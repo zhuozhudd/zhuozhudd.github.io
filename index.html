@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    categories |  小卓著的blog
+     小卓著的blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -35,23 +35,179 @@
 <body>
   <div id="app">
     <main class="content on">
-      <section class="outer">
-  
-    <h1 class="page-type-title">Kategorien</h1>
-    <!-- <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ros/">ros</a></li></ul> -->
-    <ul class="category-list">
       
-         
-          <a class="category-list-link" href="/categories/ros/" title="ros">
-            <li class="category-list-item">
-            ros<i>1</i>
-            </li>
-          </a>
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">小卓著的blog</a></h1>
+      <div id="subtitle-box">
         
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+<div id="main">
+  <section class="outer">
+  <article class="articles">
+    
+    
+    
+    
+    <article id="post-Ubuntu16-ROS-Kinetic-环境配置" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/11/05/Ubuntu16-ROS-Kinetic-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >Ubuntu16 ROS-Kinetic 环境配置</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/05/Ubuntu16-ROS-Kinetic-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-11-05T12:54:47.000Z" itemprop="datePublished">2020-11-05</time>
+</a>
       
-      </ul>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ros/">ros</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="Ubuntu16-04-ROS-Kinetic-安装"><a href="#Ubuntu16-04-ROS-Kinetic-安装" class="headerlink" title="Ubuntu16.04  ROS-Kinetic 安装"></a>Ubuntu16.04  ROS-Kinetic 安装</h1><ul>
+<li>1.软件更新选项</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183242435.png" alt="image-20201105183242435"></p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183317168.png" alt="image-20201105183317168"></p>
+<p>选完之后<code>sudo apt-get update</code></p>
+<ul>
+<li>2.添加ROS软件源</li>
+</ul>
+<p><code>sudo sh -c &#39;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#39;</code></p>
+<ul>
+<li>3.添加密钥</li>
+</ul>
+<p><code>sudo apt-key adv --keyserver &#39;hkp://keyserver.ubuntu.com:80&#39; --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></p>
+<ul>
+<li>4.更新源并安装ROS</li>
+</ul>
+<p><code>sudo apt-get update</code></p>
+<p><code>sudo apt-get install ros-kinetic-desktop-full</code></p>
+<ul>
+<li>5.初始化rosdep</li>
+</ul>
+<p><code>sudo rosdep init</code></p>
+<p><code>rosdep update</code></p>
+<p>如果出现</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183737749.png" alt="image-20201105183737749"></p>
+<p>在网站<a href="https://site.ip138.com/raw.githubusercontent.com/中搜索raw.githubusercontent.com域名，这里我选的香港的，毕竟国内毕竟近" target="_blank" rel="noopener">https://site.ip138.com/raw.githubusercontent.com/中搜索raw.githubusercontent.com域名，这里我选的香港的，毕竟国内毕竟近</a></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105192531614.png" alt="image-20201105192531614" style="zoom: 67%;" />
+
+<p>然后终端输入</p>
+<p><code>sudo gedit /etc/hosts</code></p>
+<p>在最后一行加入151.101.76.133 raw.githubusercontent.com</p>
+<p>再次<code>sudo rosdep init</code>成功</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105192735616.png" alt="image-20201105192735616"></p>
+<p>之后输入命令</p>
+<p><code>rosdep update</code></p>
+<ul>
+<li>6.设置环境变量</li>
+</ul>
+<p><code>echo &quot;source /opt/ros/kinetic/setup.bash&quot;&gt;&gt;~/.bashrc</code></p>
+<p><code>source ~/.bashrc</code></p>
+<ul>
+<li>7.安装rosinstall</li>
+</ul>
+<p><code>sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential</code></p>
+<p>安装不成功就多运行几次命令，慢慢磨过去，实在磨不过去就连手机热点就好了</p>
+<ul>
+<li>8.输入roscore验证安装是否成功</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105193349411.png" alt="image-20201105193349411"></p>
+<ul>
+<li>9.配置gazebo</li>
+</ul>
+<p>将权重文件下好，解压到~./gazebo/models中。终端输入gazebo启动，如果出现下面错误</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105202809580.png" alt="image-20201105202809580"></p>
+<p>输入以下命令即可解决</p>
+<p><code>echo &quot;export SVGA_VGPU10=0&quot; &gt;&gt; ~/.bashrc</code></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ros/" rel="tag">ros</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
   
 </section>
+</div>
+
       <footer class="footer">
   <div class="outer">
     <ul class="list-inline">
