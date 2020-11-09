@@ -70,7 +70,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">0</span>
+            <span class="post-count">421</span>
         </span>
     </span>
 
@@ -90,6 +90,8 @@
 
     
     
+    <div class="tocbot"></div>
+
 
 
 
@@ -102,7 +104,45 @@
       
 
       
-      
+      <h2 id="1-换镜像源提高下载速度"><a href="#1-换镜像源提高下载速度" class="headerlink" title="1.换镜像源提高下载速度"></a>1.换镜像源提高下载速度</h2><h4 id="1-1-Conda换镜像源"><a href="#1-1-Conda换镜像源" class="headerlink" title="1.1 Conda换镜像源"></a>1.1 Conda换镜像源</h4><ul>
+<li><p>显示镜像源<br><code>conda config --show channels</code></p>
+</li>
+<li><p>添加镜像源(以清华源为例)<br><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
+</li>
+<li><p>设置镜像源<br><code>conda config --set show_channel_urls yes</code></p>
+</li>
+<li><p>删除镜像源<br><code>conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
+</li>
+<li><p>恢复默认源<br><code>conda config --remove-key channels</code></p>
+</li>
+<li><p>也可以使用oh-my-tuna脚本一键设置清华源 <a href="https://github.com/tuna/oh-my-tuna" target="_blank" rel="noopener">https://github.com/tuna/oh-my-tuna</a></p>
+</li>
+<li><p>推荐一个装pytorch比较快的源<br><a href="https://mirrors.bfsu.edu.cn/anaconda/cloud/pytorch/" target="_blank" rel="noopener">https://mirrors.bfsu.edu.cn/anaconda/cloud/pytorch/</a></p>
+</li>
+</ul>
+<p><strong>Windows的镜像源文件在C:\Users\用户名.condarc文件中</strong><br><strong>Ubuntu的镜像源文件在/home/用户名/.condarc文件中</strong></p>
+<h4 id="1-2-pip换源"><a href="#1-2-pip换源" class="headerlink" title="1.2 pip换源"></a>1.2 pip换源</h4><ul>
+<li>指定源安装，以tensorflow为例<br><code>pip install tensorflow -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com</code></li>
+<li>如果不想每次都输入后面这一大段，可以设置全局换源<ul>
+<li>全局切换阿里云源, 注意是https<br><code>pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/</code></li>
+<li>全局切换清华源<br><code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
+<li>全局切换华为云<br><code>pip config set global.index-url https://repo.huaweicloud.com/repository/pypi/simple</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>在Windows中，pip源的配置文件在 C:\Users\用户名\AppData\Roaming\pip\pip.ini</strong><br><strong>在Ubuntu中，pip源的配置文件在 ~/.config/pip/pip.conf</strong></p>
+<h2 id="2-多环境配置"><a href="#2-多环境配置" class="headerlink" title="2.多环境配置"></a>2.多环境配置</h2><h4 id="2-1创建环境"><a href="#2-1创建环境" class="headerlink" title="2.1创建环境"></a>2.1创建环境</h4><ul>
+<li>创建新环境,以创建python3.7为例<br><code>conda create --name yourEnv python=3.7</code></li>
+<li>激活环境<br>windows：<code>activate yourEnv</code><br>linux: <code>source activate yourEnv</code></li>
+<li>查看活跃的环境<br>conda info -e</li>
+</ul>
+<h4 id="2-2重命名环境"><a href="#2-2重命名环境" class="headerlink" title="2.2重命名环境"></a>2.2重命名环境</h4><p>conda没有重命名指令，可以通过clone间接实现</p>
+<ul>
+<li>1.先clone一份new name的环境<br><code>conda create -n new_name --clone old_name</code></li>
+<li>2.删除old name的环境<br><code>conda remove -n old_name --all</code></li>
+<li>3.查看环境名列表<br><code>conda info -e</code></li>
+</ul>
+
       
       <!-- reward -->
       
@@ -343,12 +383,12 @@
   <ul class="nav">
     <li class="nav-item">
       
-      <a class="nav-item-link nav-item-search"  title="Suche">
+      <a class="nav-item-link nav-item-search"  title="Buscar">
         <i class="ri-search-line"></i>
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS">
         <i class="ri-rss-line"></i>
       </a>
       
