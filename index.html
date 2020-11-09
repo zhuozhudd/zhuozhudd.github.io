@@ -117,7 +117,7 @@
       
 
       
-      <h2 id="1-换镜像源提高下载速度"><a href="#1-换镜像源提高下载速度" class="headerlink" title="1.换镜像源提高下载速度"></a>1.换镜像源提高下载速度</h2><h4 id="1-1-Conda换镜像源"><a href="#1-1-Conda换镜像源" class="headerlink" title="1.1 Conda换镜像源"></a>1.1 Conda换镜像源</h4><ul>
+      <h2 id="1-换镜像源提高下载速度"><a href="#1-换镜像源提高下载速度" class="headerlink" title="1.换镜像源提高下载速度"></a>1.换镜像源提高下载速度</h2><h3 id="1-1-Conda换镜像源"><a href="#1-1-Conda换镜像源" class="headerlink" title="1.1 Conda换镜像源"></a>1.1 Conda换镜像源</h3><ul>
 <li><p>显示镜像源<br><code>conda config --show channels</code></p>
 </li>
 <li><p>添加镜像源(以清华源为例)<br><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
@@ -134,7 +134,20 @@
 </li>
 </ul>
 <p><strong>Windows的镜像源文件在C:\Users\用户名.condarc文件中</strong><br><strong>Ubuntu的镜像源文件在/home/用户名/.condarc文件中</strong></p>
-<h4 id="1-2-pip换源"><a href="#1-2-pip换源" class="headerlink" title="1.2 pip换源"></a>1.2 pip换源</h4><ul>
+<p>国内其他源</p>
+<ul>
+<li><p>清华镜像源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">default_channels:</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;main</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;free</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;r</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>中科大镜像源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">default_channels:</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;main&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;free&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;conda-forge&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;msys2&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;bioconda&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;menpo&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>阿里镜像源<br><code>conda config --add channels https://mirrors.aliyun.com/pypi/simple/</code></p>
+</li>
+<li><p>豆瓣python源<br><code>conda config --add channels http://pypi.douban.com/simple/</code></p>
+</li>
+</ul>
+<h3 id="1-2-pip换源"><a href="#1-2-pip换源" class="headerlink" title="1.2 pip换源"></a>1.2 pip换源</h3><ul>
 <li>指定源安装，以tensorflow为例<br><code>pip install tensorflow -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com</code></li>
 <li>如果不想每次都输入后面这一大段，可以设置全局换源<ul>
 <li>全局切换阿里云源, 注意是https<br><code>pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/</code></li>
@@ -144,12 +157,12 @@
 </li>
 </ul>
 <p><strong>在Windows中，pip源的配置文件在 C:\Users\用户名\AppData\Roaming\pip\pip.ini</strong><br><strong>在Ubuntu中，pip源的配置文件在 ~/.config/pip/pip.conf</strong></p>
-<h2 id="2-多环境配置"><a href="#2-多环境配置" class="headerlink" title="2.多环境配置"></a>2.多环境配置</h2><h4 id="2-1创建环境"><a href="#2-1创建环境" class="headerlink" title="2.1创建环境"></a>2.1创建环境</h4><ul>
+<h2 id="2-多环境配置"><a href="#2-多环境配置" class="headerlink" title="2.多环境配置"></a>2.多环境配置</h2><h3 id="2-1创建环境"><a href="#2-1创建环境" class="headerlink" title="2.1创建环境"></a>2.1创建环境</h3><ul>
 <li>创建新环境,以创建python3.7为例<br><code>conda create --name yourEnv python=3.7</code></li>
 <li>激活环境<br>windows：<code>activate yourEnv</code><br>linux: <code>source activate yourEnv</code></li>
 <li>查看活跃的环境<br>conda info -e</li>
 </ul>
-<h4 id="2-2重命名环境"><a href="#2-2重命名环境" class="headerlink" title="2.2重命名环境"></a>2.2重命名环境</h4><p>conda没有重命名指令，可以通过clone间接实现</p>
+<h3 id="2-2重命名环境"><a href="#2-2重命名环境" class="headerlink" title="2.2重命名环境"></a>2.2重命名环境</h3><p>conda没有重命名指令，可以通过clone间接实现</p>
 <ul>
 <li>1.先clone一份new name的环境<br><code>conda create -n new_name --clone old_name</code></li>
 <li>2.删除old name的环境<br><code>conda remove -n old_name --all</code></li>
@@ -401,12 +414,12 @@
   <ul class="nav">
     <li class="nav-item">
       
-      <a class="nav-item-link nav-item-search"  title="Buscar">
+      <a class="nav-item-link nav-item-search"  title="Suche">
         <i class="ri-search-line"></i>
       </a>
       
       
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS">
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
         <i class="ri-rss-line"></i>
       </a>
       
