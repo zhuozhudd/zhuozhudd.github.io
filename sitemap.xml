@@ -4,7 +4,7 @@
   <url>
     <loc>http://yoursite.com/2020/11/09/Conda%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</loc>
     
-    <lastmod>2020-11-09</lastmod>
+    <lastmod>2020-11-22</lastmod>
     
   </url>
   
@@ -47,6 +47,13 @@
   
   <url>
     <loc>http://yoursite.com/tags/conda/</loc>
+    <lastmod>2020-11-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/pip/</loc>
     <lastmod>2020-11-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
