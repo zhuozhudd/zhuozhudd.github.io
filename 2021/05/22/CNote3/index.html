@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    C基础 - 文件操作、文件读取、输入输出、目录操作 |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-CNote3" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  C基础 - 文件操作、文件读取、输入输出、目录操作
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/CNote3/" class="article-date">
+  <time datetime="2021-05-22T09:29:17.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">11 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="C基础-3"><a href="#C基础-3" class="headerlink" title="C基础 3"></a>C基础 3</h1><h2 id="1-文件操作"><a href="#1-文件操作" class="headerlink" title="1 - 文件操作"></a>1 - 文件操作</h2><h4 id="文件指针："><a href="#文件指针：" class="headerlink" title="文件指针："></a>文件指针：</h4><ul>
+<li><p>操作文件的时候，C语言为文件分配一个信息区，该信息区包含文件描述信息、缓冲区位置、缓冲区大小、文件读写到的位置等基本信息，这些信息用一个结构体来存放（struct _IO_FILE），这个结构体有一个别名FILE（typedef struct _IO_FILE FILE），FILE结构体和对文件操作的库函数在 stdio.h 头文件中声明的。</p>
+</li>
+<li><p>打开文件的时候，fopen函数中会动态分配一个FILE结构体大小的内存空间，并把FILE结构体内存的地址作为函数的返回值，程序中用FILE结构体指针存放这个地址。</p>
+</li>
+<li><p>关闭文件的时候，fclose函数除了关闭文件，还会释放FILE结构体占用的内存空间。</p>
+</li>
+<li><p>FILE结构体指针习惯称为文件指针。</p>
+</li>
+</ul>
+<h4 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FILE *<span class="title">fopen</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> * filename, <span class="keyword">const</span> <span class="keyword">char</span> * mode )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><strong>方式</strong></th>
+<th><strong>含 义</strong></th>
+<th><strong>说 明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>r</strong></td>
+<td>只读</td>
+<td>文件必须存在，否则打开失败。</td>
+</tr>
+<tr>
+<td><strong>w</strong></td>
+<td>只写</td>
+<td>如果文件存在，则清除原文件内容；如果文件不存在，则新建文件。</td>
+</tr>
+<tr>
+<td><strong>a</strong></td>
+<td>追加只写</td>
+<td>如果文件存在，则打开文件，如果文件不存在，则新建文件。</td>
+</tr>
+<tr>
+<td><strong>r+</strong></td>
+<td>读写</td>
+<td>文件必须存在。在只读 r 的基础上加 ‘+’ 表示增加可写的功能。</td>
+</tr>
+<tr>
+<td><strong>w+</strong></td>
+<td>读写</td>
+<td>在只写w的方式上增加可读的功能。</td>
+</tr>
+<tr>
+<td><strong>a+</strong></td>
+<td>读写</td>
+<td>在追加只写a的方式上增加可读的功能</td>
+</tr>
+</tbody></table>
+<h4 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fclose</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-文本文件的读写"><a href="#2-文本文件的读写" class="headerlink" title="2 - 文本文件的读写"></a>2 - 文本文件的读写</h2><p>在实际开发中，文本文件以行的形式存放字符串，如C程序的源代码，一段文字等，所以一般是按行写入和读取数据。</p>
+<h4 id="向文件中写入数据："><a href="#向文件中写入数据：" class="headerlink" title="向文件中写入数据："></a>向文件中写入数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fprintf</span><span class="params">(FILE *fp, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="从文件中读取数据："><a href="#从文件中读取数据：" class="headerlink" title="从文件中读取数据："></a>从文件中读取数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> <span class="built_in">size</span>, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>fgets的功能是从文件中读取一行。</li>
+<li>参数buf是一个字符串，用于保存从文件中读到的数据。</li>
+<li>参数size是打算读取内容的长度。</li>
+<li>参数fp是待读取文件的文件指针。</li>
+<li>如果文件中将要读取的这一行的内容的长度小于size，fgets函数就读取一行，如果这一行的内容大于等于size，fgets函数就读取size-1字节的内容。</li>
+<li>调用fgets函数如果成功的读取到内容，函数返回buf，如果读取错误或文件已结束，返回空，即0。如果fgets返回空，可以认为是文件结束而不是发生了错误，因为发生错误的情况极少出现。</li>
+</ul>
+<h2 id="3-二进制文件的读写"><a href="#3-二进制文件的读写" class="headerlink" title="3 - 二进制文件的读写"></a>3 - 二进制文件的读写</h2><p>把内存中的数据结构直接写入二进制文件，读取的时候，也是从文件中读取数据结构的大小一块数据，直接保存到数据结构中。注意，这里所说的数据结构不只是结构体，是任意数据类型。</p>
+<h4 id="向文件中写入数据：-1"><a href="#向文件中写入数据：-1" class="headerlink" title="向文件中写入数据："></a>向文件中写入数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fwrite</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">size_t</span> nmemb, FILE *stream)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>ptr：为内存区块的指针，存放了要写入的数据的地址，它可以是数组、变量、结构体等。</p>
+</li>
+<li><p>size：固定填1。</p>
+</li>
+<li><p>nmemb：表示打算写入数据的字节数。</p>
+</li>
+<li><p>fp：表示文件指针。</p>
+</li>
+<li><p>函数的返回值是本次成功写入数据的字节数，一般情况下，程序员不必关心fwrite函数的返回值。</p>
+</li>
+</ul>
+<h4 id="从文件中读取数据：-1"><a href="#从文件中读取数据：-1" class="headerlink" title="从文件中读取数据："></a>从文件中读取数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fread</span><span class="params">(<span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">size_t</span> nmemb, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ptr：用于存放从文件中读取数据的变量地址，它可以是数组、变量、结构体等。</li>
+<li>size：固定填1。</li>
+<li>nmemb：表示打算读取的数据的字节数。</li>
+<li>fp：表示文件指针。</li>
+<li>调用fread函数如果成功的读取到内容，函数返回读取到的内容的字节数，如果读取错误或文件已结束，返回空，即0。如果fread返回空，可以认为是文件结束而不是发生了错误，因为发生错误的情况极少出现。</li>
+</ul>
+<h2 id="4-文件定位"><a href="#4-文件定位" class="headerlink" title="4 - 文件定位"></a>4 - 文件定位</h2><ul>
+<li><p>在文件内部有一个位置指针，用来指向文件当前读写的位置。在文件打开时，如果打开方式是r和w，位置指针指向文件的第一个字节，如果打开方式是a，位置指针指向文件的尾部。每当从文件里读取n个字节或文件里写入n个字节后，位置指针也会向后移动n个字节。</p>
+</li>
+<li><p>文件位置指针与C语言中的指针不是一回事。位置指针仅仅是一个标志，表示文件读写到的位置，不是变量的地址。文件每读写一次，位置指针就会移动一次，它不需要您在程序中定义和赋值，而是由系统自动设置，对程序员来说是隐藏的。</p>
+</li>
+<li><p>在实际开发中，偶尔需要移动位置指针，实现对指定位置数据的读写。我们把移动位置指针称为文件定位。</p>
+</li>
+<li><p>C语言提供了ftell、rewind和fseek三个库函数来实现文件定位功能。</p>
+</li>
+</ul>
+<h4 id="ftell"><a href="#ftell" class="headerlink" title="ftell:"></a>ftell:</h4><p>ftell函数用来返回当前文件位置指针的值，这个值是当前位置相对于文件开始位置的字节数。它的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">ftell</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="rewind："><a href="#rewind：" class="headerlink" title="rewind："></a>rewind：</h4><p>rewind函数用来将位置指针移动到文件开头，它的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rewind</span> <span class="params">( FILE *fp )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fseek："><a href="#fseek：" class="headerlink" title="fseek："></a>fseek：</h4><p>fseek() 用来将位置指针移动到任意位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fseek</span> <span class="params">( FILE *fp, <span class="keyword">long</span> offset, <span class="keyword">int</span> origin )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1）fp 为文件指针，也就是被移动的文件。</p>
+</li>
+<li><p>2）offset 为偏移量，也就是要移动的字节数。之所以为 long 类型，是希望移动的范围更大，能处理的文件更大。offset 为正时，向后移动；offset 为负时，向前移动。</p>
+</li>
+<li><p>3）origin 为起始位置，也就是从何处开始计算偏移量。C语言规定的起始位置有三种，分别为：0-文件开头；1-当前位置；2-文件末尾。</p>
+</li>
+</ul>
+<h4 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h4><ul>
+<li><p>当offset是向文件尾方向偏移的时候，无论偏移量是否超出文件尾，fseek都是返回0，当偏移量没有超出文件尾的时候，文件指针式指向正常的偏移地址的，当偏移量超出文件尾的时候，文件指针是指向文件尾的，不会返回偏移出错-1值。</p>
+</li>
+<li><p>当offset是向文件头方向偏移的时候，如果offset没有超出文件头，是正常偏移，文件指针指向正确的偏移地址，fseek返回值为0，当offset超出文件头时，fseek返回出错-1值，文件指针还是处于原来的位置。</p>
+</li>
+</ul>
+<h2 id="5-文件缓冲区"><a href="#5-文件缓冲区" class="headerlink" title="5 - 文件缓冲区"></a>5 - 文件缓冲区</h2><ul>
+<li><p>在操作系统中，存在一个内存缓冲区，当调用fprintf、fwrite等函数往文件写入数据的时候，数据并不会立即写入磁盘文件，而是先写入缓冲区，等缓冲区的数据满了之后才写入文件。还有一种情况就是程序调用了fclose时也会把缓冲区的数据写入文件。</p>
+</li>
+<li><p>在实际开发中，如果程序员想把缓冲区的数据立即写入文件，可以调用fflush库函数，它的声明如下：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fflush</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数的参数只有一个，即文件指针，返回0成功，其它失败，程序员一般不关心它的返回值。</li>
+</ul>
+<h2 id="6-标准输入、标准输出和标准错误"><a href="#6-标准输入、标准输出和标准错误" class="headerlink" title="6 - 标准输入、标准输出和标准错误"></a>6 - 标准输入、标准输出和标准错误</h2><p>Linux操作系统为每个程序默认打开三个文件，即标准输入stdin、标准输出stdout和标准错误输出stderr，其中0就是stdin，表示输入流，指从键盘输入，1代表stdout，2代表stderr，1,2默认是显示器。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"Hello world.\n"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>等同于</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"Hello world.\n"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-目录操作"><a href="#7-目录操作" class="headerlink" title="7 - 目录操作"></a>7 - 目录操作</h2><h3 id="7-1-获取当前工作目录-getcwd"><a href="#7-1-获取当前工作目录-getcwd" class="headerlink" title="7.1 获取当前工作目录 getcwd"></a>7.1 获取当前工作目录 getcwd</h3><ul>
+<li>C程序中调用getcwd函数可以获取当前的工作目录。函数声明：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">getcwd</span><span class="params">(<span class="keyword">char</span> * buf,<span class="keyword">size_t</span> <span class="built_in">size</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-2-切换工作目录-chdir"><a href="#7-2-切换工作目录-chdir" class="headerlink" title="7.2 切换工作目录 chdir"></a>7.2 切换工作目录 chdir</h3><ul>
+<li><p>就像在shell中使用cd命令切换目录一样，在C程序中使用chdir函数来改变工作目录。 </p>
+</li>
+<li><p>返回值：0-切换成功；非0-失败。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">chdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-3-目录的创建和删除"><a href="#7-3-目录的创建和删除" class="headerlink" title="7.3 目录的创建和删除"></a>7.3 目录的创建和删除</h3><ul>
+<li>在shell中可以通过mkdir/rmdir命令来创建/删除目录，C程序中用mkdir/rmdir函数来创建/删除目录。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rmdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mode的含义将按open系统调用的O_CREAT选项中的有关定义设置，当然，它还要服从umask的设置况，先固定填0755</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span>(<span class="string">"/tmp/aaa"</span>,<span class="number">0755</span>);   <span class="comment">// 创建/tmp/aaa目录</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-4-获取目录中的文件列表"><a href="#7-4-获取目录中的文件列表" class="headerlink" title="7.4 获取目录中的文件列表"></a>7.4 获取目录中的文件列表</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开目录的函数opendir的声明</span></span><br><span class="line"><span class="function">DIR *<span class="title">opendir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取目录的函数readdir的声明</span></span><br><span class="line"><span class="function">struct dirent *<span class="title">readdir</span><span class="params">(DIR *dirp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭目录的函数closedir的声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">closedir</span><span class="params">(DIR *dirp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每调用一次readdir函数会返回一个struct dirent的地址，存放了本次读取到的内容，它的原理与fgets函数读取文件相同。</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">   <span class="keyword">long</span> d_ino;                    <span class="comment">// inode number 索引节点号</span></span><br><span class="line">   <span class="keyword">off_t</span> d_off;                   <span class="comment">// offset to this dirent 在目录文件中的偏移</span></span><br><span class="line">   <span class="keyword">unsigned</span> short d_reclen;     <span class="comment">// length of this d_name 文件名长</span></span><br><span class="line">   <span class="keyword">unsigned</span> <span class="keyword">char</span> d_type;         <span class="comment">// the type of d_name 文件类型</span></span><br><span class="line">   <span class="keyword">char</span> d_name [NAME_MAX+<span class="number">1</span>];    <span class="comment">// file name文件名，最长255字符</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>需要关注结构体的d_type和d_name成员，其它的不必关心。</p>
+<ul>
+<li><p>d_name文件名或目录名。</p>
+</li>
+<li><p>d_type描述了文件的类型，有多种取值，最重要的是8和4，8-常规文件（A regular file）；4-目录（A directory），其它的暂时不关心。</p>
+</li>
+</ul>
+<h3 id="7-5-access库函数"><a href="#7-5-access库函数" class="headerlink" title="7.5 access库函数"></a>7.5 access库函数</h3><ul>
+<li>access函数用于判断当前操作系统用户对文件或目录的存取权限。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明：</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">access</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>pathname文件名或目录名，可以是当前目录的文件或目录，也可以列出全路径。</p>
+</li>
+<li><p>mode 需要判断的存取权限。在头文件unistd.h中的预定义如下：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> R_OK 4     <span class="comment">// R_OK 只判断是否有读权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> W_OK 2    <span class="comment">// W_OK 只判断是否有写权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_OK 1     <span class="comment">// X_OK 判断是否有执行权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> F_OK 0     <span class="comment">// F_OK 只判断是否存在</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>返回值：当pathname满足mode的条件时候返回0，不满足返回-1。</li>
+</ul>
+<h3 id="7-6-stat-库函数"><a href="#7-6-stat-库函数" class="headerlink" title="7.6 stat 库函数"></a>7.6 stat 库函数</h3><ul>
+<li>struct stat结构体用于存放文件和目录的状态信息，如下：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">dev_t</span> st_dev;   <span class="comment">// device 文件的设备编号</span></span><br><span class="line">  <span class="keyword">ino_t</span> st_ino;   <span class="comment">// inode 文件的i-node</span></span><br><span class="line">  <span class="keyword">mode_t</span> st_mode;   <span class="comment">// protection 文件的类型和存取的权限</span></span><br><span class="line">  <span class="keyword">nlink_t</span> st_nlink;   <span class="comment">// number of hard links 连到该文件的硬连接数目, 刚建立的文件值为1.</span></span><br><span class="line">  <span class="keyword">uid_t</span> st_uid;   <span class="comment">// user ID of owner 文件所有者的用户识别码</span></span><br><span class="line">  <span class="keyword">gid_t</span> st_gid;   <span class="comment">// group ID of owner 文件所有者的组识别码</span></span><br><span class="line">  <span class="keyword">dev_t</span> st_rdev;  <span class="comment">// device type 若此文件为设备文件, 则为其设备编号</span></span><br><span class="line">  <span class="keyword">off_t</span> st_size;  <span class="comment">// total size, in bytes 文件大小, 以字节计算</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blksize;  <span class="comment">// blocksize for filesystem I/O 文件系统的I/O 缓冲区大小.</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blocks;  <span class="comment">// number of blocks allocated 占用文件区块的个数, 每一区块大小为512 个字节.</span></span><br><span class="line">  <span class="keyword">time_t</span> st_atime;  <span class="comment">// time of lastaccess 文件最近一次被存取或被执行的时间, 一般只有在用mknod、 utime、read、write 与tructate 时改变.</span></span><br><span class="line">  <span class="keyword">time_t</span> st_mtime;  <span class="comment">// time of last modification 文件最后一次被修改的时间, 一般只有在用mknod、 utime 和write 时才会改变</span></span><br><span class="line">  <span class="keyword">time_t</span> st_ctime;  <span class="comment">// time of last change i-node 最近一次被更改的时间, 此参数会在文件所有者、组、 权限被更改时更新</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>st_mode成员的取值很多，或者使用如下两个宏来判断。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S_ISREG(st_mode)  <span class="comment">// 是否为一般文件 </span></span><br><span class="line">S_ISDIR(st_mode)  <span class="comment">// 是否为目录</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="stat函数"><a href="#stat函数" class="headerlink" title="stat函数"></a>stat函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stat</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, struct stat *buf)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stat函数获取path指定文件或目录的信息，并将信息保存到结构体buf中，执行成功返回0，失败返回-1。</li>
+</ul>
+<h3 id="7-7-utime库函数"><a href="#7-7-utime库函数" class="headerlink" title="7.7 utime库函数"></a>7.7 utime库函数</h3><ul>
+<li>utime函数用于修改文件的存取时间和更改时间。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">utime</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename, <span class="keyword">const</span> struct utimbuf *times)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>utime()用来修改参数filename 文件所属的inode 存取时间。如果参数times为空指针(NULL), 则该文件的存取时间和更改时间全部会设为目前时间。其中的struct utimbuf定义如下：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">utimbuf</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">time_t</span> actime;</span><br><span class="line">  <span class="keyword">time_t</span> modtime;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>返回值：执行成功则返回0，失败返回-1。</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/22/CNote3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C语言基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C语言学习笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch6%20%E5%87%BD%E6%95%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            《Cpp-Primer-5th》Notes-Ch6 函数
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/22/CNote2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">C基础 - main函数参数、动态内存管理</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

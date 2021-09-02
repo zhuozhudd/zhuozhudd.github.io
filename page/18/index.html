@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+     Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Shine on You Crazy Diamond</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+<div id="main">
+  <section class="outer">
+  <article class="articles">
+    
+    
+    
+    
+    <article id="post-Cpp-Primer-5th-Notes-Ch4 表达式" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/Cpp-Primer-5th-Notes-Ch4%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/"
+    >《Cpp-Primer-5th》Notes-Ch4 表达式</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch4%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
+  <time datetime="2021-05-22T09:29:19.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="第四章-表达式"><a href="#第四章-表达式" class="headerlink" title="第四章 表达式"></a>第四章 表达式</h1><p>表达式由一个或多个运算对象组成，对表达式求值将得到一个结果。字面值和变量是最简单的表达式，其结果就是字面值和变量的值</p>
+<h2 id="4-1-基础"><a href="#4-1-基础" class="headerlink" title="4.1 基础"></a>4.1 基础</h2><p><strong>重载运算符</strong></p>
+<ul>
+<li>使用重载运算符时，其包括运算对象的类型和返回值的类型，都是由该运算符定义的，但是运算对象的个数、运算符的优先级和结合律都是无法改变的。</li>
+</ul>
+<p><strong>左值和右值</strong></p>
+<ul>
+<li>左值可以位于赋值语句的左侧，右值则不能</li>
+<li>一个左值表达式的求值结果是一个对象或一个函数，然而以常量对象为代表的某些左值实际上不能作为负值语句的左侧运算对象</li>
+<li>当一个对象被用作右值的时候，用的是对象的值（内容）</li>
+<li>当对象被用作左值的时候，用的是对象的身份（在内存中的位置）</li>
+</ul>
+<h3 id="4-1-2-优先级与结合律"><a href="#4-1-2-优先级与结合律" class="headerlink" title="4.1.2 优先级与结合律"></a>4.1.2 优先级与结合律</h3><h3 id="4-1-3-求值顺序"><a href="#4-1-3-求值顺序" class="headerlink" title="4.1.3 求值顺序"></a>4.1.3 求值顺序</h3><p><strong>有4种运算符明确规定了运算对象的求值顺序</strong></p>
+<ul>
+<li>逻辑与(&amp;&amp;)，规定先求左侧运算对象的值，只有当左侧运算对象的值为真时才继续求右侧运算对象的值</li>
+<li>逻辑或(||)</li>
+<li>条件(?:)运算符</li>
+<li>逗号(,)运算符</li>
+</ul>
+<h2 id="4-2-算数运算符"><a href="#4-2-算数运算符" class="headerlink" title="4.2 算数运算符"></a>4.2 算数运算符</h2><p><strong>+、-（正负号）、*、/、%、+、-（加减号）</strong></p>
+<ul>
+<li><p>除非另作说明，算数运算符都能作用于任何算数类型以及任意能转换为算数类型的类型。</p>
+</li>
+<li><p>对于大多数运算符来说，布尔类型的运算对象将被提升为int类型。</p>
+<ul>
+<li>下例，布尔变量b的值为真，参与运算时将被提升成整数值1，对它求负为-1，将-1再转回bool，除了0都会转为true。所以b2为真<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> b = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">bool</span> b2 = -b;  <span class="comment">// b2是true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>C++新标准 除法运算取整</strong></p>
+<ul>
+<li>除法运算中，C++语言早起版本允许结果为负值的商向上或向下取整，C++11新标准规定商一律向0取整（即直接切除小数部分）</li>
+</ul>
+<p><strong>取余运算</strong></p>
+<ul>
+<li>m%n 不等于0，则它的符号同m相同</li>
+</ul>
+<h2 id="4-3-逻辑和关系运算符"><a href="#4-3-逻辑和关系运算符" class="headerlink" title="4.3 逻辑和关系运算符"></a>4.3 逻辑和关系运算符</h2><p><strong>！、&lt;、&lt;=、&gt;、&gt;=、==、!=、&amp;&amp;、||</strong></p>
+<p><strong>逻辑与和逻辑或运算符</strong></p>
+<ul>
+<li>逻辑与运算符和逻辑或运算符都是先求左侧运算对象的值再求右侧运算对象的值，当且仅当左侧运算对象无法确定表达式的结果时才会计算右侧运算对象的值。这种策略称作<strong>短路求值(short-circuit evaluation)</strong></li>
+</ul>
+<h2 id="4-4-赋值运算符"><a href="#4-4-赋值运算符" class="headerlink" title="4.4 赋值运算符"></a>4.4 赋值运算符</h2><ul>
+<li><strong>C++11新标准</strong>允许使用花括号括起来的初始值列表作为赋值语句的右侧运算对象：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">k = &#123;<span class="number">3.14</span>&#125;;  <span class="comment">// 错误：窄化转换</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vi; <span class="comment">// 初始为空</span></span><br><span class="line">vi = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;</span><br></pre></td></tr></table></figure></li>
+<li>赋值运算满足右结合律<ul>
+<li>对于多重赋值语句中的每一个对象，它的类型或者与右侧对象的类型相同、或者可由右边对象的类型转换得到<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ival, *pval; <span class="comment">// ival的类型是int，pval是指向int的指针</span></span><br><span class="line">ival = pval = <span class="number">0</span>; <span class="comment">// 错误：不能把指针负值给int</span></span><br><span class="line"><span class="built_in">string</span> s1, s2;</span><br><span class="line">s1 = s2 = <span class="string">"OK"</span>; <span class="comment">// 字符串字面值“OK”转换成string对象</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-5-递增和递增运算符"><a href="#4-5-递增和递增运算符" class="headerlink" title="4.5 递增和递增运算符"></a>4.5 递增和递增运算符</h2><p><strong>++ 、 –</strong></p>
+<ul>
+<li>递增和递减有两种形式：前置版本 和 后置版本</li>
+<li>前置版本，先将运算对象+1或-1，然后将改变后的对象作为求值结果</li>
+<li>后置版本，也将运算对象+1或-1，但是求值结果是运算对象改变之前那个值的副本</li>
+</ul>
+<p><strong>建议养成使用前置版本的习惯，这样不仅不需要担心性能的问题，而且更重要的是写出的代码更符合编程的初衷</strong></p>
+<ul>
+<li>后置版本需要将元史之存储下来以便于返回这个未修改的内容。浪费</li>
+</ul>
+<p><strong>在一条语句中混用解引用和递增运算符</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> pbeg = v.<span class="built_in">begin</span>()</span><br><span class="line"><span class="comment">// 输出元素直到遇到第一个负值为止</span></span><br><span class="line"><span class="keyword">while</span>(pbeg != v.<span class="built_in">end</span>() &amp;&amp; *pbeg &gt;= <span class="number">0</span>)</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; *pbeg++ &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>后置递增运算符的优先级高于解引用运算符，因此 *pbeg++等价于 *(pbeg++)</p>
+</li>
+<li><p>简洁可以成为一种美德</p>
+<ul>
+<li>cout &lt;&lt; *iter++ &lt;&lt; endl;</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-6-成员访问运算符"><a href="#4-6-成员访问运算符" class="headerlink" title="4.6 成员访问运算符"></a>4.6 成员访问运算符</h2><ul>
+<li>点运算符和箭头运算符都可用于访问成员</li>
+<li>ptr-&gt;men 等价于 (*ptr).men</li>
+</ul>
+<h2 id="4-7-条件运算符"><a href="#4-7-条件运算符" class="headerlink" title="4.7 条件运算符"></a>4.7 条件运算符</h2><ul>
+<li>cond ? expr1 : expr2;</li>
+<li>在输出表达式中使用条件运算符<ul>
+<li>条件运算符的优先级非常低，因此当一条长表达式中嵌套了条件运算子表达式时，通常需要在它两端加上括号<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; ((grade) &lt; <span class="number">60</span>) ? <span class="string">"fail"</span> : <span class="string">"pass"</span> ); <span class="comment">// 输出pass或者fail</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; (grade &lt; <span class="number">60</span>) ? <span class="string">"fail"</span> : <span class="string">"pass"</span>; <span class="comment">//输出1或者0</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; grade &lt; <span class="number">60</span> ? <span class="string">"fail"</span> : <span class="string">"pass"</span>;  <span class="comment">//错误：试图比较cout和60</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-8-位运算符"><a href="#4-8-位运算符" class="headerlink" title="4.8 位运算符"></a>4.8 位运算符</h2><ul>
+<li>～ 位求反</li>
+<li>&lt;&lt; 左移</li>
+<li>&gt;&gt; 右移</li>
+<li>&amp; 位与</li>
+<li>^ 位异或</li>
+<li>| 位或</li>
+</ul>
+<p>如果运算对象是“小整型”，则它的值回被自动提升成较大的整数类型</p>
+<p><strong>移位运算符</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1001 1011</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> bits = <span class="number">0233</span></span><br><span class="line"><span class="comment">// bits提升成int类型，然后向左移动8位</span></span><br><span class="line">bits &lt;&lt; <span class="number">8</span> <span class="comment">//00000000 00000000 10011011 00000000</span></span><br><span class="line"><span class="comment">// 向左移动31位，左边超出边界的位丢弃掉了</span></span><br><span class="line">bits &lt;&lt; <span class="number">31</span> <span class="comment">// 10000000 00000000 00000000 00000000</span></span><br><span class="line"><span class="comment">// 向右移动3位，最右边的3位丢弃了</span></span><br><span class="line">bits &gt;&gt; <span class="number">3</span>  <span class="comment">// 00000000 00000000 00000000 00010011</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先令左侧运算对象的内容按照右侧运算对象的要求移动指定位数，然后将经过移动（可能还进行了提升）左侧运算对象的拷贝作为求值结果。其中，右侧的运算对一定不能位负，而且值必须严格小于结果的位数，否则就会产生未定义行为</li>
+</ul>
+<p><strong>位求反运算符</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> bits = <span class="number">0227</span>; <span class="comment">// 10010111</span></span><br><span class="line">~bits; <span class="comment">// 11111111 11111111 11111111 01101000</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>char类型的运算对象首先提升成int类型</li>
+</ul>
+<h2 id="4-9-sizeof运算符"><a href="#4-9-sizeof运算符" class="headerlink" title="4.9 sizeof运算符"></a>4.9 sizeof运算符</h2><ul>
+<li>sizeof运算符满足右结合律，其所得值是一个size_t类型的常量表达式</li>
+<li>运算符的运算对象有两种形式：<blockquote>
+<p>sizeof (type)<br>sizeof expr</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>C++11新标准</strong></p>
+<ul>
+<li>C++11新标准允许我们使用作用域运算符来获取类成员的大小。通常情况下只有通过类的对象才能访问的类的成员，但是sizeof运算符无须我们提供一个具体的对象，因为要想知道类成员的大小无须真的获取该成员。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Sales_data data, *p;</span><br><span class="line"><span class="keyword">sizeof</span>(Sales_data); <span class="comment">// 存储Sales_data类型的对象所占的空间大小</span></span><br><span class="line"><span class="keyword">sizeof</span> data; <span class="comment">// data的类型的大小，即sizeof(Sales_data)</span></span><br><span class="line"><span class="keyword">sizeof</span> p;   <span class="comment">// 指针所占的空间大小</span></span><br><span class="line"><span class="keyword">sizeof</span> *p;  <span class="comment">// p所指类型的空间大小，即sizeof(Sales_data)</span></span><br><span class="line"><span class="keyword">sizeof</span> data.revenue; <span class="comment">// Sales_data的revenue成员对应的类型大小</span></span><br><span class="line"><span class="keyword">sizeof</span> Sales_data::revenue; <span class="comment">// 另一种获取revenue大小的方式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// sizeof(ia) / sizeof(*ia) 返回ia的元素数量</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">size_t</span> sz = <span class="keyword">sizeof</span>(ia)/<span class="keyword">sizeof</span>(*ia);</span><br><span class="line"><span class="keyword">int</span> arr2[sz]; <span class="comment">// 正确：sizof返回一个常量表达式</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="4-10-逗号运算符"><a href="#4-10-逗号运算符" class="headerlink" title="4.10 逗号运算符"></a>4.10 逗号运算符</h2><ul>
+<li>逗号运算符含有两个运算对象，首先对左侧对表达式求值，然后将求值结果丢弃掉。逗号运算符真正对结果是右侧表达式对值。</li>
+</ul>
+<h2 id="4-11-类型转换"><a href="#4-11-类型转换" class="headerlink" title="4.11 类型转换"></a>4.11 类型转换</h2><ul>
+<li>算数类型之间的隐式转换被设计得尽可能避免损失精度。很多时候如果表达式中既有整数类型也有浮点数类型的对象，整型会转换成浮点型。</li>
+</ul>
+<h3 id="4-11-1-算数转换"><a href="#4-11-1-算数转换" class="headerlink" title="4.11.1 算数转换"></a>4.11.1 算数转换</h3><h3 id="4-11-2-其他隐式类型转换"><a href="#4-11-2-其他隐式类型转换" class="headerlink" title="4.11.2 其他隐式类型转换"></a>4.11.2 其他隐式类型转换</h3><ul>
+<li>数组转换成指针：在大多数用到数组的表达式中，数组自动转换成指向数组首元素的指针</li>
+<li>指针的转换：<ul>
+<li>常量整数值0或者字面值nullptr能转换成任意指针类型</li>
+<li>指向任意非常量的指针能转换成void*</li>
+<li>指向任意对象的指针能转换成 const void*</li>
+</ul>
+</li>
+<li>转换成布尔类型<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *cp = get_string()</span><br><span class="line"><span class="keyword">if</span> (cp)  <span class="comment">// 如果指针cp不是0，条件为真</span></span><br><span class="line"><span class="keyword">while</span> (*cp) <span class="comment">// 如果*cp不是空字符，条件为真</span></span><br></pre></td></tr></table></figure></li>
+<li>转换成常量：允许将指向非常量类型的指针转换成指向相应的常量类型的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;j = i; <span class="comment">//非常量转换成 const int 的引用</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p = &amp;i; <span class="comment">// 非常量的地址转换成const的地址</span></span><br><span class="line"><span class="keyword">int</span> &amp;r = j, *q = p; <span class="comment">// 错误：不允许const转换成非常量</span></span><br></pre></td></tr></table></figure></li>
+<li>类类型定义的转换</li>
+</ul>
+<h3 id="4-13-显式转换"><a href="#4-13-显式转换" class="headerlink" title="4.13 显式转换"></a>4.13 显式转换</h3><p><strong>命名的强制类型转换</strong></p>
+<blockquote>
+<p>cast-name<type> (expression);</p>
+</blockquote>
+<ul>
+<li>cast-name:<ul>
+<li>static_cast</li>
+<li>dynamic_cast</li>
+<li>const_cast</li>
+<li>reinterpret_cast</li>
+<li>static_cast</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, j;</span><br><span class="line"><span class="keyword">double</span> slope = i/j;</span><br><span class="line"><span class="comment">//需要使用某种方法将i和/ 或j显式的转换成double，才能执行浮点数除法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// static_cast</span></span><br><span class="line"><span class="comment">// 任何具有明确定义的类型转换，只要不包含底层const，就可以使用static_cast</span></span><br><span class="line"><span class="keyword">double</span> slope = <span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(j) / i; <span class="comment">//进行强转以便执行浮点数除法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// const_cast</span></span><br><span class="line"><span class="comment">// const_cast只能改变运算对象的底层const，对于将常量对象转换成非常量对象的行为，我们一般称其为“去掉const性质”</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *pc;</span><br><span class="line"><span class="keyword">char</span> *p = <span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>*&gt;(pc); <span class="comment">// 正确：但是通过p写值是为定义的行为</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// reinterpret_cast </span></span><br><span class="line"><span class="comment">// reinterpret_cast通常为运算对象的位模式提供较低层次上的重新编译</span></span><br><span class="line"><span class="keyword">int</span> *ip</span><br><span class="line"><span class="keyword">char</span> *pc = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">char</span>*&gt;(ip);</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C++基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C++学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8AC-Primer-Plus%E3%80%8B/" rel="tag">《C++ Primer Plus》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Cpp-Primer-5th-Notes-Ch5 语句" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/Cpp-Primer-5th-Notes-Ch5%20%E8%AF%AD%E5%8F%A5/"
+    >《Cpp-Primer-5th》Notes-Ch5 语句</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch5%20%E8%AF%AD%E5%8F%A5/" class="article-date">
+  <time datetime="2021-05-22T09:29:19.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="第五章-语句"><a href="#第五章-语句" class="headerlink" title="第五章 语句"></a>第五章 语句</h1><h2 id="5-1-简单语句"><a href="#5-1-简单语句" class="headerlink" title="5.1 简单语句"></a>5.1 简单语句</h2><p><strong>空语句</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">; <span class="comment">// 空语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重复读入数据直至到达文件末尾或某次输入的值等于sought</span></span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; s &amp;&amp; s != sought)</span><br><span class="line">    ; <span class="comment">//空语句</span></span><br><span class="line"><span class="comment">// 使用空语句时应该加上注释，从而令读这段代码的人知道该语句是有意省略的</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-语句作用域"><a href="#5-2-语句作用域" class="headerlink" title="5.2 语句作用域"></a>5.2 语句作用域</h2><h2 id="5-3-条件语句"><a href="#5-3-条件语句" class="headerlink" title="5.3 条件语句"></a>5.3 条件语句</h2><h3 id="5-3-1-if语句"><a href="#5-3-1-if语句" class="headerlink" title="5.3.1 if语句"></a>5.3.1 if语句</h3><h3 id="5-3-2-switch语句"><a href="#5-3-2-switch语句" class="headerlink" title="5.3.2 switch语句"></a>5.3.2 switch语句</h3><ul>
+<li>switch语句首先对括号离的表达式求值，该表达式紧跟在关键字switch的后面，可以是一个初始化的变量声明。表达式的值转换称整数类型，然后与每个case标签的值比较。</li>
+<li>case关键字和它对应的值一起被成为case标签(case label)。case标签必须是整型常量表达式<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch = getVal();</span><br><span class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">switch</span>(ch)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3.14</span>: <span class="comment">// 错误：case标签不是一个整数</span></span><br><span class="line">    <span class="keyword">case</span> ival; <span class="comment">// 错误：case标签不是一个常量</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>switch内部的控制流</strong></p>
+<ul>
+<li>有时默认的switch也是必要的。每个case标签只能对应一个值，但是有时候我们希望两个或更多个值共享一个操作。此时可以故意省略break语句，使得程序能够连续执行若干个case标签<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> vowelCnt = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">switch</span>(ch)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 出现了a、e、i、o、u中的任意一个都会将vowelCnt的值加1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'a'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'e'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'i'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'o'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">        ++vowelCnt;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以把几个case标签写在一行里，强调这些case代表的是某个范围内的值</span></span><br><span class="line"><span class="keyword">switch</span>(ch)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'a'</span>: <span class="keyword">case</span> <span class="string">'e'</span>: <span class="keyword">case</span> <span class="string">'i'</span>: <span class="keyword">case</span> <span class="string">'o'</span>: <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">        ++vowelCnt;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>switch内部的变量定义</strong></p>
+<ul>
+<li>switch的执行流程可能会跳过某些case标签。如果程序跳转到了某个特定的case，则switch结构中该case标签之前的部分会被忽略掉，如果被忽略的代码中含有变量的定义怎么办？<ul>
+<li>如果在某处一个带有初值的变量位于作用域之外，在另一处该变量位于作用域之内，则从前一处跳转到后一处的行为是非法行为。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="literal">true</span>:</span><br><span class="line"><span class="comment">//因为程序执行流程可能绕开下面的初始化语句，所以该switch语句不合法</span></span><br><span class="line">    <span class="built_in">string</span> file_name; <span class="comment">// 错误</span></span><br><span class="line">    <span class="keyword">int</span> ival = <span class="number">0</span>;     <span class="comment">// 错误</span></span><br><span class="line">    <span class="keyword">int</span> jval;         <span class="comment">// 正确</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="literal">false</span>:</span><br><span class="line"><span class="comment">// 正确：javal虽然在作用域内，但是它没有被初始化</span></span><br><span class="line">    javal = next_num(); <span class="comment">// 正确</span></span><br><span class="line">    <span class="keyword">if</span>(file_name.empty()) <span class="comment">// 正确</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要为某个case分支定义并初始化一个变量，我们应该把变量定义在块内，从而确保后面的所有case标签都在变量的作用域之内。</span></span><br><span class="line"><span class="keyword">case</span> <span class="literal">true</span>:</span><br><span class="line">    &#123;</span><br><span class="line">         <span class="comment">//正确：声明语句位于语句块内部</span></span><br><span class="line">         <span class="built_in">string</span> file_name = get_file_name();</span><br><span class="line">         <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="literal">false</span>:</span><br><span class="line">    <span class="keyword">if</span>(file_name.empty()) <span class="comment">//错误：file_name不在作用域内</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-4-迭代语句"><a href="#5-4-迭代语句" class="headerlink" title="5.4 迭代语句"></a>5.4 迭代语句</h2><h3 id="5-4-1-while语句"><a href="#5-4-1-while语句" class="headerlink" title="5.4.1 while语句"></a>5.4.1 while语句</h3><p><strong>使用while循环</strong></p>
+<ul>
+<li>当不确定到底要迭代多少次时，使用while循环比较何时，比如读取输入的内容</li>
+<li>当想再循环结束后访问循环控制变量，用while循环</li>
+</ul>
+<h3 id="5-4-2-传统的for语句"><a href="#5-4-2-传统的for语句" class="headerlink" title="5.4.2 传统的for语句"></a>5.4.2 传统的for语句</h3><blockquote>
+<p>for (init-statemen; condition; expression)<br> statement</p>
+</blockquote>
+<p><strong>for语句头中的多重定义</strong></p>
+<ul>
+<li><p>init-statment也可以定义多个对象。但是init-statement只能有一条声明语句，因此，所有变量的基础类型必须相同</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记录下v的大小，当到达原来的最后一个元素后结束循环</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">decltype</span>(v.<span class="built_in">size</span>()) i = <span class="number">0</span>, sz = v.<span class="built_in">size</span>(); i != sz; ++i)</span><br><span class="line">    v.push_back(v[i]);</span><br></pre></td></tr></table></figure>
+<h3 id="5-4-3-范围for语句"><a href="#5-4-3-范围for语句" class="headerlink" title="5.4.3 范围for语句"></a>5.4.3 范围for语句</h3></li>
+<li><p>范围for语句（range for statement）</p>
+<blockquote>
+<p>for (declaration : expression)<br>statement</p>
+</blockquote>
+</li>
+<li><p>expression 表示的必须是一个序列，比如用花括号扩起来的初始值列表、数组或者 vector、string 等类型的对象</p>
+</li>
+<li><p>declaration 定义一个变量，序列中的每个元素都得能转换成该变量的类型。<strong>确保类型相容最简单的方法就是使用auto类型说明符</strong></p>
+</li>
+<li><p>如果需要对序列中的元素执行写操作，循环变量必须声明成引用类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;r : v)</span><br><span class="line">    r *= <span class="number">2</span>; <span class="comment">// 将v中每个元素的值翻倍</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-4-4-do-while语句"><a href="#5-4-4-do-while语句" class="headerlink" title="5.4.4 do while语句"></a>5.4.4 do while语句</h3></li>
+</ul>
+<blockquote>
+<p>do<br> statement<br>while (condition) ;</p>
+</blockquote>
+<ul>
+<li>do while 语句应该在括号包围起来的条件后面用一个分号表示语句结束。</li>
+</ul>
+<h2 id="5-5-跳转语句"><a href="#5-5-跳转语句" class="headerlink" title="5.5 跳转语句"></a>5.5 跳转语句</h2><p><strong>break语句</strong></p>
+<ul>
+<li>break负责终止离它最近的while、do while、for、switch语句，并从这些语句之后的第一条语句开始继续执行</li>
+</ul>
+<p><strong>continue语句</strong></p>
+<ul>
+<li>出现在嵌套循环中的continue语句也仅作用于理它最近的循环</li>
+</ul>
+<p><strong>goto语句</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">begin</span>:</span><br><span class="line">    <span class="keyword">int</span> sz = get_size();</span><br><span class="line">    <span class="keyword">if</span> (sz &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">begin</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-6-try语句块和异常处理"><a href="#5-6-try语句块和异常处理" class="headerlink" title="5.6 try语句块和异常处理"></a>5.6 try语句块和异常处理</h2><p><strong>异常处理包括：</strong></p>
+<ul>
+<li><strong>throw 表达式(throw expression):</strong> 异常检测部分使用throw表达式来表示它遇到来无法处理的问题。即throw 引发 了异常。</li>
+<li><strong>try 语句块(try block):</strong> try语句块以关键字try开始，并以一个或多个catch子句结束。try语句块中代码抛出的异常通常会被某个catch子句处理。因为catch子句”处理“异常，所以他们也被称作<strong>异常处理代码(exception handler)</strong></li>
+<li>一套<strong>异常类(exception class):</strong> 用于在throw表达式和相关catch子句之间传递异常的具体信息。</li>
+</ul>
+<h3 id="5-6-1-throw-表达式"><a href="#5-6-1-throw-表达式" class="headerlink" title="5.6.1 throw 表达式"></a>5.6.1 throw 表达式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Sales_item item1, item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() == item2.isbn())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 成功</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cerr</span> &lt;&lt; <span class="string">"Data must refer to same ISBN"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 失败</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用异常处理</span></span><br><span class="line"><span class="keyword">if</span> (item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line"><span class="comment">// 如果程序执行到了这里，表示两个ISBN是相同的</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>该异常是类型 <strong>runtime_error</strong>的对象。抛出异常将终止当前的函数，并把控制权转移给能处理该异常的代码。</li>
+<li><strong>类型runtime_error</strong> 是标准库异常类型的一种，定义在<strong>stdexcept头文件</strong>  中</li>
+<li>必须初始化<strong>runtime_error</strong>对象，方式是给它提供一个string对象或者一个C风格的字符串</li>
+</ul>
+<h3 id="5-6-2-try-语句块"><a href="#5-6-2-try-语句块" class="headerlink" title="5.6.2 try 语句块"></a>5.6.2 try 语句块</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2)&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">//执行添加两个Sales_item对象的代码</span></span><br><span class="line">        <span class="comment">//如果添加失败，代码抛出一个runtime_error异常</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (runtime_error err)&#123;</span><br><span class="line">        <span class="comment">//提醒用户两个ISBN必须一致，询问是否重新输入</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; err.what()</span><br><span class="line">             &lt;&lt; <span class="string">"\nTry Again? Enter y or n"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">cin</span> || c == <span class="string">'n'</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>给用户的提示信息中输出了<strong>err.what()</strong>的返回值。what是runtime_error类的一个成员函数。</li>
+<li>每个标准库异常类都定义类名为what的成员函数，这些函数没有参数，返回的是C风格字符串(即 const char*)</li>
+<li>如果最终没能找到任何匹配的catch子句，程序转到名为<strong>terminate</strong>的标准库函数。该函数的行为与系统有关，一般情况下，执行该函数将导致程序非正常退出</li>
+</ul>
+<h3 id="5-6-3-标准异常"><a href="#5-6-3-标准异常" class="headerlink" title="5.6.3 标准异常"></a>5.6.3 标准异常</h3><ul>
+<li><strong>exception头文件</strong> 定义了最通用的异常类<strong>excetion</strong>。它只报告异常的发生，不提供任何额外信息。</li>
+<li><strong>stdexcept头文件</strong> 定义了集中常用的异常类</li>
+<li><strong>new头文件</strong> 定义了 <strong>bad_alloc</strong>异常类型</li>
+<li><strong>type_info头文件</strong> 定义了 <strong>bad_cast</strong> 异常类型</li>
+</ul>
+<p><strong>&lt;stdexcept&gt; 定义的异常类:</strong></p>
+<ul>
+<li>exception 最常见问题</li>
+<li>runtime_error 只有在运行时才能检测出的问题</li>
+<li>range_error   运行时错误：生成的结果超出类有意义的值域范围</li>
+<li>overflow_error    运行时错误：计算上溢</li>
+<li>underflow_error   运行时错误：计算下溢</li>
+<li>logic_error   程序逻辑错误</li>
+<li>domain_error  逻辑错误：参数对应的结果值不存在</li>
+<li>invalid_argument  逻辑错误：无效参数</li>
+<li>length_error  逻辑错误：试图创建一个超出该类型的最大长度的对象</li>
+<li>out_of_range  逻辑错误：使用一个超出有效范围的值</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C++基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C++学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8AC-Primer-Plus%E3%80%8B/" rel="tag">《C++ Primer Plus》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Cpp-Primer-5th-Notes-Ch6 函数" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/Cpp-Primer-5th-Notes-Ch6%20%E5%87%BD%E6%95%B0/"
+    >《Cpp-Primer-5th》Notes-Ch6 函数</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch6%20%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2021-05-22T09:29:19.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="第六章-函数"><a href="#第六章-函数" class="headerlink" title="第六章 函数"></a>第六章 函数</h1><h2 id="6-1-函数基础"><a href="#6-1-函数基础" class="headerlink" title="6.1 函数基础"></a>6.1 函数基础</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fact</span><span class="params">(<span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(val &gt; <span class="number">1</span>)</span><br><span class="line">        ret *= val--;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>fact(3.14) </p>
+</blockquote>
+<ul>
+<li>正确，double可以转换成int。执行调用时，实参隐式地转换成int类型(截取小数部分)</li>
+</ul>
+<h3 id="6-1-1-局部对象"><a href="#6-1-1-局部对象" class="headerlink" title="6.1.1 局部对象"></a>6.1.1 局部对象</h3><p>C++语言中，名字有作用域，对象有声明周期：</p>
+<ul>
+<li>名字的作用域是程序文本的一部分，名字在其中可见</li>
+<li>对象的声明周期是程序执行过程中该对象存在的一段时间</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C++基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C++学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8AC-Primer-Plus%E3%80%8B/" rel="tag">《C++ Primer Plus》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-CNote3" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/CNote3/"
+    >C基础 - 文件操作、文件读取、输入输出、目录操作</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/CNote3/" class="article-date">
+  <time datetime="2021-05-22T09:29:17.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="C基础-3"><a href="#C基础-3" class="headerlink" title="C基础 3"></a>C基础 3</h1><h2 id="1-文件操作"><a href="#1-文件操作" class="headerlink" title="1 - 文件操作"></a>1 - 文件操作</h2><h4 id="文件指针："><a href="#文件指针：" class="headerlink" title="文件指针："></a>文件指针：</h4><ul>
+<li><p>操作文件的时候，C语言为文件分配一个信息区，该信息区包含文件描述信息、缓冲区位置、缓冲区大小、文件读写到的位置等基本信息，这些信息用一个结构体来存放（struct _IO_FILE），这个结构体有一个别名FILE（typedef struct _IO_FILE FILE），FILE结构体和对文件操作的库函数在 stdio.h 头文件中声明的。</p>
+</li>
+<li><p>打开文件的时候，fopen函数中会动态分配一个FILE结构体大小的内存空间，并把FILE结构体内存的地址作为函数的返回值，程序中用FILE结构体指针存放这个地址。</p>
+</li>
+<li><p>关闭文件的时候，fclose函数除了关闭文件，还会释放FILE结构体占用的内存空间。</p>
+</li>
+<li><p>FILE结构体指针习惯称为文件指针。</p>
+</li>
+</ul>
+<h4 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FILE *<span class="title">fopen</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> * filename, <span class="keyword">const</span> <span class="keyword">char</span> * mode )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><strong>方式</strong></th>
+<th><strong>含 义</strong></th>
+<th><strong>说 明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>r</strong></td>
+<td>只读</td>
+<td>文件必须存在，否则打开失败。</td>
+</tr>
+<tr>
+<td><strong>w</strong></td>
+<td>只写</td>
+<td>如果文件存在，则清除原文件内容；如果文件不存在，则新建文件。</td>
+</tr>
+<tr>
+<td><strong>a</strong></td>
+<td>追加只写</td>
+<td>如果文件存在，则打开文件，如果文件不存在，则新建文件。</td>
+</tr>
+<tr>
+<td><strong>r+</strong></td>
+<td>读写</td>
+<td>文件必须存在。在只读 r 的基础上加 ‘+’ 表示增加可写的功能。</td>
+</tr>
+<tr>
+<td><strong>w+</strong></td>
+<td>读写</td>
+<td>在只写w的方式上增加可读的功能。</td>
+</tr>
+<tr>
+<td><strong>a+</strong></td>
+<td>读写</td>
+<td>在追加只写a的方式上增加可读的功能</td>
+</tr>
+</tbody></table>
+<h4 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fclose</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-文本文件的读写"><a href="#2-文本文件的读写" class="headerlink" title="2 - 文本文件的读写"></a>2 - 文本文件的读写</h2><p>在实际开发中，文本文件以行的形式存放字符串，如C程序的源代码，一段文字等，所以一般是按行写入和读取数据。</p>
+<h4 id="向文件中写入数据："><a href="#向文件中写入数据：" class="headerlink" title="向文件中写入数据："></a>向文件中写入数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fprintf</span><span class="params">(FILE *fp, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="从文件中读取数据："><a href="#从文件中读取数据：" class="headerlink" title="从文件中读取数据："></a>从文件中读取数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">fgets</span><span class="params">(<span class="keyword">char</span> *buf, <span class="keyword">int</span> <span class="built_in">size</span>, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>fgets的功能是从文件中读取一行。</li>
+<li>参数buf是一个字符串，用于保存从文件中读到的数据。</li>
+<li>参数size是打算读取内容的长度。</li>
+<li>参数fp是待读取文件的文件指针。</li>
+<li>如果文件中将要读取的这一行的内容的长度小于size，fgets函数就读取一行，如果这一行的内容大于等于size，fgets函数就读取size-1字节的内容。</li>
+<li>调用fgets函数如果成功的读取到内容，函数返回buf，如果读取错误或文件已结束，返回空，即0。如果fgets返回空，可以认为是文件结束而不是发生了错误，因为发生错误的情况极少出现。</li>
+</ul>
+<h2 id="3-二进制文件的读写"><a href="#3-二进制文件的读写" class="headerlink" title="3 - 二进制文件的读写"></a>3 - 二进制文件的读写</h2><p>把内存中的数据结构直接写入二进制文件，读取的时候，也是从文件中读取数据结构的大小一块数据，直接保存到数据结构中。注意，这里所说的数据结构不只是结构体，是任意数据类型。</p>
+<h4 id="向文件中写入数据：-1"><a href="#向文件中写入数据：-1" class="headerlink" title="向文件中写入数据："></a>向文件中写入数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fwrite</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">size_t</span> nmemb, FILE *stream)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>ptr：为内存区块的指针，存放了要写入的数据的地址，它可以是数组、变量、结构体等。</p>
+</li>
+<li><p>size：固定填1。</p>
+</li>
+<li><p>nmemb：表示打算写入数据的字节数。</p>
+</li>
+<li><p>fp：表示文件指针。</p>
+</li>
+<li><p>函数的返回值是本次成功写入数据的字节数，一般情况下，程序员不必关心fwrite函数的返回值。</p>
+</li>
+</ul>
+<h4 id="从文件中读取数据：-1"><a href="#从文件中读取数据：-1" class="headerlink" title="从文件中读取数据："></a>从文件中读取数据：</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span> <span class="title">fread</span><span class="params">(<span class="keyword">void</span> *ptr, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">size_t</span> nmemb, FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ptr：用于存放从文件中读取数据的变量地址，它可以是数组、变量、结构体等。</li>
+<li>size：固定填1。</li>
+<li>nmemb：表示打算读取的数据的字节数。</li>
+<li>fp：表示文件指针。</li>
+<li>调用fread函数如果成功的读取到内容，函数返回读取到的内容的字节数，如果读取错误或文件已结束，返回空，即0。如果fread返回空，可以认为是文件结束而不是发生了错误，因为发生错误的情况极少出现。</li>
+</ul>
+<h2 id="4-文件定位"><a href="#4-文件定位" class="headerlink" title="4 - 文件定位"></a>4 - 文件定位</h2><ul>
+<li><p>在文件内部有一个位置指针，用来指向文件当前读写的位置。在文件打开时，如果打开方式是r和w，位置指针指向文件的第一个字节，如果打开方式是a，位置指针指向文件的尾部。每当从文件里读取n个字节或文件里写入n个字节后，位置指针也会向后移动n个字节。</p>
+</li>
+<li><p>文件位置指针与C语言中的指针不是一回事。位置指针仅仅是一个标志，表示文件读写到的位置，不是变量的地址。文件每读写一次，位置指针就会移动一次，它不需要您在程序中定义和赋值，而是由系统自动设置，对程序员来说是隐藏的。</p>
+</li>
+<li><p>在实际开发中，偶尔需要移动位置指针，实现对指定位置数据的读写。我们把移动位置指针称为文件定位。</p>
+</li>
+<li><p>C语言提供了ftell、rewind和fseek三个库函数来实现文件定位功能。</p>
+</li>
+</ul>
+<h4 id="ftell"><a href="#ftell" class="headerlink" title="ftell:"></a>ftell:</h4><p>ftell函数用来返回当前文件位置指针的值，这个值是当前位置相对于文件开始位置的字节数。它的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">ftell</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="rewind："><a href="#rewind：" class="headerlink" title="rewind："></a>rewind：</h4><p>rewind函数用来将位置指针移动到文件开头，它的声明如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rewind</span> <span class="params">( FILE *fp )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="fseek："><a href="#fseek：" class="headerlink" title="fseek："></a>fseek：</h4><p>fseek() 用来将位置指针移动到任意位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fseek</span> <span class="params">( FILE *fp, <span class="keyword">long</span> offset, <span class="keyword">int</span> origin )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>1）fp 为文件指针，也就是被移动的文件。</p>
+</li>
+<li><p>2）offset 为偏移量，也就是要移动的字节数。之所以为 long 类型，是希望移动的范围更大，能处理的文件更大。offset 为正时，向后移动；offset 为负时，向前移动。</p>
+</li>
+<li><p>3）origin 为起始位置，也就是从何处开始计算偏移量。C语言规定的起始位置有三种，分别为：0-文件开头；1-当前位置；2-文件末尾。</p>
+</li>
+</ul>
+<h4 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h4><ul>
+<li><p>当offset是向文件尾方向偏移的时候，无论偏移量是否超出文件尾，fseek都是返回0，当偏移量没有超出文件尾的时候，文件指针式指向正常的偏移地址的，当偏移量超出文件尾的时候，文件指针是指向文件尾的，不会返回偏移出错-1值。</p>
+</li>
+<li><p>当offset是向文件头方向偏移的时候，如果offset没有超出文件头，是正常偏移，文件指针指向正确的偏移地址，fseek返回值为0，当offset超出文件头时，fseek返回出错-1值，文件指针还是处于原来的位置。</p>
+</li>
+</ul>
+<h2 id="5-文件缓冲区"><a href="#5-文件缓冲区" class="headerlink" title="5 - 文件缓冲区"></a>5 - 文件缓冲区</h2><ul>
+<li><p>在操作系统中，存在一个内存缓冲区，当调用fprintf、fwrite等函数往文件写入数据的时候，数据并不会立即写入磁盘文件，而是先写入缓冲区，等缓冲区的数据满了之后才写入文件。还有一种情况就是程序调用了fclose时也会把缓冲区的数据写入文件。</p>
+</li>
+<li><p>在实际开发中，如果程序员想把缓冲区的数据立即写入文件，可以调用fflush库函数，它的声明如下：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fflush</span><span class="params">(FILE *fp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数的参数只有一个，即文件指针，返回0成功，其它失败，程序员一般不关心它的返回值。</li>
+</ul>
+<h2 id="6-标准输入、标准输出和标准错误"><a href="#6-标准输入、标准输出和标准错误" class="headerlink" title="6 - 标准输入、标准输出和标准错误"></a>6 - 标准输入、标准输出和标准错误</h2><p>Linux操作系统为每个程序默认打开三个文件，即标准输入stdin、标准输出stdout和标准错误输出stderr，其中0就是stdin，表示输入流，指从键盘输入，1代表stdout，2代表stderr，1,2默认是显示器。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"Hello world.\n"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>等同于</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fprintf</span>(<span class="built_in">stdout</span>,<span class="string">"Hello world.\n"</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-目录操作"><a href="#7-目录操作" class="headerlink" title="7 - 目录操作"></a>7 - 目录操作</h2><h3 id="7-1-获取当前工作目录-getcwd"><a href="#7-1-获取当前工作目录-getcwd" class="headerlink" title="7.1 获取当前工作目录 getcwd"></a>7.1 获取当前工作目录 getcwd</h3><ul>
+<li>C程序中调用getcwd函数可以获取当前的工作目录。函数声明：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">getcwd</span><span class="params">(<span class="keyword">char</span> * buf,<span class="keyword">size_t</span> <span class="built_in">size</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-2-切换工作目录-chdir"><a href="#7-2-切换工作目录-chdir" class="headerlink" title="7.2 切换工作目录 chdir"></a>7.2 切换工作目录 chdir</h3><ul>
+<li><p>就像在shell中使用cd命令切换目录一样，在C程序中使用chdir函数来改变工作目录。 </p>
+</li>
+<li><p>返回值：0-切换成功；非0-失败。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">chdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-3-目录的创建和删除"><a href="#7-3-目录的创建和删除" class="headerlink" title="7.3 目录的创建和删除"></a>7.3 目录的创建和删除</h3><ul>
+<li>在shell中可以通过mkdir/rmdir命令来创建/删除目录，C程序中用mkdir/rmdir函数来创建/删除目录。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mkdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">mode_t</span> mode)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rmdir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mode的含义将按open系统调用的O_CREAT选项中的有关定义设置，当然，它还要服从umask的设置况，先固定填0755</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span>(<span class="string">"/tmp/aaa"</span>,<span class="number">0755</span>);   <span class="comment">// 创建/tmp/aaa目录</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-4-获取目录中的文件列表"><a href="#7-4-获取目录中的文件列表" class="headerlink" title="7.4 获取目录中的文件列表"></a>7.4 获取目录中的文件列表</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开目录的函数opendir的声明</span></span><br><span class="line"><span class="function">DIR *<span class="title">opendir</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取目录的函数readdir的声明</span></span><br><span class="line"><span class="function">struct dirent *<span class="title">readdir</span><span class="params">(DIR *dirp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭目录的函数closedir的声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">closedir</span><span class="params">(DIR *dirp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每调用一次readdir函数会返回一个struct dirent的地址，存放了本次读取到的内容，它的原理与fgets函数读取文件相同。</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">   <span class="keyword">long</span> d_ino;                    <span class="comment">// inode number 索引节点号</span></span><br><span class="line">   <span class="keyword">off_t</span> d_off;                   <span class="comment">// offset to this dirent 在目录文件中的偏移</span></span><br><span class="line">   <span class="keyword">unsigned</span> short d_reclen;     <span class="comment">// length of this d_name 文件名长</span></span><br><span class="line">   <span class="keyword">unsigned</span> <span class="keyword">char</span> d_type;         <span class="comment">// the type of d_name 文件类型</span></span><br><span class="line">   <span class="keyword">char</span> d_name [NAME_MAX+<span class="number">1</span>];    <span class="comment">// file name文件名，最长255字符</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>需要关注结构体的d_type和d_name成员，其它的不必关心。</p>
+<ul>
+<li><p>d_name文件名或目录名。</p>
+</li>
+<li><p>d_type描述了文件的类型，有多种取值，最重要的是8和4，8-常规文件（A regular file）；4-目录（A directory），其它的暂时不关心。</p>
+</li>
+</ul>
+<h3 id="7-5-access库函数"><a href="#7-5-access库函数" class="headerlink" title="7.5 access库函数"></a>7.5 access库函数</h3><ul>
+<li>access函数用于判断当前操作系统用户对文件或目录的存取权限。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明：</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">access</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> mode)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>pathname文件名或目录名，可以是当前目录的文件或目录，也可以列出全路径。</p>
+</li>
+<li><p>mode 需要判断的存取权限。在头文件unistd.h中的预定义如下：</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> R_OK 4     <span class="comment">// R_OK 只判断是否有读权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> W_OK 2    <span class="comment">// W_OK 只判断是否有写权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> X_OK 1     <span class="comment">// X_OK 判断是否有执行权限</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> F_OK 0     <span class="comment">// F_OK 只判断是否存在</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>返回值：当pathname满足mode的条件时候返回0，不满足返回-1。</li>
+</ul>
+<h3 id="7-6-stat-库函数"><a href="#7-6-stat-库函数" class="headerlink" title="7.6 stat 库函数"></a>7.6 stat 库函数</h3><ul>
+<li>struct stat结构体用于存放文件和目录的状态信息，如下：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">dev_t</span> st_dev;   <span class="comment">// device 文件的设备编号</span></span><br><span class="line">  <span class="keyword">ino_t</span> st_ino;   <span class="comment">// inode 文件的i-node</span></span><br><span class="line">  <span class="keyword">mode_t</span> st_mode;   <span class="comment">// protection 文件的类型和存取的权限</span></span><br><span class="line">  <span class="keyword">nlink_t</span> st_nlink;   <span class="comment">// number of hard links 连到该文件的硬连接数目, 刚建立的文件值为1.</span></span><br><span class="line">  <span class="keyword">uid_t</span> st_uid;   <span class="comment">// user ID of owner 文件所有者的用户识别码</span></span><br><span class="line">  <span class="keyword">gid_t</span> st_gid;   <span class="comment">// group ID of owner 文件所有者的组识别码</span></span><br><span class="line">  <span class="keyword">dev_t</span> st_rdev;  <span class="comment">// device type 若此文件为设备文件, 则为其设备编号</span></span><br><span class="line">  <span class="keyword">off_t</span> st_size;  <span class="comment">// total size, in bytes 文件大小, 以字节计算</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blksize;  <span class="comment">// blocksize for filesystem I/O 文件系统的I/O 缓冲区大小.</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">long</span> st_blocks;  <span class="comment">// number of blocks allocated 占用文件区块的个数, 每一区块大小为512 个字节.</span></span><br><span class="line">  <span class="keyword">time_t</span> st_atime;  <span class="comment">// time of lastaccess 文件最近一次被存取或被执行的时间, 一般只有在用mknod、 utime、read、write 与tructate 时改变.</span></span><br><span class="line">  <span class="keyword">time_t</span> st_mtime;  <span class="comment">// time of last modification 文件最后一次被修改的时间, 一般只有在用mknod、 utime 和write 时才会改变</span></span><br><span class="line">  <span class="keyword">time_t</span> st_ctime;  <span class="comment">// time of last change i-node 最近一次被更改的时间, 此参数会在文件所有者、组、 权限被更改时更新</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>st_mode成员的取值很多，或者使用如下两个宏来判断。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S_ISREG(st_mode)  <span class="comment">// 是否为一般文件 </span></span><br><span class="line">S_ISDIR(st_mode)  <span class="comment">// 是否为目录</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="stat函数"><a href="#stat函数" class="headerlink" title="stat函数"></a>stat函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stat</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, struct stat *buf)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stat函数获取path指定文件或目录的信息，并将信息保存到结构体buf中，执行成功返回0，失败返回-1。</li>
+</ul>
+<h3 id="7-7-utime库函数"><a href="#7-7-utime库函数" class="headerlink" title="7.7 utime库函数"></a>7.7 utime库函数</h3><ul>
+<li>utime函数用于修改文件的存取时间和更改时间。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包含头文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utime.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">utime</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *filename, <span class="keyword">const</span> struct utimbuf *times)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>utime()用来修改参数filename 文件所属的inode 存取时间。如果参数times为空指针(NULL), 则该文件的存取时间和更改时间全部会设为目前时间。其中的struct utimbuf定义如下：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">utimbuf</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">time_t</span> actime;</span><br><span class="line">  <span class="keyword">time_t</span> modtime;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>返回值：执行成功则返回0，失败返回-1。</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C语言基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C语言学习笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-CNote2" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/CNote2/"
+    >C基础 - main函数参数、动态内存管理</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/CNote2/" class="article-date">
+  <time datetime="2021-05-22T09:29:16.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="C基础-2"><a href="#C基础-2" class="headerlink" title="C基础 2"></a>C基础 2</h1><h2 id="1-main函数的参数"><a href="#1-main函数的参数" class="headerlink" title="1 - main函数的参数"></a>1 - main函数的参数</h2><p>main函数有三个参数: argc、argv 和 envp<br><code>int main(int argc,char *argv[],char *envp[])</code></p>
+<ul>
+<li>int argc，存放了命令行参数的个数。</li>
+<li>char *argv[]，是个字符串的数组，每个元素都是一个字符指针，指向一个字符串，即命令行中的每一个参数。</li>
+<li>char *envp[]，也是一个字符串的数组，这个数组的每一个元素是指向一个环境变量的字符指针。</li>
+<li>argc的值是参数个数加1，因为程序名称是程序的第一个参数，即argv[0]</li>
+<li>main函数的参数，不管是书写的整数还是浮点数，全部被认为是字符串。</li>
+</ul>
+<h2 id="2-动态内存管理"><a href="#2-动态内存管理" class="headerlink" title="2 - 动态内存管理"></a>2 - 动态内存管理</h2><h3 id="相关的库函数"><a href="#相关的库函数" class="headerlink" title="相关的库函数"></a>相关的库函数</h3><ul>
+<li>malloc函数<br>malloc的作用是向系统申请一块大小为size的连续内存空间，如果申请失败，函数返回0，如果申请成功，返回成功分配内存块的起始地址。<br><code>void *malloc(unsigned int size)</code><br>malloc的返回值的地址的基类型为 void，即不指向任何类型的数据，只提供一个地址，程序中需要定义一个指针来指向动态分配的内存地址。<br><code>int *pi=malloc(sizeof(int));</code></li>
+<li>free函数<br>free的作用是释放指针p指向的动态内存空间，p是调用malloc函数时返回的地址，free函数无返回值。<br><code>void free(void *p);</code></li>
+</ul>
+<h3 id="野指针"><a href="#野指针" class="headerlink" title="野指针"></a>野指针</h3><p>野指针就是无效的指针，与空指针不同，野指针无法通过简单地判断是否为 NULL避免，而只能通过养成良好的编程习惯来尽力减少。</p>
+<ul>
+<li>1、内存指针变量未初始化</li>
+</ul>
+<p>指针变量刚被创建时不一定会自动初始化成为空指针（与编译器有关），它的缺省值是可能随机的，它会随便乱指。所以，指针变量在创建的同时应当被初始化，要么将指针的值设置为0，要么让它指向合法的内存。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *pi=<span class="number">0</span>;</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">int</span> *pi=&amp;i;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>2、内存释放后指针没用置空</li>
+</ul>
+<p>调用free函数把指针所指的内存给释放掉，但指针不一定会赋值 0（也与编译器有关），如果对释放后的指针进行操作，相当于非法操作内存。释放内存后应立即将指针置为0。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">free</span>(pi);</span><br><span class="line">pi=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C语言基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C语言学习笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-CNote1" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/22/CNote1/"
+    >C基础 - 概念、随机数、字符与编码、字符串、编码、结构体 等</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/CNote1/" class="article-date">
+  <time datetime="2021-05-22T09:29:15.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="C基础-1"><a href="#C基础-1" class="headerlink" title="C基础 1"></a>C基础 1</h1><h2 id="1-函数"><a href="#1-函数" class="headerlink" title="1 - 函数"></a>1 - 函数</h2><ul>
+<li><ol>
+<li>在变量前加const约束，主要用于定义函数的参数，表示该参数在函数中是只读取，不允许改变，如果函数中试图改变它的值，编译的时候就会报错。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>局部变量和全局变量的名称可以相同，在某函数或语句块内部，如果局部变量名与全局变量名相同，就会屏蔽全局变量而使用局部变量</li>
+</ol>
+</li>
+</ul>
+<h2 id="2-指针"><a href="#2-指针" class="headerlink" title="2 - 指针"></a>2 - 指针</h2><ul>
+<li><ol>
+<li>在printf函数中，输出内存地址的格式控制符是%p，地址采用十六进制的数字显示。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>空指针就是说指针没有指向任何内存变量，指针的值是空，所以不能操作内存，否则可能会引起程序的崩溃。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>在C语言中，数组占用的内存空间是连续的，数组名是数组元素的首地址，也是数组的地址。数组名、对数组取地址和数组元素的首地址<code>(arr,&amp;arr,&amp;arr[0])</code>是同一回事。在应用开发中，程序员一般用数组名，书写最简单。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>指针也是一种内存变量，是内存变量就要占用内存空间，在C语言中，任何类型的指针占用8字节的内存（32位操作系统4字节）</li>
+</ol>
+</li>
+</ul>
+<h2 id="3-整数"><a href="#3-整数" class="headerlink" title="3 - 整数"></a>3 - 整数</h2><ul>
+<li>二进制0b(0B)开头,八进制0开头,十六进制0x(0X)开头</li>
+<li>%hd、%d、%ld 以十进制、有符号的形式输出short、int、long 类型的整数。</li>
+<li>%hu、%u、%lu 以十进制、无符号的形式输出short、int、long 类型的整数。</li>
+<li>库函数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">atoi</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;   <span class="comment">// 把字符串nptr转换为int整数</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">atol</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;     <span class="comment">// 把字符串nptr转换为long整数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">abs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> j)</span></span>;            <span class="comment">// 求int整数的绝对值</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">labs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">int</span> j)</span></span>;     <span class="comment">// 求long整数的绝对值</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-数据类型的别名"><a href="#4-数据类型的别名" class="headerlink" title="4 - 数据类型的别名"></a>4 - 数据类型的别名</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="keyword">size_t</span>;</span><br><span class="line"><span class="keyword">size_t</span> ii; <span class="comment">// 等同于 unsigned int ii;</span></span><br></pre></td></tr></table></figure></li>
+<li>strlen的返回值是size_t类型。</li>
+<li>man strlen 查看strlen的文档</li>
+</ul>
+<h2 id="5-随机数"><a href="#5-随机数" class="headerlink" title="5 - 随机数"></a>5 - 随机数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">srand</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> seed)</span></span>; <span class="comment">// 随机数生成器的初始化函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rand</span><span class="params">()</span></span>;  <span class="comment">// 获取一个随机数</span></span><br><span class="line"></span><br><span class="line">srand(time(<span class="number">0</span>));  <span class="comment">// 播下随机种子,每次运行都不同</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d "</span>,rand());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rand函数初始化随机数发生器（俗称种子），在实际开发中，可以用时间作为参数，只要每次播种的时间不同，那么生成的种子就不同，最终的随机数也就不同，通常我们采用<code>&lt;time.h&gt;</code> 头文件中的 time 函数即可得到一个精确到秒的时间作为种子。</li>
+<li>生成一定范围的随机数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = rand() % <span class="number">50</span>;   <span class="comment">// 产生0~49的随机数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = rand() % <span class="number">51</span> + <span class="number">100</span>;   <span class="comment">// 产生100~150的随机数</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="6-字符与ASCII码"><a href="#6-字符与ASCII码" class="headerlink" title="6 - 字符与ASCII码"></a>6 - 字符与ASCII码</h2><ul>
+<li>32是空格。</li>
+<li>48～57为0到9十个阿拉伯数字；</li>
+<li>65～90为26个大写英文字母；</li>
+<li>97～122号为26个小写英文字母；</li>
+<li><strong>在char的取值范围内（0-255），字符和整数没有本质区别</strong>,char 变量在内存中存储的是字符对应的 ASCII 码值。如果以 %c 输出，会根据 ASCII 码表转换成对应的字符，如果以 %d 输出，那么还是整数。int 变量在内存中存储的是整数本身，如果以 %c 输出时，也会根据 ASCII 码表转换成对应的字符<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalpha</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是字母（'A'-'Z','a'-'z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalnum</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是字母（'A'-'Z','a'-'z'）或数字（'0'-'9'），返回非0值,否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isdigit</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是数字（'0'-'9'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">islower</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是小写字母（'a'-'z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isupper</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是大写字母（'A'-'Z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tolower</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是大写字母（'A'-'Z'）返回相应的小写字母（'a'-'z'）。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">toupper</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是小写字母（'a'-'z'）返回相应的大写字母（'A'-'Z'）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ispunct</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是标点字符（0x00-0x1F）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isspace</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是空格（' '），水平制表符（'/t'）,回车符（'/r'），走纸换行（'/f'），垂直制表符（'/v'），换行符（'/n'），返回非0值，否则返回0。</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="7-浮点数"><a href="#7-浮点数" class="headerlink" title="7 - 浮点数"></a>7 - 浮点数</h2><ul>
+<li><p>浮点数的精度:</p>
+<ul>
+<li>float只能表达6-7位的有效数字，不能用“==”判断两个数字是否相等。</li>
+<li>double能表达15-16位有效的数字，可以用“==”判断两个数字是否相等。</li>
+<li>long double占用的内存是double的两倍，但表达数据的精度和double相同。</li>
+<li>实际开发中，建议弃用float，只采用double就可以</li>
+</ul>
+</li>
+<li><p>浮点数的输出:</p>
+<ul>
+<li>float采用%f占位符。</li>
+<li>double采用%lf占位符.</li>
+<li>long double采用%Lf占位符，注意，L是大写。</li>
+</ul>
+</li>
+<li><p>float只能表达6-7位的有效数字，不能用“==”判断两个数字是否相等。</p>
+</li>
+<li><p>double能表达15-16位有效的数字，可以用“==”判断两个数字是否相等。</p>
+</li>
+<li><p>long double占用的内存是double的两倍，但表达数据的精度和double相同。</p>
+<p><strong>在实际开发中，建议弃用float，只采用double就可以，long double暂时没有必要，但不知道以后的操作系统和编译器对long double是否有改进</strong></p>
+</li>
+<li><p>常用库函数:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">atof</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;       <span class="comment">// 把字符串nptr转换为double</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">fabs</span><span class="params">(<span class="keyword">double</span> x)</span></span>;                <span class="comment">// 求双精度实数x的绝对值</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>;      <span class="comment">// 求 x 的 y 次幂（次方）</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">round</span><span class="params">(<span class="keyword">double</span> x)</span></span>;               <span class="comment">// double四舍五入</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">ceil</span><span class="params">(<span class="keyword">double</span> x)</span></span>;                <span class="comment">// double向上取整数</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">floor</span><span class="params">(<span class="keyword">double</span> x)</span></span>;               <span class="comment">// double向下取整数</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">fmod</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>;      <span class="comment">// 求x/y整除后的双精度余数</span></span><br><span class="line"><span class="comment">// 把双精度val分解成整数部分和小数部分，整数部分存放在ip所指的变量中，返回小数部分。</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">modf</span><span class="params">(<span class="keyword">double</span> val,<span class="keyword">double</span> *ip)</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>科学计数法</p>
+<ul>
+<li>科学计数法采用%e或%E输出，完整的输出格式是%m.ne或%m.nE，指定输出数据整数部分和小数部分共占m位，其中有n位是小数。如果数值长度小于m，则左端补空格，若数值长度大于m，则按实际位数输出</li>
+</ul>
+</li>
+<li><p>浮点数有一些坑，例如两个浮点数不相等和精度的问题，在实际开发中，我们经常用整数代替浮点数，因为整数是精确的，效率也更高。例如人的身高一米七五，以米为单位，用浮点数表示是1.75米，如果以厘米为单位，用整数表示是175。</p>
+</li>
+</ul>
+<h2 id="8-字符串"><a href="#8-字符串" class="headerlink" title="8 - 字符串"></a>8 - 字符串</h2><ul>
+<li><p>因为字符串需要用\0结尾，所以在定义字符串的时候，字符数组的长度要预留多一个字节用来存放\0, \0就是数字0。这是约定。</p>
+</li>
+<li><p>一个中文字符占两个字节（GBK编码）。char strname[21]用于存放中文的时候，只能存10个汉字。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>];  <span class="comment">// 定义一个最多存放20个英文字符或十个中文的字符串</span></span><br></pre></td></tr></table></figure></li>
+<li><p>字符串的初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>]; <span class="comment">// 一个字符占一个字节</span></span><br><span class="line"><span class="built_in">memset</span>(strname,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname));  <span class="comment">// 把全部的元素置为0</span></span><br></pre></td></tr></table></figure></li>
+<li><p>字符串越界问题 c80_str.c</p>
+</li>
+<li><p>字符串常用的库函数</p>
+</li>
+</ul>
+<ol>
+<li>strlen <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span>  <span class="title">strlen</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span>*  str)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">返回值：返回字符串的字符数</span></span><br><span class="line"><span class="comment">strlen 函数计算的是字符串的实际长度，遇到第一个0结束。</span></span><br><span class="line"><span class="comment">函数返回值一定是size_t，是无符号的整数</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strcpy<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strcpy</span><span class="params">(<span class="keyword">char</span>* dest, <span class="keyword">const</span> <span class="keyword">char</span>* src)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功 能: 将参数src字符串拷贝至参数dest所指的地址。</span></span><br><span class="line"><span class="comment">返回值: 返回参数dest的字符串起始地址。</span></span><br><span class="line"><span class="comment">复制完字符串后，在dest后追加0。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strncpy<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">strncpy</span><span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src, <span class="keyword">const</span> <span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能：把src前n字符的内容复制到dest中</span></span><br><span class="line"><span class="comment">如果src的长度大于等于n，就截取src的前n个字符，不会在dest后追加0。*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strcat<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">strcat</span><span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能：将src字符串拼接到dest所指的字符串尾部。</span></span><br><span class="line"><span class="comment">返回值：返回dest字符串起始地址。</span></span><br><span class="line"><span class="comment">dest最后原有的结尾字符0会被覆盖掉，并在连接后的字符串的尾部再增加一个0。</span></span><br><span class="line"><span class="comment">dest要有足够的空间来容纳要拼接的字符串，否则可能会造成缓冲溢出的错误情况。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strncat<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strncat</span> <span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src, <span class="keyword">const</span> <span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line"><span class="comment">// 功能：将src字符串的前n个字符拼接到dest所指的字符串尾部。</span></span><br></pre></td></tr></table></figure></li>
+<li>strchr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strchr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *s,<span class="keyword">const</span> <span class="keyword">int</span> c)</span></span>;</span><br><span class="line"><span class="comment">// 返回一个指向在字符串s中第一个出现c的位置，如果找不到，返回0。</span></span><br></pre></td></tr></table></figure></li>
+<li>strnchr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strrchr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *s,<span class="keyword">const</span> <span class="keyword">int</span> c)</span></span>;</span><br><span class="line"><span class="comment">// 返回一个指向在字符串s中最后一个出现c的位置，如果找不到，返回0.</span></span><br></pre></td></tr></table></figure></li>
+<li>strstr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str,<span class="keyword">const</span> <span class="keyword">char</span>* substr)</span></span>;</span><br><span class="line"><span class="comment">// 返回值：返回字符串str中第一次出现子串substr的地址；如果没有检索到子串，则返回0。</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>位置（地址）偏移的用法<br>字符串的地址偏移其本质是指针的运算，常用于灵活的处理字符串。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>];</span><br><span class="line"><span class="built_in">memset</span>(strname,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname));</span><br><span class="line"><span class="built_in">strcpy</span>(strname,<span class="string">"abcdefghijk"</span>);     <span class="comment">// 把abcdefghijk赋值给strname</span></span><br><span class="line"><span class="keyword">char</span> strname1[<span class="number">21</span>];</span><br><span class="line"><span class="built_in">memset</span>(strname1,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname1));</span><br><span class="line"><span class="built_in">strcpy</span>(strname1,strname+<span class="number">1</span>);       <span class="comment">// 把bcdefghijk的值赋给strname1</span></span><br><span class="line"><span class="built_in">strncpy</span>(strname1,strname+<span class="number">2</span>,<span class="number">3</span>);    <span class="comment">// 把cde的值赋给strname1</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="9-数据类型转换"><a href="#9-数据类型转换" class="headerlink" title="9 - 数据类型转换"></a>9 - 数据类型转换</h2><ul>
+<li><p>计算机进行算术运算时，要求各操作数的类型具有相同的大小（存储位数）及存储方式，不能将 char 型（ 1 字节）数据与 int 型（ 2、4或8字节）数据直接参与运算；由于存储方式的不同，也不能将 int 型数据与 double 型数据直接参与运算。</p>
+</li>
+<li><p>一个表达式中出现不同类型间的混合运算，较低类型将自动向较高类型转换。一般情况下，数据的取值范围越大、精度越高，其类型也越“高级”。</p>
+</li>
+</ul>
+<h2 id="10-结构体"><a href="#10-结构体" class="headerlink" title="10 - 结构体"></a>10 - 结构体</h2><h3 id="10-1-占用内存的情况"><a href="#10-1-占用内存的情况" class="headerlink" title="10.1 占用内存的情况"></a>10.1 占用内存的情况</h3><ul>
+<li>理论上讲结构体的各个成员在内存中是连续存放的，和数组非常类似，但是，结构体的占用内存的总大小不一定等于全部成员变量占用内存大小之和。在编译器的具体实现中，为了提高内存寻址的效率，各个成员之间可能会存在缝隙。</li>
+<li>C语言提供了结构体成员内存对齐的方法，在定义结构体之前，增加以下代码可以使结构体成员变量之间的内存没有空隙。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-结构体的复制"><a href="#10-2-结构体的复制" class="headerlink" title="10.2 结构体的复制"></a>10.2 结构体的复制</h3><ul>
+<li>使用内存拷贝，C语言提供了memcpy（memory copy的简写）实现内存拷贝功能。<ul>
+<li><strong>src</strong> 源内存变量的起始地址。</li>
+<li><strong>dest</strong> 目的内存变量的起始地址。</li>
+<li><strong>n</strong> 需要复制内容的字节数。</li>
+<li>函数返回指向dest的地址，函数的返回值意义不大，程序员一般不关心这个返回值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memcpy</span><span class="params">(<span class="keyword">void</span> *dest, <span class="keyword">const</span> <span class="keyword">void</span> *src, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>strcpy 和 memcpy 比较：</p>
+<p>1）复制的内容不同，strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。</p>
+<p>2）用途不同，通常在复制字符串时用strcpy，而需要复制其他类型数据时则一般用memcpy。</p>
+<p>3）复制的方法不同，strcpy不需要指定长度，它遇到被复制字符的串结尾符0才结束，memcpy则是根据其第3个参数决定复制的长度。</p>
+</li>
+</ul>
+<h3 id="10-3-结构体作为函数的参数"><a href="#10-3-结构体作为函数的参数" class="headerlink" title="10.3 结构体作为函数的参数"></a>10.3 结构体作为函数的参数</h3><ul>
+<li>结构体是多个变量集合，作为函数参数时就可以传递整个集合，也就是所有成员。如果结构体成员较多，函数参数的初始化和赋值的内存开销会很大，影响程序的运行效率。所以最好的办法就是传递结构体变量的地址。</li>
+</ul>
+<h3 id="10-4-memset和bzero函数"><a href="#10-4-memset和bzero函数" class="headerlink" title="10.4 memset和bzero函数"></a>10.4 memset和bzero函数</h3><p><strong>memset函数：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memset</span><span class="params">(<span class="keyword">void</span> *s, <span class="keyword">int</span> v, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>memset 函数是内存空间赋值函数，用来给某一块内存空间进行赋值的。包含在&lt;string.h&gt;头文件中。<ul>
+<li>s为内存空间的地址，一般是数组名或结构体的地址。</li>
+<li>v为要填充的值，填0就是初始化。</li>
+<li>n为要填充的字节数。</li>
+</ul>
+</li>
+</ul>
+<p><strong>bzero函数：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bzero</span><span class="params">(<span class="keyword">void</span> *s, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bzero函数是内存空间清零。包含在&lt;string.h&gt;头文件中。<ul>
+<li>s为内存空间的地址，一般是数组名或结构体的地址。</li>
+<li>n为要清零的字节数。</li>
+<li>如果要对数组或结构体清零，用memset和bzero都可以，没什么差别，看程序员的习惯。</li>
+</ul>
+</li>
+</ul>
+<h2 id="11-格式化输出"><a href="#11-格式化输出" class="headerlink" title="11 - 格式化输出"></a>11 - 格式化输出</h2><h3 id="11-1-格式说明符的形式如下（方括号-中的项为可选项）："><a href="#11-1-格式说明符的形式如下（方括号-中的项为可选项）：" class="headerlink" title="11.1 格式说明符的形式如下（方括号 [] 中的项为可选项）："></a>11.1 格式说明符的形式如下（方括号 [] 中的项为可选项）：</h3><p><strong><code>%[flags][width][.prec]type</code></strong></p>
+<h4 id="对齐标志-flags："><a href="#对齐标志-flags：" class="headerlink" title="对齐标志 flags："></a>对齐标志 flags：</h4><ul>
+<li>flag: 不填或+是右对齐,  - 是左对齐</li>
+</ul>
+<h4 id="宽度-width："><a href="#宽度-width：" class="headerlink" title="宽度 width："></a>宽度 width：</h4><ul>
+<li>如果本身输出的长度大于指定宽度，则宽度限制无效，输出本身</li>
+<li>数字会在前面补充0</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12s=\n"</span>,<span class="string">"abc"</span>);     <span class="comment">// 输出=         abc=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12d=\n"</span>,<span class="number">123</span>);       <span class="comment">// 输出=         123=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12lf=\n"</span>,<span class="number">123.5</span>);    <span class="comment">// 输出=  123.500000=</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="精度-prec"><a href="#精度-prec" class="headerlink" title="精度 .prec"></a>精度 .prec</h4><p>如果输出的内容是浮点数，用于控制输出内容的精度，也就是说小数点后面保留多少位，后面的数四舍五入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12.2lf=\n"</span>,<span class="number">123.5</span>);   <span class="comment">// 输出=      123.50=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%.2lf=\n"</span>,<span class="number">123.5</span>);     <span class="comment">// 输出=123.50=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12.2e=\n"</span>,<span class="number">123500000000.0</span>);  <span class="comment">// 输出=    1.24e+11=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%.2e=\n"</span>,<span class="number">123500000000.0</span>);    <span class="comment">// 输出=1.24e+11=</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类型符-type："><a href="#类型符-type：" class="headerlink" title="类型符 type："></a>类型符 type：</h4><ul>
+<li>%hd、%d、%ld 以十进制、有符号的形式输出 short、int、long 类型的整数。</li>
+<li>%hu、%u、%lu 以十进制、无符号的形式输出 short、int、long 类型的整数</li>
+<li>%c 输出字符。</li>
+<li>%lf 以普通方式输出double（float弃用，long doube无用）。</li>
+<li>%e 以科学计数法输出double。</li>
+<li>%s 输出字符串。</li>
+<li>%p 输出内存的地址</li>
+</ul>
+<h3 id="11-2-格式化输出到字符串"><a href="#11-2-格式化输出到字符串" class="headerlink" title="11.2 格式化输出到字符串"></a>11.2 格式化输出到字符串</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sprintf</span><span class="params">(<span class="keyword">char</span> *str, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">snprintf</span><span class="params">(<span class="keyword">char</span> *str, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>功能：printf是把结果输出到屏幕，sprintf把格式化输出的内容保存到字符串str中，snprintf的n类似于strncpy中的n，意思是只获取输出结果的前n-1个字符，不是n个字符。</strong></p>
+<p>sprintf 和 snprintf</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 格式化输出到str中</span></span><br><span class="line"><span class="built_in">sprintf</span>(str,<span class="string">"%d,%c,%f,%s"</span>,<span class="number">10</span>,<span class="string">'A'</span>,<span class="number">25.97</span>,<span class="string">"一共输入了三个数。"</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,str);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 格式化输出到str中，只截取前7个字符</span></span><br><span class="line"><span class="built_in">snprintf</span>(str,<span class="number">8</span>,<span class="string">"%d,%c,%f,%s"</span>,<span class="number">10</span>,<span class="string">'A'</span>,<span class="number">25.97</span>,<span class="string">"一共输入了三个数。"</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,str);</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果 n = 7，snprintf函数在unix和windows平台下的表现略有不同，在windows平台下，会输出7个字符。unix则输出6个字符</strong></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C语言基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C语言学习笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Conda使用指南" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/11/09/Conda%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/"
+    >Conda使用指南</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/09/Conda%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="article-date">
+  <time datetime="2020-11-09T01:17:13.000Z" itemprop="datePublished">2020-11-09</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">深度学习环境配置</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h2 id="1-换镜像源提高下载速度"><a href="#1-换镜像源提高下载速度" class="headerlink" title="1.换镜像源提高下载速度"></a>1.换镜像源提高下载速度</h2><h3 id="1-1-Conda换镜像源"><a href="#1-1-Conda换镜像源" class="headerlink" title="1.1 Conda换镜像源"></a>1.1 Conda换镜像源</h3><ul>
+<li><p>显示镜像源<br><code>conda config --show channels</code></p>
+</li>
+<li><p>添加镜像源(以清华源为例)<br><code>conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
+</li>
+<li><p>设置镜像源<br><code>conda config --set show_channel_urls yes</code></p>
+</li>
+<li><p>删除镜像源<br><code>conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
+</li>
+<li><p>恢复默认源<br><code>conda config --remove-key channels</code></p>
+</li>
+<li><p>也可以使用oh-my-tuna脚本一键设置清华源 <a href="https://github.com/tuna/oh-my-tuna" target="_blank" rel="noopener">https://github.com/tuna/oh-my-tuna</a></p>
+</li>
+<li><p>推荐一个装pytorch比较快的源<br><a href="https://mirrors.bfsu.edu.cn/anaconda/cloud/pytorch/" target="_blank" rel="noopener">https://mirrors.bfsu.edu.cn/anaconda/cloud/pytorch/</a></p>
+</li>
+</ul>
+<p><strong>Windows的镜像源文件在C:\Users\用户名.condarc文件中</strong><br><strong>Ubuntu的镜像源文件在/home/用户名/.condarc文件中</strong></p>
+<p>国内其他源</p>
+<ul>
+<li><p>清华镜像源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">default_channels:</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;main</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;free</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;r</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>中科大镜像源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">default_channels:</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;main&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;pkgs&#x2F;free&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;conda-forge&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;msys2&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;bioconda&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;menpo&#x2F;</span><br><span class="line">  - https:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;anaconda&#x2F;cloud&#x2F;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>阿里镜像源<br><code>conda config --add channels https://mirrors.aliyun.com/pypi/simple/</code></p>
+</li>
+<li><p>豆瓣python源<br><code>conda config --add channels http://pypi.douban.com/simple/</code></p>
+</li>
+</ul>
+<h3 id="1-2-pip换源"><a href="#1-2-pip换源" class="headerlink" title="1.2 pip换源"></a>1.2 pip换源</h3><ul>
+<li>指定源安装，以tensorflow为例<br><code>pip install tensorflow -i http://mirrors.aliyun.com/pypi/simple/  --trusted-host mirrors.aliyun.com</code></li>
+<li>如果不想每次都输入后面这一大段，可以设置全局换源<ul>
+<li>全局切换阿里云源, 注意是https<br><code>pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/</code></li>
+<li>全局切换清华源<br><code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
+<li>全局切换华为云<br><code>pip config set global.index-url https://repo.huaweicloud.com/repository/pypi/simple</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>在Windows中，pip源的配置文件在 C:\Users\用户名\AppData\Roaming\pip\pip.ini</strong><br><strong>在Ubuntu中，pip源的配置文件在 ~/.config/pip/pip.conf</strong></p>
+<h2 id="2-多环境配置"><a href="#2-多环境配置" class="headerlink" title="2.多环境配置"></a>2.多环境配置</h2><h3 id="2-1创建环境"><a href="#2-1创建环境" class="headerlink" title="2.1创建环境"></a>2.1创建环境</h3><ul>
+<li>创建新环境,以创建python3.7为例<br><code>conda create --name yourEnv python=3.7</code></li>
+<li>激活环境<br>windows：<code>activate yourEnv</code><br>linux: <code>source activate yourEnv</code></li>
+<li>查看活跃的环境<br>conda info -e</li>
+</ul>
+<h3 id="2-2重命名环境"><a href="#2-2重命名环境" class="headerlink" title="2.2重命名环境"></a>2.2重命名环境</h3><p>conda没有重命名指令，可以通过clone间接实现</p>
+<ul>
+<li>1.先clone一份new name的环境<br><code>conda create -n new_name --clone old_name</code></li>
+<li>2.删除old name的环境<br><code>conda remove -n old_name --all</code></li>
+<li>3.查看环境名列表<br><code>conda info -e</code></li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Conda/" rel="tag">Conda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pip/" rel="tag">pip</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-Ubuntu16-ROS-Kinetic-环境配置" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/11/05/Ubuntu16-ROS-Kinetic-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"
+    >Ubuntu16 ROS-Kinetic 环境配置</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/11/05/Ubuntu16-ROS-Kinetic-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-11-05T12:54:47.000Z" itemprop="datePublished">2020-11-05</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ROS/">ROS</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="Ubuntu16-04-ROS-Kinetic-安装"><a href="#Ubuntu16-04-ROS-Kinetic-安装" class="headerlink" title="Ubuntu16.04  ROS-Kinetic 安装"></a>Ubuntu16.04  ROS-Kinetic 安装</h1><ul>
+<li>1.软件更新选项</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183242435.png" alt="image-20201105183242435"></p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183317168.png" alt="image-20201105183317168"></p>
+<p>选完之后<code>sudo apt-get update</code></p>
+<ul>
+<li>2.添加ROS软件源</li>
+</ul>
+<p><code>sudo sh -c &#39;echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &gt; /etc/apt/sources.list.d/ros-latest.list&#39;</code></p>
+<ul>
+<li>3.添加密钥</li>
+</ul>
+<p><code>sudo apt-key adv --keyserver &#39;hkp://keyserver.ubuntu.com:80&#39; --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</code></p>
+<ul>
+<li>4.更新源并安装ROS</li>
+</ul>
+<p><code>sudo apt-get update</code></p>
+<p><code>sudo apt-get install ros-kinetic-desktop-full</code></p>
+<ul>
+<li>5.初始化rosdep</li>
+</ul>
+<p><code>sudo rosdep init</code></p>
+<p><code>rosdep update</code></p>
+<p>如果出现</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105183737749.png" alt="image-20201105183737749"></p>
+<p>在网站 <a href="https://site.ip138.com/raw.githubusercontent.com/" target="_blank" rel="noopener">https://site.ip138.com/raw.githubusercontent.com/</a> 中搜索raw.githubusercontent.com域名，这里我选的香港的，毕竟国内毕竟近</p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105192531614.png" alt="image-20201105192531614" style="zoom: 67%;" />
+
+<p>然后终端输入</p>
+<p><code>sudo gedit /etc/hosts</code></p>
+<p>在最后一行加入151.101.76.133 raw.githubusercontent.com</p>
+<p>再次<code>sudo rosdep init</code>成功</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105192735616.png" alt="image-20201105192735616"></p>
+<p>之后输入命令</p>
+<p><code>rosdep update</code></p>
+<ul>
+<li>6.设置环境变量</li>
+</ul>
+<p><code>echo &quot;source /opt/ros/kinetic/setup.bash&quot;&gt;&gt;~/.bashrc</code></p>
+<p><code>source ~/.bashrc</code></p>
+<ul>
+<li>7.安装rosinstall</li>
+</ul>
+<p><code>sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential</code></p>
+<p>安装不成功就多运行几次命令，慢慢磨过去，实在磨不过去就连手机热点就好了</p>
+<ul>
+<li>8.输入roscore验证安装是否成功</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105193349411.png" alt="image-20201105193349411"></p>
+<ul>
+<li>9.配置gazebo</li>
+</ul>
+<p>将模型文件下好，解压到~./gazebo/models中。终端输入gazebo启动，如果出现下面错误</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20201105202809580.png" alt="image-20201105202809580"></p>
+<p>输入以下命令即可解决</p>
+<p><code>echo &quot;export SVGA_VGPU10=0&quot; &gt;&gt; ~/.bashrc</code></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ROS/" rel="tag">ROS</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-About_me" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2019/02/25/About_me/"
+    >About Me</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/02/25/About_me/" class="article-date">
+  <time datetime="2019-02-24T16:00:00.000Z" itemprop="datePublished">2019-02-25</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><h5 id="山东枣庄人，目前在沈阳读研，深度学习，机器人抓取方向。在此记录研究生期间的学习历程。"><a href="#山东枣庄人，目前在沈阳读研，深度学习，机器人抓取方向。在此记录研究生期间的学习历程。" class="headerlink" title="山东枣庄人，目前在沈阳读研，深度学习，机器人抓取方向。在此记录研究生期间的学习历程。"></a>山东枣庄人，目前在沈阳读研，深度学习，机器人抓取方向。在此记录研究生期间的学习历程。</h5><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528155305.jpg" alt="image" style="zoom:67%;" />
+
+<h6 id="数学不太好但是喜欢数学，喜欢读科普读物，敬佩向往古往今来的伟大的数学家、物理学家、计算机科学家。"><a href="#数学不太好但是喜欢数学，喜欢读科普读物，敬佩向往古往今来的伟大的数学家、物理学家、计算机科学家。" class="headerlink" title="数学不太好但是喜欢数学，喜欢读科普读物，敬佩向往古往今来的伟大的数学家、物理学家、计算机科学家。"></a>数学不太好但是喜欢数学，喜欢读科普读物，敬佩向往古往今来的伟大的数学家、物理学家、计算机科学家。</h6><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528155313.jpg" alt="_109347319_gettyimages-611195980" style="zoom:67%;" />
+
+<h6 id="喜欢摇滚乐，Pink-Floyd、Guns-N’-Roses。喜欢老歌，张国荣、张学友、陈慧娴。喜欢坂井泉水，永远的女神！"><a href="#喜欢摇滚乐，Pink-Floyd、Guns-N’-Roses。喜欢老歌，张国荣、张学友、陈慧娴。喜欢坂井泉水，永远的女神！" class="headerlink" title="喜欢摇滚乐，Pink Floyd、Guns N’ Roses。喜欢老歌，张国荣、张学友、陈慧娴。喜欢坂井泉水，永远的女神！"></a>喜欢摇滚乐，Pink Floyd、Guns N’ Roses。喜欢老歌，张国荣、张学友、陈慧娴。喜欢坂井泉水，永远的女神！</h6><p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528155327.jpg" alt="3"> </p>
+<h6 id="热爱生活，喜欢玩魔方，擅长三单，目标中国前百。"><a href="#热爱生活，喜欢玩魔方，擅长三单，目标中国前百。" class="headerlink" title="热爱生活，喜欢玩魔方，擅长三单，目标中国前百。"></a>热爱生活，喜欢玩魔方，擅长三单，目标中国前百。</h6><p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528163127.png" alt="4"></p>
+<h6 id="母胎solo。。。"><a href="#母胎solo。。。" class="headerlink" title="母胎solo。。。"></a>母胎solo。。。</h6><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528153509.jpeg" alt="921d429f162248289b3d5b8f02ccc493" style="zoom:67%;" />
+
+<h6 id="成为一名真正的文艺程序员。"><a href="#成为一名真正的文艺程序员。" class="headerlink" title="成为一名真正的文艺程序员。"></a>成为一名真正的文艺程序员。</h6><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20210528155609.png" alt="codelove" style="zoom:67%;" />
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/17/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

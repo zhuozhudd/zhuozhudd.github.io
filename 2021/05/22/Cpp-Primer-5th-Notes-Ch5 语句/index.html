@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    《Cpp-Primer-5th》Notes-Ch5 语句 |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-Cpp-Primer-5th-Notes-Ch5 语句" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  《Cpp-Primer-5th》Notes-Ch5 语句
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch5%20%E8%AF%AD%E5%8F%A5/" class="article-date">
+  <time datetime="2021-05-22T09:29:19.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C/">C++</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">7 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="第五章-语句"><a href="#第五章-语句" class="headerlink" title="第五章 语句"></a>第五章 语句</h1><h2 id="5-1-简单语句"><a href="#5-1-简单语句" class="headerlink" title="5.1 简单语句"></a>5.1 简单语句</h2><p><strong>空语句</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">; <span class="comment">// 空语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重复读入数据直至到达文件末尾或某次输入的值等于sought</span></span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; s &amp;&amp; s != sought)</span><br><span class="line">    ; <span class="comment">//空语句</span></span><br><span class="line"><span class="comment">// 使用空语句时应该加上注释，从而令读这段代码的人知道该语句是有意省略的</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-语句作用域"><a href="#5-2-语句作用域" class="headerlink" title="5.2 语句作用域"></a>5.2 语句作用域</h2><h2 id="5-3-条件语句"><a href="#5-3-条件语句" class="headerlink" title="5.3 条件语句"></a>5.3 条件语句</h2><h3 id="5-3-1-if语句"><a href="#5-3-1-if语句" class="headerlink" title="5.3.1 if语句"></a>5.3.1 if语句</h3><h3 id="5-3-2-switch语句"><a href="#5-3-2-switch语句" class="headerlink" title="5.3.2 switch语句"></a>5.3.2 switch语句</h3><ul>
+<li>switch语句首先对括号离的表达式求值，该表达式紧跟在关键字switch的后面，可以是一个初始化的变量声明。表达式的值转换称整数类型，然后与每个case标签的值比较。</li>
+<li>case关键字和它对应的值一起被成为case标签(case label)。case标签必须是整型常量表达式<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch = getVal();</span><br><span class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">switch</span>(ch)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3.14</span>: <span class="comment">// 错误：case标签不是一个整数</span></span><br><span class="line">    <span class="keyword">case</span> ival; <span class="comment">// 错误：case标签不是一个常量</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>switch内部的控制流</strong></p>
+<ul>
+<li>有时默认的switch也是必要的。每个case标签只能对应一个值，但是有时候我们希望两个或更多个值共享一个操作。此时可以故意省略break语句，使得程序能够连续执行若干个case标签<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> vowelCnt = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">switch</span>(ch)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 出现了a、e、i、o、u中的任意一个都会将vowelCnt的值加1</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">'a'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'e'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'i'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'o'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">        ++vowelCnt;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以把几个case标签写在一行里，强调这些case代表的是某个范围内的值</span></span><br><span class="line"><span class="keyword">switch</span>(ch)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'a'</span>: <span class="keyword">case</span> <span class="string">'e'</span>: <span class="keyword">case</span> <span class="string">'i'</span>: <span class="keyword">case</span> <span class="string">'o'</span>: <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">        ++vowelCnt;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>switch内部的变量定义</strong></p>
+<ul>
+<li>switch的执行流程可能会跳过某些case标签。如果程序跳转到了某个特定的case，则switch结构中该case标签之前的部分会被忽略掉，如果被忽略的代码中含有变量的定义怎么办？<ul>
+<li>如果在某处一个带有初值的变量位于作用域之外，在另一处该变量位于作用域之内，则从前一处跳转到后一处的行为是非法行为。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="literal">true</span>:</span><br><span class="line"><span class="comment">//因为程序执行流程可能绕开下面的初始化语句，所以该switch语句不合法</span></span><br><span class="line">    <span class="built_in">string</span> file_name; <span class="comment">// 错误</span></span><br><span class="line">    <span class="keyword">int</span> ival = <span class="number">0</span>;     <span class="comment">// 错误</span></span><br><span class="line">    <span class="keyword">int</span> jval;         <span class="comment">// 正确</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="literal">false</span>:</span><br><span class="line"><span class="comment">// 正确：javal虽然在作用域内，但是它没有被初始化</span></span><br><span class="line">    javal = next_num(); <span class="comment">// 正确</span></span><br><span class="line">    <span class="keyword">if</span>(file_name.empty()) <span class="comment">// 正确</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果需要为某个case分支定义并初始化一个变量，我们应该把变量定义在块内，从而确保后面的所有case标签都在变量的作用域之内。</span></span><br><span class="line"><span class="keyword">case</span> <span class="literal">true</span>:</span><br><span class="line">    &#123;</span><br><span class="line">         <span class="comment">//正确：声明语句位于语句块内部</span></span><br><span class="line">         <span class="built_in">string</span> file_name = get_file_name();</span><br><span class="line">         <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="literal">false</span>:</span><br><span class="line">    <span class="keyword">if</span>(file_name.empty()) <span class="comment">//错误：file_name不在作用域内</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-4-迭代语句"><a href="#5-4-迭代语句" class="headerlink" title="5.4 迭代语句"></a>5.4 迭代语句</h2><h3 id="5-4-1-while语句"><a href="#5-4-1-while语句" class="headerlink" title="5.4.1 while语句"></a>5.4.1 while语句</h3><p><strong>使用while循环</strong></p>
+<ul>
+<li>当不确定到底要迭代多少次时，使用while循环比较何时，比如读取输入的内容</li>
+<li>当想再循环结束后访问循环控制变量，用while循环</li>
+</ul>
+<h3 id="5-4-2-传统的for语句"><a href="#5-4-2-传统的for语句" class="headerlink" title="5.4.2 传统的for语句"></a>5.4.2 传统的for语句</h3><blockquote>
+<p>for (init-statemen; condition; expression)<br> statement</p>
+</blockquote>
+<p><strong>for语句头中的多重定义</strong></p>
+<ul>
+<li><p>init-statment也可以定义多个对象。但是init-statement只能有一条声明语句，因此，所有变量的基础类型必须相同</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记录下v的大小，当到达原来的最后一个元素后结束循环</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">decltype</span>(v.<span class="built_in">size</span>()) i = <span class="number">0</span>, sz = v.<span class="built_in">size</span>(); i != sz; ++i)</span><br><span class="line">    v.push_back(v[i]);</span><br></pre></td></tr></table></figure>
+<h3 id="5-4-3-范围for语句"><a href="#5-4-3-范围for语句" class="headerlink" title="5.4.3 范围for语句"></a>5.4.3 范围for语句</h3></li>
+<li><p>范围for语句（range for statement）</p>
+<blockquote>
+<p>for (declaration : expression)<br>statement</p>
+</blockquote>
+</li>
+<li><p>expression 表示的必须是一个序列，比如用花括号扩起来的初始值列表、数组或者 vector、string 等类型的对象</p>
+</li>
+<li><p>declaration 定义一个变量，序列中的每个元素都得能转换成该变量的类型。<strong>确保类型相容最简单的方法就是使用auto类型说明符</strong></p>
+</li>
+<li><p>如果需要对序列中的元素执行写操作，循环变量必须声明成引用类型。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;r : v)</span><br><span class="line">    r *= <span class="number">2</span>; <span class="comment">// 将v中每个元素的值翻倍</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-4-4-do-while语句"><a href="#5-4-4-do-while语句" class="headerlink" title="5.4.4 do while语句"></a>5.4.4 do while语句</h3></li>
+</ul>
+<blockquote>
+<p>do<br> statement<br>while (condition) ;</p>
+</blockquote>
+<ul>
+<li>do while 语句应该在括号包围起来的条件后面用一个分号表示语句结束。</li>
+</ul>
+<h2 id="5-5-跳转语句"><a href="#5-5-跳转语句" class="headerlink" title="5.5 跳转语句"></a>5.5 跳转语句</h2><p><strong>break语句</strong></p>
+<ul>
+<li>break负责终止离它最近的while、do while、for、switch语句，并从这些语句之后的第一条语句开始继续执行</li>
+</ul>
+<p><strong>continue语句</strong></p>
+<ul>
+<li>出现在嵌套循环中的continue语句也仅作用于理它最近的循环</li>
+</ul>
+<p><strong>goto语句</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">begin</span>:</span><br><span class="line">    <span class="keyword">int</span> sz = get_size();</span><br><span class="line">    <span class="keyword">if</span> (sz &lt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">goto</span> <span class="built_in">begin</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-6-try语句块和异常处理"><a href="#5-6-try语句块和异常处理" class="headerlink" title="5.6 try语句块和异常处理"></a>5.6 try语句块和异常处理</h2><p><strong>异常处理包括：</strong></p>
+<ul>
+<li><strong>throw 表达式(throw expression):</strong> 异常检测部分使用throw表达式来表示它遇到来无法处理的问题。即throw 引发 了异常。</li>
+<li><strong>try 语句块(try block):</strong> try语句块以关键字try开始，并以一个或多个catch子句结束。try语句块中代码抛出的异常通常会被某个catch子句处理。因为catch子句”处理“异常，所以他们也被称作<strong>异常处理代码(exception handler)</strong></li>
+<li>一套<strong>异常类(exception class):</strong> 用于在throw表达式和相关catch子句之间传递异常的具体信息。</li>
+</ul>
+<h3 id="5-6-1-throw-表达式"><a href="#5-6-1-throw-表达式" class="headerlink" title="5.6.1 throw 表达式"></a>5.6.1 throw 表达式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Sales_item item1, item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() == item2.isbn())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 成功</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cerr</span> &lt;&lt; <span class="string">"Data must refer to same ISBN"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 失败</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用异常处理</span></span><br><span class="line"><span class="keyword">if</span> (item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line"><span class="comment">// 如果程序执行到了这里，表示两个ISBN是相同的</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>该异常是类型 <strong>runtime_error</strong>的对象。抛出异常将终止当前的函数，并把控制权转移给能处理该异常的代码。</li>
+<li><strong>类型runtime_error</strong> 是标准库异常类型的一种，定义在<strong>stdexcept头文件</strong>  中</li>
+<li>必须初始化<strong>runtime_error</strong>对象，方式是给它提供一个string对象或者一个C风格的字符串</li>
+</ul>
+<h3 id="5-6-2-try-语句块"><a href="#5-6-2-try-语句块" class="headerlink" title="5.6.2 try 语句块"></a>5.6.2 try 语句块</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2)&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">//执行添加两个Sales_item对象的代码</span></span><br><span class="line">        <span class="comment">//如果添加失败，代码抛出一个runtime_error异常</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (runtime_error err)&#123;</span><br><span class="line">        <span class="comment">//提醒用户两个ISBN必须一致，询问是否重新输入</span></span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; err.what()</span><br><span class="line">             &lt;&lt; <span class="string">"\nTry Again? Enter y or n"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">cin</span> || c == <span class="string">'n'</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>给用户的提示信息中输出了<strong>err.what()</strong>的返回值。what是runtime_error类的一个成员函数。</li>
+<li>每个标准库异常类都定义类名为what的成员函数，这些函数没有参数，返回的是C风格字符串(即 const char*)</li>
+<li>如果最终没能找到任何匹配的catch子句，程序转到名为<strong>terminate</strong>的标准库函数。该函数的行为与系统有关，一般情况下，执行该函数将导致程序非正常退出</li>
+</ul>
+<h3 id="5-6-3-标准异常"><a href="#5-6-3-标准异常" class="headerlink" title="5.6.3 标准异常"></a>5.6.3 标准异常</h3><ul>
+<li><strong>exception头文件</strong> 定义了最通用的异常类<strong>excetion</strong>。它只报告异常的发生，不提供任何额外信息。</li>
+<li><strong>stdexcept头文件</strong> 定义了集中常用的异常类</li>
+<li><strong>new头文件</strong> 定义了 <strong>bad_alloc</strong>异常类型</li>
+<li><strong>type_info头文件</strong> 定义了 <strong>bad_cast</strong> 异常类型</li>
+</ul>
+<p><strong>&lt;stdexcept&gt; 定义的异常类:</strong></p>
+<ul>
+<li>exception 最常见问题</li>
+<li>runtime_error 只有在运行时才能检测出的问题</li>
+<li>range_error   运行时错误：生成的结果超出类有意义的值域范围</li>
+<li>overflow_error    运行时错误：计算上溢</li>
+<li>underflow_error   运行时错误：计算下溢</li>
+<li>logic_error   程序逻辑错误</li>
+<li>domain_error  逻辑错误：参数对应的结果值不存在</li>
+<li>invalid_argument  逻辑错误：无效参数</li>
+<li>length_error  逻辑错误：试图创建一个超出该类型的最大长度的对象</li>
+<li>out_of_range  逻辑错误：使用一个超出有效范围的值</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/22/Cpp-Primer-5th-Notes-Ch5%20%E8%AF%AD%E5%8F%A5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C++基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C++学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8AC-Primer-Plus%E3%80%8B/" rel="tag">《C++ Primer Plus》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch4%20%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            《Cpp-Primer-5th》Notes-Ch4 表达式
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch6%20%E5%87%BD%E6%95%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">《Cpp-Primer-5th》Notes-Ch6 函数</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

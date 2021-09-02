@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    ROS MoviIt!学习 - 3.MoveIt！入门 |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-ROS MoviIt!教程 - 3.MoveIt!入门" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ROS MoviIt!学习 - 3.MoveIt！入门
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%203.MoveIt!%E5%85%A5%E9%97%A8/" class="article-date">
+  <time datetime="2021-05-27T09:29:18.000Z" itemprop="datePublished">2021-05-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ROS/">ROS</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">4 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="三、MoveIt！入门"><a href="#三、MoveIt！入门" class="headerlink" title="三、MoveIt！入门"></a>三、MoveIt！入门</h1><h2 id="3-1-MoveIt！简介"><a href="#3-1-MoveIt！简介" class="headerlink" title="3.1 MoveIt！简介"></a>3.1 MoveIt！简介</h2><p><a href="http://moveit.ros.org" target="_blank" rel="noopener">MoveIt官方教程</a></p>
+<h3 id="MoveIt-三大核心功能"><a href="#MoveIt-三大核心功能" class="headerlink" title="MoveIt! 三大核心功能"></a>MoveIt! 三大核心功能</h3><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201126161937.png" alt="image-20201126161937539" style="zoom:80%;" />
+
+<ul>
+<li>运动学：KDL、Trac-IK、IKFast ……</li>
+<li>路径规划：OMPL、CHOMP、SBPL ……</li>
+<li>碰撞检测：FCL、PCD ……</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201126162124.png" alt="image-20201126162124713"></p>
+<h3 id="MoveIt-核心节点-——-move-group"><a href="#MoveIt-核心节点-——-move-group" class="headerlink" title="MoveIt! 核心节点 —— move_group"></a>MoveIt! 核心节点 —— move_group</h3><p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201126162506.png" alt="image-20201126162506043"></p>
+<ul>
+<li>用户接口（User Interface）<ul>
+<li>C++：使用move_group_interface包提供的API</li>
+<li>Python：使用moveit_commander包提供的API</li>
+<li>GUI：使用MoveIt！的rviz插件</li>
+</ul>
+</li>
+<li>ROS参数服务器<ul>
+<li>URDF：robot_description参数，获取机器人URDF模型的描述信息</li>
+<li>SRDF：robot_description_semantic参数，获取机器人模型的配置信息</li>
+<li>config：机器人的其他配置信息，例如关节限位、运动学插件、运动规插件等</li>
+</ul>
+</li>
+<li>机器人<ul>
+<li>Topic和Action通信</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用MoveIt！"><a href="#使用MoveIt！" class="headerlink" title="使用MoveIt！"></a>使用MoveIt！</h3><ul>
+<li><p>组装：创建机器人URDF模型</p>
+</li>
+<li><p>配置：使用MoveIt！Setup Assistant工具生成配置文件</p>
+</li>
+<li><p>驱动：添加机器人控制器插件（controller）</p>
+</li>
+<li><p>控制：MoveIt！控制机器人运动（算法仿真、物理仿真）</p>
+</li>
+</ul>
+<br>
+
+<br>
+
+<h2 id="3-2-MoveIt！可视化配置"><a href="#3-2-MoveIt！可视化配置" class="headerlink" title="3.2 MoveIt！可视化配置"></a>3.2 MoveIt！可视化配置</h2><br>
+
+<h3 id="MoveIt！安装命令："><a href="#MoveIt！安装命令：" class="headerlink" title="MoveIt！安装命令："></a>MoveIt！安装命令：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install ros-kinetic-moveit</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h3 id="moveit-setup-assistant"><a href="#moveit-setup-assistant" class="headerlink" title="moveit_setup_assistant"></a>moveit_setup_assistant</h3><h4 id="（1）启动Setup-Assistant"><a href="#（1）启动Setup-Assistant" class="headerlink" title="（1）启动Setup Assistant"></a>（1）启动Setup Assistant</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rosrun moveit_setup_assistant moveit_setup_assistant</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127134502.png" alt="image-20201127134455554" style="zoom:80%;" />
+
+<h4 id="（2）Start"><a href="#（2）Start" class="headerlink" title="（2）Start"></a>（2）Start</h4><ul>
+<li>Create New MoveIt Configuration Package 创建新的功能包</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127134902.png" alt="image-20201127134902864" style="zoom:80%;" />
+
+<ul>
+<li>点击Browse选择xacro或urdf文件后，点击Load Files，可以在右方加载出机械臂模型。</li>
+</ul>
+<h4 id="（3）-Self-Collisions-自碰撞检测"><a href="#（3）-Self-Collisions-自碰撞检测" class="headerlink" title="（3） Self-Collisions 自碰撞检测"></a>（3） Self-Collisions 自碰撞检测</h4><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127145058.png" alt="image-20201127145058316" style="zoom:80%;" />
+
+<ul>
+<li>检测两个link在运动中是否会发生碰撞，点击Generate Collision Martrix生成碰撞矩阵，采样点选择默认的10000即可（官方推荐）</li>
+</ul>
+<h4 id="（4）Virtual-Joints-虚拟关节"><a href="#（4）Virtual-Joints-虚拟关节" class="headerlink" title="（4）Virtual Joints 虚拟关节"></a>（4）Virtual Joints 虚拟关节</h4><ul>
+<li>虚拟关节主要用来描述机器人在world坐标系下的位置。如果机器人是移动的，则虚拟关节可以与移动基座关联，但这里设计的机械臂是固定不动的，所以无需设置虚拟关节。</li>
+</ul>
+<h4 id="（5）Planning-Groups-创建规划组"><a href="#（5）Planning-Groups-创建规划组" class="headerlink" title="（5）Planning Groups 创建规划组"></a>（5）Planning Groups 创建规划组</h4><ul>
+<li>将机器人的多个组成部分（link，joint）集成到一个组中，运动规划器会针对一组link或joint完成规划任务。配置过程中，还可以选择运动学解析器。</li>
+<li>点击Add Group<ul>
+<li>Group Name，运动组命名。</li>
+<li>Kinematic Solver，运动学求解器。负责求解正向运动学(Forward Kinematics)和逆运动学(IK)的。 一般选用KDL， The Kinematics and Dynamics Library。这是一个运动学与动力学的库，可以很好的解决6自由度以上的单链机械结构的正逆运动学问题。</li>
+<li>Kin. Search Resolution：关节空间的采样密度。</li>
+<li>Kin. Search Timeout(sec)：运动学求解时间。</li>
+<li>Kin.Solver Attempts：求解失败尝试次数，一般来说以上三项使用默认值即可。</li>
+<li>OMPL Planning：运动规划算法，选用RRT(Rapidly-exploring Random Trees)，这是一种基于采样的运动规划算法。</li>
+</ul>
+</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127153824.png" alt="image-20201127153824322" style="zoom:80%;" />
+
+<ul>
+<li>点击 Add Kin. Chian ，添加运动学求解链。<ul>
+<li>选择 base_link 座位Base Link</li>
+<li>选择 tool0 座位 Tip Link</li>
+<li>Save</li>
+</ul>
+</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127155711.png" alt="image-20201127155711331" style="zoom:80%;" />
+
+<h4 id="（6）Robot-Poses-机器人位姿"><a href="#（6）Robot-Poses-机器人位姿" class="headerlink" title="（6）Robot Poses 机器人位姿"></a>（6）Robot Poses 机器人位姿</h4><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127162348.png" alt="image-20201127162348386" style="zoom:80%;" />
+
+<ul>
+<li>设置一些自定义的位姿，比如机器人的初始位姿、指定位姿。点击Add Pose添加。</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127162554.png" alt="image-20201127162554450" style="zoom:80%;" />
+
+<ul>
+<li>设置home位姿，便于在仿真环境中让机械臂恢复到初始home位姿。设置完成点击Save即可。</li>
+</ul>
+<h4 id="（7）End-Effectors-配置终端夹爪"><a href="#（7）End-Effectors-配置终端夹爪" class="headerlink" title="（7）End Effectors 配置终端夹爪"></a>（7）End Effectors 配置终端夹爪</h4><ul>
+<li>点击 Add End Effector</li>
+</ul>
+<h4 id="（8）Passive-Joints-消极关节"><a href="#（8）Passive-Joints-消极关节" class="headerlink" title="（8）Passive Joints 消极关节"></a>（8）Passive Joints 消极关节</h4><p>机器人上的某些关节可能在规划、控制过程中使用不到，可以先声明出来。</p>
+<h4 id="（9）ROS-Control"><a href="#（9）ROS-Control" class="headerlink" title="（9）ROS Control"></a>（9）ROS Control</h4><p>给机器人各个关节设置Controller，每个关节如何通过Controller完成闭环控制，可以通过文件配置，此处略过</p>
+<h4 id="（10）Simulate"><a href="#（10）Simulate" class="headerlink" title="（10）Simulate"></a>（10）Simulate</h4><p>后续手动添加，此处略过</p>
+<h4 id="（11）3D-Perception-3D视觉"><a href="#（11）3D-Perception-3D视觉" class="headerlink" title="（11）3D Perception 3D视觉"></a>（11）3D Perception 3D视觉</h4><h4 id="（12）Author-Information-作者信息"><a href="#（12）Author-Information-作者信息" class="headerlink" title="（12）Author Information 作者信息"></a>（12）Author Information 作者信息</h4><h4 id="（13）Configuration-Files-配置文件"><a href="#（13）Configuration-Files-配置文件" class="headerlink" title="（13）Configuration Files 配置文件"></a>（13）Configuration Files 配置文件</h4><ul>
+<li><p>自动生成配置功能包中的所有文件，点击Browser选择功能包目录保存</p>
+</li>
+<li><p>命名格式：机器人名字_moveit_config</p>
+</li>
+<li><p>点击Generate Package，OK。</p>
+</li>
+<li><p>Exit Setup Assistant</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127172150.png" alt="image-20201127172150596"></p>
+<h4 id="（14）查看生成的配置文件"><a href="#（14）查看生成的配置文件" class="headerlink" title="（14）查看生成的配置文件"></a>（14）查看生成的配置文件</h4><p>在*_moveit_config 文件夹下会生成如图文件</p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127202636.png" alt="image-20201127202636342" style="zoom: 80%;" />
+
+<p><strong>config文件夹下：</strong></p>
+<ul>
+<li>kinematics.yaml 保存了运动学求解器的相关设置，如 kdl</li>
+<li>joint_limits.yaml 保存了每个关节的限位，此文件后续会经常修改，此文件的修改会覆盖urdf中的配置，所以以此文件的配置为准</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127202730.png" alt="image-20201127202730954" style="zoom:80%;" />
+
+<p><strong>launch文件夹下：</strong></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127203047.png" alt="image-20201127203047647" style="zoom: 67%;" />
+
+<p>可以运行其中的demo.launch验证是否配置成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_anno_moveit_config demo.launch</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127203500.png" alt="image-20201127203500838" style="zoom:80%;" />
+
+<p>添加RobotModel插件</p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201127203556.png" alt="image-20201127203556602" style="zoom:80%;" />
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%203.MoveIt!%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MoveIt/" rel="tag">MoveIt!</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ROS/" rel="tag">ROS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%204.MoveIt!%E4%BB%BF%E7%9C%9F/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ROS MoviIt!学习 - 4.MoveIt！仿真
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%202.ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BB%BA%E6%A8%A1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ROS MoviIt!学习 - 2.ROS机器人建模</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

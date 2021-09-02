@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    ROS MoviIt!学习 - 7.ROS机器视觉 |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-ROS MoviIt!教程 - 7.ROS机器视觉" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  ROS MoviIt!学习 - 7.ROS机器视觉
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%207.ROS%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/" class="article-date">
+  <time datetime="2021-05-27T09:29:22.000Z" itemprop="datePublished">2021-05-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ROS/">ROS</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.2k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">11 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="七、ROS机器视觉"><a href="#七、ROS机器视觉" class="headerlink" title="七、ROS机器视觉"></a>七、ROS机器视觉</h1><h2 id="7-1-ROS图像接口"><a href="#7-1-ROS图像接口" class="headerlink" title="7.1 ROS图像接口"></a>7.1 ROS图像接口</h2><p><strong>摄像头驱动安装：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install ros-kinetic-usb-cam</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_vision usb_cam.launch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rqt_image_view</span></span><br></pre></td></tr></table></figure>
+
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201201162609.png" alt="image-20201201162609077" style="zoom: 80%;" />
+
+<p><strong>ROS定义的图像话题：</strong></p>
+<p><strong>sensor_msgs/Image</strong></p>
+<ul>
+<li>Header：消息头，包含消息序列，时间戳和绑定坐标系</li>
+<li>height：图像的纵向分辨率</li>
+<li>width：图像的横向分辨率</li>
+<li>encoding：图像编码格式，包含RGB、YUV等常用格式，不涉及图像压缩编码</li>
+<li>is_bigendian：图像数据的大小端存储模式</li>
+<li><strong>step</strong>：一行图像数据的字节数量，作为数据的步长参数，如果是RGB图像，width=480，step则 = 3 * 480 = 1360字节，便于寻址</li>
+<li><strong>data</strong>：存储图像数据的数组，大小为 step * height 个字节</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rosmsg show sensor_msgs/Image</span></span><br><span class="line"></span><br><span class="line">std_msgs/Header header</span><br><span class="line">  uint32 seq</span><br><span class="line">  time stamp</span><br><span class="line">  string frame_id</span><br><span class="line">uint32 height</span><br><span class="line">uint32 width</span><br><span class="line">string encoding</span><br><span class="line">uint8 is_bigendian</span><br><span class="line">uint32 step</span><br><span class="line">uint8[] data</span><br></pre></td></tr></table></figure>
+
+<p><strong>压缩图像消息  sensor_msgs/CompressedImage：</strong></p>
+<ul>
+<li>format：图像的压缩编码格式（jpeg、png、bmp）</li>
+<li>data：存储图像数据数组</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rosmsg show sensor_msgs/CompressedImage</span></span><br><span class="line"></span><br><span class="line">std_msgs/Header header</span><br><span class="line">  uint32 seq</span><br><span class="line">  time stamp</span><br><span class="line">  string frame_id</span><br><span class="line">string format</span><br><span class="line">uint8[] data</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-2-摄像头内参标定"><a href="#7-2-摄像头内参标定" class="headerlink" title="7.2 摄像头内参标定"></a>7.2 摄像头内参标定</h2><h3 id="7-2-1-摄像头为什么要标定？"><a href="#7-2-1-摄像头为什么要标定？" class="headerlink" title="7.2.1 摄像头为什么要标定？"></a>7.2.1 摄像头为什么要标定？</h3><p>摄像头这种精密仪器对光学器件要求较高，由于摄像头内部与外部的一些原因，生成的物体图像往往会发生畸变，为避免数据源造成的误差，需要针对摄像头参数进行标定。</p>
+<p>安装标定功能包： </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install ros-kinetic-camera-calibration</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 image:=/camera/color/image_raw camera:=/camera/color --no-service-check</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201207154833.png" alt="image-20201207154826554"></p>
+<ul>
+<li>X : 左右移动</li>
+<li>Y：上下移动</li>
+<li>Size：前后移动</li>
+<li>Skew：扭转</li>
+</ul>
+<p>等待 <strong>CALIBRATE</strong> 按钮变蓝，点击即可，等待计算完成后，点击 <strong>SAVE</strong> ,终端打印出保存路径</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201207155311.png" alt="image-20201207155311509"></p>
+<p>解压此文件后，选中 <strong>ost.yaml</strong> 文件，即标定结果，复制粘贴到功能包目录下即可</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">image_width:</span> <span class="number">640</span></span><br><span class="line"><span class="attr">image_height:</span> <span class="number">480</span></span><br><span class="line"><span class="attr">camera_name:</span> <span class="string">narrow_stereo</span></span><br><span class="line"><span class="attr">camera_matrix:</span></span><br><span class="line">  <span class="attr">rows:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">cols:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">data:</span> <span class="string">[627.878924,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">342.443106</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">625.646792</span><span class="string">,</span> <span class="number">250.452535</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">1.000000</span><span class="string">]</span></span><br><span class="line"><span class="attr">distortion_model:</span> <span class="string">plumb_bob</span></span><br><span class="line"><span class="attr">distortion_coefficients:</span></span><br><span class="line">  <span class="attr">rows:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">cols:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">data:</span> <span class="string">[0.172732,</span> <span class="number">-0.085637</span><span class="string">,</span> <span class="number">0.010766</span><span class="string">,</span> <span class="number">0.022194</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">]</span></span><br><span class="line"><span class="attr">rectification_matrix:</span></span><br><span class="line">  <span class="attr">rows:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">cols:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">data:</span> <span class="string">[1.000000,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">1.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">1.000000</span><span class="string">]</span></span><br><span class="line"><span class="attr">projection_matrix:</span></span><br><span class="line">  <span class="attr">rows:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">cols:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">data:</span> <span class="string">[660.365295,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">352.083569</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">666.242432</span><span class="string">,</span> <span class="number">253.895221</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">,</span> <span class="number">1.000000</span><span class="string">,</span> <span class="number">0.000000</span><span class="string">]</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <strong>probot_vision/launch/usb_cam_with_calibration.launch</strong> 中替换标定文件即可</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">"usb_cam"</span> <span class="attr">pkg</span>=<span class="string">"usb_cam"</span> <span class="attr">type</span>=<span class="string">"usb_cam_node"</span> <span class="attr">output</span>=<span class="string">"screen"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"video_device"</span> <span class="attr">value</span>=<span class="string">"/dev/video0"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"image_width"</span> <span class="attr">value</span>=<span class="string">"1280"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"image_height"</span> <span class="attr">value</span>=<span class="string">"720"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"pixel_format"</span> <span class="attr">value</span>=<span class="string">"yuyv"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"camera_frame_id"</span> <span class="attr">value</span>=<span class="string">"usb_cam"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"io_method"</span> <span class="attr">value</span>=<span class="string">"mmap"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">       	<span class="comment">&lt;!-- 标定文件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"camera_info_url"</span> <span class="attr">type</span>=<span class="string">"string"</span> <span class="attr">value</span>=<span class="string">"file://$(find probot_vision)/camera_calibration.yaml"</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 标定文件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="7-3-ROS-OpenCV物体识别"><a href="#7-3-ROS-OpenCV物体识别" class="headerlink" title="7.3 ROS + OpenCV物体识别"></a>7.3 ROS + OpenCV物体识别</h2><p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201207163532.png" alt="image-20201207163532882"></p>
+<p>安装OpenCV</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install ros-kinetic-vision-opencv libopencv-dev python-opencv</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>image_converter.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;image_transport/image_transport.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cv_bridge/cv_bridge.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sensor_msgs/image_encodings.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/imgproc/imgproc.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> OPENCV_WINDOW = <span class="string">"Image window"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ImageConverter</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  ros::NodeHandle nh_;</span><br><span class="line">  image_transport::ImageTransport it_;</span><br><span class="line">  image_transport::Subscriber image_sub_;</span><br><span class="line">  image_transport::Publisher image_pub_;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 构造函数</span></span><br><span class="line">  ImageConverter()</span><br><span class="line">    : it_(nh_)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// Subscrive to input video feed and publish output video feed</span></span><br><span class="line">    <span class="comment">// 创建一个订阅者，订阅处理前的图像</span></span><br><span class="line">    image_sub_ = it_.subscribe(<span class="string">"/usb_cam/image_raw"</span>, <span class="number">1</span>, &amp;ImageConverter::imageCb, <span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">// 创建一个发布者，发布处理完的图像</span></span><br><span class="line">    image_pub_ = it_.advertise(<span class="string">"/image_converter/output_video"</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    cv::namedWindow(OPENCV_WINDOW);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ~ImageConverter()</span><br><span class="line">  &#123;</span><br><span class="line">    cv::destroyWindow(OPENCV_WINDOW);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 进入到spin过程，spin会不断在队列中找图像消息，一旦有消息进来，就会进入imageCb里（call back）</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">imageCb</span><span class="params">(<span class="keyword">const</span> sensor_msgs::ImageConstPtr&amp; msg)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    </span><br><span class="line">    cv_bridge::CvImagePtr cv_ptr;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// 关键API，cv_bridge::toCvCopy可以把图像消息msg变到opencv中，sensor_msgs::image_encodings::BGR8为编码格式，返回的指针指向这个opencv图像的地址</span></span><br><span class="line">      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (cv_bridge::Exception&amp; e)</span><br><span class="line">    &#123;</span><br><span class="line">      ROS_ERROR(<span class="string">"cv_bridge exception: %s"</span>, e.what());</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//OpenCV代码</span></span><br><span class="line">    <span class="keyword">if</span> (cv_ptr-&gt;<span class="built_in">image</span>.rows &gt; <span class="number">60</span> &amp;&amp; cv_ptr-&gt;<span class="built_in">image</span>.cols &gt; <span class="number">60</span>)</span><br><span class="line">      <span class="comment">// 在图像左上角画一个圈</span></span><br><span class="line">      cv::<span class="built_in">circle</span>(cv_ptr-&gt;<span class="built_in">image</span>, cv::Point(<span class="number">50</span>, <span class="number">50</span>), <span class="number">30</span>, CV_RGB(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>), <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update GUI Window</span></span><br><span class="line">    cv::imshow(OPENCV_WINDOW, cv_ptr-&gt;<span class="built_in">image</span>);</span><br><span class="line">    cv::waitKey(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output modified video stream</span></span><br><span class="line">    <span class="comment">// 把OpenCV的图像变成ROS的图像发布出去</span></span><br><span class="line">    image_pub_.publish(cv_ptr-&gt;toImageMsg());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  ros::init(argc, argv, <span class="string">"image_converter"</span>);</span><br><span class="line">  ImageConverter ic;</span><br><span class="line">  ros::spin(); <span class="comment">// 调用spin进入死循环，在循环里不断订阅图像消息并处理</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>核心代码梳理：</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201207214446.png" alt="image-20201207214446150"></p>
+<p><a href="http://wiki.ros.org/cv_bridge/Tutorials" target="_blank" rel="noopener">cv_bridge / Tutorials </a></p>
+<h4 id="ROS-OpenCV-物体识别例程"><a href="#ROS-OpenCV-物体识别例程" class="headerlink" title="ROS + OpenCV 物体识别例程"></a>ROS + OpenCV 物体识别例程</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_gazebo probot_anno_with_gripper_gazebo_world.launch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun probot_vision visonManger</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> rqt_image_view</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201210152342.png" alt="image-20201210152335046"></p>
+<p>识别原理是基于颜色的阈值，主要是理解程序的流程：</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201210152529.png" alt="image-20201210152529359"></p>
+<p><strong>vision_manager.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"probot_vision/vision_manager.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 视觉管理器，完成数据的订阅和发布，数据的处理</span></span><br><span class="line">VisionManager::VisionManager(ros::NodeHandle n_, <span class="keyword">float</span> length, <span class="keyword">float</span> breadth) : it_(n_)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;table_length = length;</span><br><span class="line">	<span class="keyword">this</span>-&gt;table_breadth = breadth;</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// Subscribe to input video feed and publish object location</span></span><br><span class="line">    <span class="comment">// 订阅摄像头所发布的图像，收到图像后调用imageCb回调函数</span></span><br><span class="line">  	image_sub_  = it_.subscribe(<span class="string">"/probot_anno/camera/image_raw"</span>, <span class="number">1</span>, &amp;VisionManager::imageCb, <span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">// 两个识别结果，通过话题发布出去</span></span><br><span class="line">	image1_pub_ = it_.advertise(<span class="string">"/table_detect"</span>, <span class="number">1</span>);</span><br><span class="line">	image2_pub_ = it_.advertise(<span class="string">"/object_detect"</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VisionManager::get2DLocation</span><span class="params">(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;msg, <span class="keyword">float</span> &amp;x, <span class="keyword">float</span> &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cv::Rect tablePos;</span><br><span class="line">    <span class="comment">// 识别table</span></span><br><span class="line">	detectTable(msg, tablePos);</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 识别object，通过convertToMM把识别到的像素位置转换为以米为单位的实际单位</span></span><br><span class="line">	detect2DObject(msg, x, y, tablePos);</span><br><span class="line">	convertToMM(x, y);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VisionManager::detectTable</span><span class="params">(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;msg, cv::Rect &amp;tablePos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// Extract Table from the image and assign values to pixel_per_mm fields</span></span><br><span class="line">	cv::Mat BGR[<span class="number">3</span>];</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">      cv_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (cv_bridge::Exception &amp;e)</span><br><span class="line">    &#123;</span><br><span class="line">      ROS_ERROR(<span class="string">"cv_bridge exception: %s"</span>, e.what());</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	cv::Mat &amp;<span class="built_in">image</span> = cv_ptr_-&gt;<span class="built_in">image</span>;</span><br><span class="line"></span><br><span class="line">	split(<span class="built_in">image</span>, BGR);</span><br><span class="line">	cv::Mat gray_image_red = BGR[<span class="number">2</span>];</span><br><span class="line">	cv::Mat gray_image_green = BGR[<span class="number">1</span>];</span><br><span class="line">	cv::Mat denoiseImage;</span><br><span class="line">	cv::medianBlur(gray_image_red, denoiseImage, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Threshold the Image</span></span><br><span class="line">	cv::Mat binaryImage = denoiseImage;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; binaryImage.rows; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; binaryImage.cols; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> editValue = binaryImage.at&lt;uchar&gt;(i, j);</span><br><span class="line">			<span class="keyword">int</span> editValue2 = gray_image_green.at&lt;uchar&gt;(i, j);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> ((editValue &gt;= <span class="number">0</span>) &amp;&amp; (editValue &lt; <span class="number">20</span>) &amp;&amp; (editValue2 &gt;= <span class="number">0</span>) &amp;&amp; (editValue2 &lt; <span class="number">20</span>))</span><br><span class="line">			&#123; <span class="comment">// check whether value is within range.</span></span><br><span class="line">				binaryImage.at&lt;uchar&gt;(i, j) = <span class="number">255</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				binaryImage.at&lt;uchar&gt;(i, j) = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dilate(binaryImage, binaryImage, cv::Mat());</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Get the centroid of the of the blob</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Point&gt; nonZeroPoints;</span><br><span class="line">	cv::findNonZero(binaryImage, nonZeroPoints);</span><br><span class="line">	cv::Rect bbox = cv::boundingRect(nonZeroPoints);</span><br><span class="line">	cv::Point pt;</span><br><span class="line">	pt.x = bbox.x + bbox.<span class="built_in">width</span> / <span class="number">2</span>;</span><br><span class="line">	pt.y = bbox.y + bbox.<span class="built_in">height</span> / <span class="number">2</span>;</span><br><span class="line">	cv::<span class="built_in">circle</span>(<span class="built_in">image</span>, pt, <span class="number">4</span>, cv::Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">-1</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Update pixels_per_mm fields</span></span><br><span class="line">	pixels_permm_y = bbox.<span class="built_in">height</span> / table_length;</span><br><span class="line">	pixels_permm_x = bbox.<span class="built_in">width</span>  / table_breadth;</span><br><span class="line"></span><br><span class="line">    tablePos = bbox;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Test the conversion values</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Pixels in y"</span> &lt;&lt; pixels_permm_y &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Pixels in x"</span> &lt;&lt; pixels_permm_x &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Draw Contours - For Debugging</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Point&gt;&gt; contours;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Vec4i&gt; hierarchy;</span><br><span class="line"></span><br><span class="line">	cv::findContours(binaryImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contours.<span class="built_in">size</span>(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cv::Scalar color = cv::Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		cv::drawContours(<span class="built_in">image</span>, contours, i, color, <span class="number">3</span>, <span class="number">8</span>, hierarchy, <span class="number">0</span>, cv::Point());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Output modified video stream</span></span><br><span class="line"> 	image1_pub_.publish(cv_ptr_-&gt;toImageMsg());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VisionManager::detect2DObject</span><span class="params">(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;msg, <span class="keyword">float</span> &amp;pixel_x, <span class="keyword">float</span> &amp;pixel_y, cv::Rect &amp;tablePos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// Implement Color Thresholding and contour findings to get the location of object to be grasped in 2D</span></span><br><span class="line">	cv::Mat gray_image_green;</span><br><span class="line">	cv::Mat BGR[<span class="number">3</span>];</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line">      cv_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (cv_bridge::Exception &amp;e)</span><br><span class="line">    &#123;</span><br><span class="line">      ROS_ERROR(<span class="string">"cv_bridge exception: %s"</span>, e.what());</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	cv::Mat &amp;<span class="built_in">image</span> = cv_ptr_-&gt;<span class="built_in">image</span>;</span><br><span class="line"></span><br><span class="line">	cv::split(<span class="built_in">image</span>, BGR);</span><br><span class="line"></span><br><span class="line">	gray_image_green = BGR[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Denoise the Image</span></span><br><span class="line">	cv::Mat denoiseImage;</span><br><span class="line">	cv::medianBlur(gray_image_green, denoiseImage, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Threshold the Image</span></span><br><span class="line">	cv::Mat binaryImage = denoiseImage;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; binaryImage.rows; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; binaryImage.cols; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>((j&lt;tablePos.x+<span class="number">3</span>) || j&gt;(tablePos.x+tablePos.<span class="built_in">width</span><span class="number">-3</span>) || (i&lt;tablePos.y+<span class="number">3</span>) || i&gt;(tablePos.y + tablePos.<span class="built_in">height</span><span class="number">-3</span>))</span><br><span class="line">			&#123;</span><br><span class="line">				binaryImage.at&lt;uchar&gt;(i, j) = <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">int</span> editValue = binaryImage.at&lt;uchar&gt;(i, j);</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> ((editValue &gt; <span class="number">100</span>) &amp;&amp; (editValue &lt;= <span class="number">255</span>))</span><br><span class="line">				&#123; <span class="comment">// check whether value is within range.</span></span><br><span class="line">					binaryImage.at&lt;uchar&gt;(i, j) = <span class="number">255</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span></span><br><span class="line">				&#123;</span><br><span class="line">					binaryImage.at&lt;uchar&gt;(i, j) = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	dilate(binaryImage, binaryImage, cv::Mat());</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Get the centroid of the of the blob</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Point&gt; nonZeroPoints;</span><br><span class="line">	cv::findNonZero(binaryImage, nonZeroPoints);</span><br><span class="line">	cv::Rect bbox = cv::boundingRect(nonZeroPoints);</span><br><span class="line">	cv::Point pt;</span><br><span class="line">	pixel_x = bbox.x + bbox.<span class="built_in">width</span> / <span class="number">2</span>;</span><br><span class="line">	pixel_y = bbox.y + bbox.<span class="built_in">height</span> / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Test the conversion values</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"pixel_x"</span> &lt;&lt; pixel_x &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"pixel_y"</span> &lt;&lt; pixel_y &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// For Drawing</span></span><br><span class="line">	pt.x = bbox.x + bbox.<span class="built_in">width</span> / <span class="number">2</span>;</span><br><span class="line">	pt.y = bbox.y + bbox.<span class="built_in">height</span> / <span class="number">2</span>;</span><br><span class="line">	cv::<span class="built_in">circle</span>(<span class="built_in">image</span>, pt, <span class="number">4</span>, cv::Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">-1</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Draw Contours</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Point&gt;&gt; contours;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cv::Vec4i&gt; hierarchy;</span><br><span class="line"></span><br><span class="line">	cv::findContours(binaryImage, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(<span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; contours.<span class="built_in">size</span>(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cv::Scalar color = cv::Scalar(<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		cv::drawContours(<span class="built_in">image</span>, contours, i, color, <span class="number">3</span>, <span class="number">8</span>, hierarchy, <span class="number">0</span>, cv::Point());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Output modified video stream</span></span><br><span class="line"> 	image2_pub_.publish(cv_ptr_-&gt;toImageMsg());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VisionManager::convertToMM</span><span class="params">(<span class="keyword">float</span> &amp;x, <span class="keyword">float</span> &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	img_centre_x_ = <span class="number">640</span> / <span class="number">2</span>;</span><br><span class="line">	img_centre_y_ = <span class="number">480</span> / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Convert from pixel to world co-ordinates in the camera frame</span></span><br><span class="line">	x = (x - img_centre_x_) / pixels_permm_x;</span><br><span class="line">	y = (y - img_centre_y_) / pixels_permm_y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VisionManager::imageCb</span><span class="params">(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 发布一个log，表示开始做图像的识别</span></span><br><span class="line">    ROS_INFO_STREAM(<span class="string">"Processing the Image to locate the Object..."</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ROS_INFO("Image Message Received");</span></span><br><span class="line">    <span class="keyword">float</span> obj_x, obj_y; <span class="comment">// 物体识别后的坐标，单位是米</span></span><br><span class="line">    get2DLocation(msg, obj_x, obj_y);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Temporary Debugging</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="string">" X-Co-ordinate in Camera Frame :"</span> &lt;&lt; obj_x &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="string">" Y-Co-ordinate in Camera Frame :"</span> &lt;&lt; obj_y &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Temporary Main Function for testing- This should go away later</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 首先初始化节点，调用类的创建，在while循环里不断等待接收图像并处理</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  	ros::init(argc, argv, <span class="string">"simple_grasping_vision_detection"</span>);</span><br><span class="line">  	ros::NodeHandle n_;</span><br><span class="line"></span><br><span class="line">  	ROS_INFO_STREAM(<span class="string">"Waiting for two seconds.."</span>);</span><br><span class="line">  	ros::WallDuration(<span class="number">2.0</span>).sleep();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">float</span> length = <span class="number">0.3</span>;</span><br><span class="line">	<span class="keyword">float</span> breadth = <span class="number">0.3</span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">VisionManager <span class="title">vm</span><span class="params">(n_, length, breadth)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (ros::ok())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// Process image callback</span></span><br><span class="line">		ros::spinOnce();</span><br><span class="line"></span><br><span class="line">		ros::WallDuration(<span class="number">2.0</span>).sleep();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%207.ROS%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MoveIt/" rel="tag">MoveIt!</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ROS/" rel="tag">ROS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%208.ROS%E6%8A%93%E5%8F%96/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            ROS MoviIt!学习 - 8.ROS抓取
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%206.MoveIt!%E6%8A%80%E5%B7%A7/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">ROS MoviIt!学习 - 6.MoveIt！技巧</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+     Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      
+<section class="cover">
+    
+      
+      <a class="forkMe" href="https://github.com/Shen-Yu/hexo-theme-ayer"
+        target="_blank"><img width="149" height="149" src="/images/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">Shine on You Crazy Diamond</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+<div id="main">
+  <section class="outer">
+  <article class="articles">
+    
+    
+    
+    
+    <article id="post-SwordToOffer - 35 复杂链表的复制" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/29/SwordToOffer%20-%2035%20%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/"
+    >《剑指Offer》  35 - 复杂链表的复制</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/29/SwordToOffer%20-%2035%20%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/" class="article-date">
+  <time datetime="2021-06-29T13:04:35.000Z" itemprop="datePublished">2021-06-29</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-35-复杂链表的复制"><a href="#《剑指Offer》-35-复杂链表的复制" class="headerlink" title="《剑指Offer》  35 - 复杂链表的复制"></a>《剑指Offer》  35 - 复杂链表的复制</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof/" target="_blank" rel="noopener">剑指 Offer 35. 复杂链表的复制</a></p>
+<p>请实现<code>copyRandomList</code> 函数，复制一个复杂链表。在复杂链表中，每个节点除了有一个 <code>next</code> 指针指向下一个节点，还有一个 <code>random</code> 指针指向链表中的任意节点或者 <code>null</code>。</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629153211479.png" alt="image-20210629153211479"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：head &#x3D; [[7,null],[13,0],[11,4],[10,2],[1,0]]</span><br><span class="line">输出：[[7,null],[13,0],[11,4],[10,2],[1,0]]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629153433704.png" alt="image-20210629153433704"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例 2：</span><br><span class="line">输入：head &#x3D; [[1,1],[2,1]]</span><br><span class="line">输出：[[1,1],[2,1]]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629153442371.png" alt="image-20210629153442371"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例 3：</span><br><span class="line">输入：head &#x3D; [[3,null],[3,0],[3,null]]</span><br><span class="line">输出：[[3,null],[3,0],[3,null]]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 4：</span><br><span class="line">输入：head &#x3D; []</span><br><span class="line">输出：[]</span><br><span class="line">解释：给定的链表为空（空指针），因此返回 null。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">提示：</span><br><span class="line">-10000 &lt;&#x3D; Node.val &lt;&#x3D; 10000</span><br><span class="line">Node-&gt;random 为空（null）或指向链表中的节点。</span><br><span class="line">节点数目不超过 1000 。</span><br></pre></td></tr></table></figure>
+
+<p><strong>本题与LeetCode138相同：</strong><a href="https://leetcode-cn.com/problems/copy-list-with-random-pointer/" target="_blank" rel="noopener">138. 复制带随机指针的链表</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一：-哈希表，但空间复杂度为-O-n"><a href="#方法一：-哈希表，但空间复杂度为-O-n" class="headerlink" title="方法一： 哈希表，但空间复杂度为 $O(n)$"></a>方法一： 哈希表，但空间复杂度为 $O(n)$</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">// Definition for a Node.</span></span><br><span class="line"><span class="comment">class Node &#123;</span></span><br><span class="line"><span class="comment">public:</span></span><br><span class="line"><span class="comment">    int val;</span></span><br><span class="line"><span class="comment">    Node* next;</span></span><br><span class="line"><span class="comment">    Node* random;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    Node(int _val) &#123;</span></span><br><span class="line"><span class="comment">        val = _val;</span></span><br><span class="line"><span class="comment">        next = NULL;</span></span><br><span class="line"><span class="comment">        random = NULL;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">copyRandomList</span><span class="params">(Node* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        Node* p = head;  </span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;Node*, Node*&gt; <span class="built_in">map</span>;</span><br><span class="line">        <span class="keyword">while</span>(p)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">map</span>[p] = <span class="keyword">new</span> Node(p-&gt;val);</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        p = head;</span><br><span class="line">        <span class="keyword">while</span>(p)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">map</span>[p]-&gt;next = <span class="built_in">map</span>[p-&gt;next];</span><br><span class="line">            <span class="built_in">map</span>[p]-&gt;random = <span class="built_in">map</span>[p-&gt;random];</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">map</span>[head];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629154148112.png" alt="image-20210629154148112"></p>
+<h4 id="方法二：拼接-重连-拆分-空间复杂度为-O-1"><a href="#方法二：拼接-重连-拆分-空间复杂度为-O-1" class="headerlink" title="方法二：拼接 + 重连 + 拆分 空间复杂度为 $O(1)$"></a>方法二：拼接 + 重连 + 拆分 空间复杂度为 $O(1)$</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">Node* <span class="title">copyRandomList</span><span class="params">(Node* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="literal">nullptr</span>) <span class="keyword">return</span> head;</span><br><span class="line">        Node* p = head;</span><br><span class="line">               </span><br><span class="line">        <span class="comment">// 1. 拼接 A-&gt;A'-&gt;B-B' ...</span></span><br><span class="line">        <span class="keyword">while</span> (p)</span><br><span class="line">        &#123;</span><br><span class="line">            Node* node = <span class="keyword">new</span> Node(p-&gt;val);</span><br><span class="line">            <span class="comment">// node-&gt;random = nullptr;</span></span><br><span class="line">            node-&gt;next = p-&gt;next;</span><br><span class="line">            p-&gt;next = node;</span><br><span class="line">            p = node-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 重连接 如果 A-&gt;random为S，则S'为A-&gt;random-&gt;next;</span></span><br><span class="line">        p = head;</span><br><span class="line">        <span class="keyword">while</span> (p)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;<span class="built_in">random</span>)</span><br><span class="line">                p-&gt;next-&gt;<span class="built_in">random</span> = p-&gt;<span class="built_in">random</span>-&gt;next;</span><br><span class="line">            p = p-&gt;next-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 拆分为两个链表</span></span><br><span class="line">        p = head-&gt;next; <span class="comment">// 新链表起点</span></span><br><span class="line">        Node *pre = head, *newHead = head-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (p-&gt;next)</span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;next = pre-&gt;next-&gt;next;</span><br><span class="line">            p-&gt;next = p-&gt;next-&gt;next;</span><br><span class="line">            pre = pre-&gt;next;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        pre-&gt;next = <span class="literal">nullptr</span>; <span class="comment">// 单独处理原链表尾节点</span></span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629164053283.png" alt="image-20210629164053283"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 34 二叉树中和为某一值的路径" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/29/SwordToOffer%20-%2034%20%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84/"
+    >《剑指Offer》  34 - 二叉树中和为某一值的路径</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/29/SwordToOffer%20-%2034%20%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84/" class="article-date">
+  <time datetime="2021-06-29T12:10:26.000Z" itemprop="datePublished">2021-06-29</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-34-二叉树中和为某一值的路径"><a href="#《剑指Offer》-34-二叉树中和为某一值的路径" class="headerlink" title="《剑指Offer》  34 - 二叉树中和为某一值的路径"></a>《剑指Offer》  34 - 二叉树中和为某一值的路径</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/" target="_blank" rel="noopener">剑指 Offer 34. 二叉树中和为某一值的路径</a></p>
+<p>输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line">给定如下二叉树，以及目标和 target &#x3D; 22，</span><br><span class="line"> 			  5</span><br><span class="line">             &#x2F; \</span><br><span class="line">            4   8</span><br><span class="line">           &#x2F;   &#x2F; \</span><br><span class="line">          11  13  4</span><br><span class="line">         &#x2F;  \    &#x2F; \</span><br><span class="line">        7    2  5   1</span><br><span class="line"></span><br><span class="line">返回:</span><br><span class="line">[</span><br><span class="line">   [5,4,11,2],</span><br><span class="line">   [5,8,4,5]</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">节点总数 &lt;&#x3D; 10000</span><br></pre></td></tr></table></figure>
+
+<p><strong>本题与LeetCode113相同：</strong><a href="https://leetcode-cn.com/problems/path-sum-ii/" target="_blank" rel="noopener">113. 路径总和 II</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="DFS-回溯"><a href="#DFS-回溯" class="headerlink" title="DFS 回溯"></a>DFS 回溯</h4><ul>
+<li>递推参数： 当前节点 <code>root</code> ，当前目标值 <code>tar</code> 。</li>
+<li>终止条件： 若节点 <code>root</code> 为空，则直接返回。</li>
+<li>递推工作：<ul>
+<li>路径更新： 将当前节点值 <code>root-&gt;val</code> 加入路径 <code>path</code> ；</li>
+<li>目标值更新： <code>tar = tar - root-&gt;val</code>（即目标值 <code>tar</code> 从<code>sum</code> 减至<code>0</code> ）；</li>
+<li>路径记录： 当 ① <code>root</code>为叶节点 且 ② 路径和等于目标值 ，则将此路径 <code>path</code>加入<code>res</code>。</li>
+<li>先序遍历： 递归左 / 右子节点。</li>
+<li>路径恢复： 向上回溯前，需要将当前节点从路径 <code>path</code> 中删除，即执行 <code>path.pop_back()</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; path;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">pathSum</span><span class="params">(TreeNode* root, <span class="keyword">int</span> targetSum)</span> </span>&#123;</span><br><span class="line">        dfs(root, targetSum);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode* root, <span class="keyword">int</span> tar)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span>;</span><br><span class="line">        path.push_back(root-&gt;val);</span><br><span class="line">        tar -= root-&gt;val;</span><br><span class="line">        <span class="keyword">if</span> (tar == <span class="number">0</span> &amp;&amp; root-&gt;left == <span class="literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="literal">nullptr</span>)</span><br><span class="line">            res.push_back(path);</span><br><span class="line">        dfs(root-&gt;left,tar);</span><br><span class="line">        dfs(root-&gt;right,tar);</span><br><span class="line">        path.pop_back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629144342707.png" alt="image-20210629144342707"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 33 二叉搜索数的后序遍历序列" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/29/SwordToOffer%20-%2033%20%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%95%B0%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/"
+    >《剑指Offer》  33 - 二叉搜索数的后序遍历序列</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/29/SwordToOffer%20-%2033%20%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%95%B0%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/" class="article-date">
+  <time datetime="2021-06-29T03:36:38.000Z" itemprop="datePublished">2021-06-29</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-33-二叉搜索数的后序遍历序列"><a href="#《剑指Offer》-33-二叉搜索数的后序遍历序列" class="headerlink" title="《剑指Offer》  33 - 二叉搜索数的后序遍历序列"></a>《剑指Offer》  33 - 二叉搜索数的后序遍历序列</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/" target="_blank" rel="noopener">剑指 Offer 33. 二叉搜索树的后序遍历序列</a></p>
+<p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历结果。如果是则返回 <code>true</code>，否则返回 <code>false</code>。假设输入的数组的任意两个数字都互不相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">参考以下这颗二叉搜索树：</span><br><span class="line">     5</span><br><span class="line">    &#x2F; \</span><br><span class="line">   2   6</span><br><span class="line">  &#x2F; \</span><br><span class="line"> 1   3</span><br><span class="line"></span><br><span class="line">示例 1：</span><br><span class="line">输入: [1,6,3,2,5]</span><br><span class="line">输出: false</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入: [1,3,2,6,5]</span><br><span class="line">输出: true</span><br><span class="line"> </span><br><span class="line">提示：</span><br><span class="line">数组长度 &lt;&#x3D; 1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一：递归分治"><a href="#方法一：递归分治" class="headerlink" title="方法一：递归分治"></a>方法一：递归分治</h4><ul>
+<li>首先理清后序遍历的定义，后续遍历中最后一个数字是根节点的值。前面的数字可以分成两部分，第一部分是左子树节点的值，它们都小于根节点；第二部分是右子树节点的值，它们都比根节点大。</li>
+<li><strong>终止条件</strong>：当 <code>i &gt;= j</code>，说明此子树节点数量 <code>&lt;= 1</code>，则无需判断直接返回 <code>true</code></li>
+<li><strong>递推</strong>：<ul>
+<li>按照后序遍历的性质划分左右子树</li>
+<li>判断左右子树是否均为二叉搜索数</li>
+</ul>
+</li>
+<li><strong>返回值</strong>：<ul>
+<li>此树正确 &amp;&amp;</li>
+<li>左子树正确 &amp;&amp;</li>
+<li>右子树正确</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">verifyPostorder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> _verifyPostorder(postorder, <span class="number">0</span>, postorder.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">bool</span> _verifyPostorder(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= j) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">int</span> p = i;</span><br><span class="line">        <span class="keyword">while</span> (postorder[p] &lt; postorder[j]) ++p;</span><br><span class="line">        <span class="keyword">int</span> cut_point = p;</span><br><span class="line">        <span class="keyword">while</span> (postorder[p] &gt; postorder[j]) ++p;</span><br><span class="line">        <span class="keyword">return</span> p == j &amp;&amp; _verifyPostorder(postorder, i, cut_point - <span class="number">1</span>) &amp;&amp; _verifyPostorder(postorder, cut_point, j - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:%5CUsers%5Cszz%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20210629094743098.png" alt="image-20210629094743098"></p>
+<h4 id="方法二-：-辅助单调栈"><a href="#方法二-：-辅助单调栈" class="headerlink" title="方法二 ： 辅助单调栈"></a>方法二 ： 辅助单调栈</h4><ul>
+<li><strong>后序遍历的倒序：</strong> 根|右|左。类似于先序遍历的镜像（根|左|右）。</li>
+<li>设后续遍历的倒序为 $r_n,r_{n-1},…r_1$ ，设索引为i，若为<strong>二叉搜索树</strong>，则有：<ul>
+<li>若 $r_{i+1} &lt; r_i$：$r_i$ 是 $r_{i+1}$ 的右子节点</li>
+<li>若 $r_{i+1} &gt; r_i$：$r_i$ 一定是某节点 <code>root</code> 的左子节点，且 <code>root</code> 为节点 $r_{i+1}, r_{i+2},… r_1$ 中值大于且最接近 $r_i$ 的节点且最接近 $r_i$ 的节点，因为 <code>root</code> 是直接连接左子节点 $r_i$ 的。</li>
+</ul>
+</li>
+<li>当遍历时遇到递减节点  $r_{i+1} &gt; r_i$ 时，如果是二叉搜索树，最对于后序遍历中节点 $r_i$ 右边的所有节点，都必须小于 <code>root</code>。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">     5</span><br><span class="line">    &#x2F; \</span><br><span class="line">   2   6</span><br><span class="line">  &#x2F; \   </span><br><span class="line"> 1   3   </span><br><span class="line"> </span><br><span class="line"> 后序：13265</span><br><span class="line"> 栈的操作过程：</span><br><span class="line">i &#x3D; 4 : s[INT_MAX] -&gt; root &#x3D; INT_MAX -&gt; s[5]</span><br><span class="line">i &#x3D; 3 : s[5] -&gt; s[5,6]</span><br><span class="line">i &#x3D; 2 : s[5,6] -&gt; root&#x3D;6,s[5];root&#x3D;5,s[] -&gt; s[2]</span><br><span class="line">i &#x3D; 1 : s[2] -&gt; s[2,3]</span><br><span class="line">i &#x3D; 0 : s[2,3] -&gt; root &#x3D; 3,s[2];root&#x3D;2,s[] -&gt; s[1]</span><br><span class="line">return true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">后序：[1,6,3,2,5]</span><br><span class="line">栈的操作过程：false</span><br><span class="line">i &#x3D; 4: s[INT_MAX] -&gt; root &#x3D; INT_MAX -&gt; s[5]</span><br><span class="line">i &#x3D; 3: s[5] -&gt;  root &#x3D; 5,s[] -&gt; s[2]</span><br><span class="line">i &#x3D; 2: s[2] -&gt; s[2,3]</span><br><span class="line">i &#x3D; 1: s[2,3] -&gt; 6 &gt; 5 return false</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">verifyPostorder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; postorder)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">int</span> root = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = postorder.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (postorder[i] &gt; root) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">while</span> (!s.empty() &amp;&amp; s.top() &gt; postorder[i]) <span class="comment">// 遇到递减元素</span></span><br><span class="line">            &#123;</span><br><span class="line">                root = s.top();</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            s.push(postorder[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 32 从上到下打印二叉树" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/29/SwordToOffer%20-%2032%20%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/"
+    >《剑指Offer》  32 - 从上到下打印二叉树</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/29/SwordToOffer%20-%2032%20%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2021-06-29T01:14:24.000Z" itemprop="datePublished">2021-06-29</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-32-从上到下打印二叉树"><a href="#《剑指Offer》-32-从上到下打印二叉树" class="headerlink" title="《剑指Offer》  32 - 从上到下打印二叉树"></a>《剑指Offer》  32 - 从上到下打印二叉树</h1><p><strong>题目1：</strong><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-lcof/" target="_blank" rel="noopener">剑指 Offer 32 - I. 从上到下打印二叉树</a></p>
+<p>从上到下打印出二叉树的每个节点，同一层的节点按照从左到右的顺序打印。</p>
+<pre><code>例如:
+给定二叉树: [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+返回：
+[3,9,20,15,7]
+
+提示：
+节点总数 &lt;= 1000 </code></pre><h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="层序遍历即可-也可用于-图的遍历（BFS）"><a href="#层序遍历即可-也可用于-图的遍历（BFS）" class="headerlink" title="层序遍历即可 也可用于 图的遍历（BFS）"></a>层序遍历即可 也可用于 图的遍历（BFS）</h4><ul>
+<li>可以使用queue或者deque来做，两者的区别是：<ul>
+<li>queue可以访问两端但是只能修改队头</li>
+<li>deque可以访问两端并且可以在队首和队尾删除和插入元素</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* node = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            res.push_back(node-&gt;val);</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;left) q.push(node-&gt;left);</span><br><span class="line">            <span class="keyword">if</span> (node-&gt;right) q.push(node-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628173336152.png" alt="image-20210628173336152"></p>
+<p><strong>题目2：</strong><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/" target="_blank" rel="noopener">剑指 Offer 32 - II. 从上到下打印二叉树 II</a></p>
+<p>从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。</p>
+<pre><code>例如:
+给定二叉树: [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+返回其层次遍历结果：
+[
+  [3],
+  [9,20],
+  [15,7]
+]</code></pre><p><strong>本题与LeetCode102题相同：</strong><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">102. 二叉树的层序遍历</a></p>
+<h2 id="题解：-1"><a href="#题解：-1" class="headerlink" title="题解："></a>题解：</h2><ul>
+<li>巧用 <code>for</code> 循环， 循环次数为当前层节点数（即队列 <code>queue</code> 长度）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; ans;</span><br><span class="line">        q.push(root);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = q.<span class="built_in">size</span>(); i &gt; <span class="number">0</span>; --i)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* node = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                temp.push_back(node-&gt;val);</span><br><span class="line">                <span class="keyword">if</span>(node-&gt;left!=<span class="literal">NULL</span>) q.push(node-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(node-&gt;right!=<span class="literal">NULL</span>) q.push(node-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            ans.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628201922777.png" alt="image-20210628201922777"></p>
+<p><strong>剑指Offer中的写法：</strong></p>
+<ul>
+<li>利用三个临时变量<ul>
+<li><code>toBePrinted</code>表示当前层中还没有打印的结点数</li>
+<li><code>nextLayer</code>变量表示下一层节点的数目</li>
+<li><code>curLayer</code>变量表示当前所在层</li>
+</ul>
+</li>
+<li>本题要求分层打印，入队和出队的先后顺序将影响当前所在行的判断，因此必须严格遵循先出队再入队的顺序，否则会得到错误的结果。由于出队会造成信息的丢失，因此需要设置一个中间变量<code>temp</code>保存出队的结点。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="literal">nullptr</span>)</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">deque</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push_back(root);</span><br><span class="line">        <span class="keyword">int</span> toBePrinted = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> nextLayer = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> curLayer = <span class="number">0</span>;</span><br><span class="line">        res.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(toBePrinted == <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                toBePrinted = nextLayer;</span><br><span class="line">                nextLayer = <span class="number">0</span>;</span><br><span class="line">                curLayer++;</span><br><span class="line">                res.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">            &#125;</span><br><span class="line">            res[curLayer].push_back(q.front()-&gt;val);</span><br><span class="line">            TreeNode *temp = q.front();</span><br><span class="line">            toBePrinted--;</span><br><span class="line">            q.pop_front();</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(temp-&gt;left)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push_back(temp-&gt;left);</span><br><span class="line">                nextLayer++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(temp-&gt;right)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push_back(temp-&gt;right);</span><br><span class="line">                nextLayer++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628204845960.png" alt="image-20210628204845960"></p>
+<p><strong>递归写法：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        levelOrder(root, <span class="number">0</span>, res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">levelOrder</span><span class="params">(TreeNode* root, <span class="keyword">int</span> level, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span> (level &gt;= res.size()) res.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line"></span><br><span class="line">        res[level].push_back(root-&gt;val);</span><br><span class="line">        levelOrder(root-&gt;left, level + <span class="number">1</span>, res);</span><br><span class="line">        levelOrder(root-&gt;right, level + <span class="number">1</span>, res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628205401347.png" alt="image-20210628205401347"></p>
+<p><strong>题目3：</strong><a href="https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/" target="_blank" rel="noopener">剑指 Offer 32 - III. 从上到下打印二叉树 III</a></p>
+<p>请实现一个函数按照之字形顺序打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右到左的顺序打印，第三行再按照从左到右的顺序打印，其他行以此类推。</p>
+<pre><code>例如:
+给定二叉树: [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+返回其层次遍历结果：
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
+提示：
+节点总数 &lt;= 1000</code></pre><h2 id="题解：-2"><a href="#题解：-2" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一：-双端队列，两层一组"><a href="#方法一：-双端队列，两层一组" class="headerlink" title="方法一： 双端队列，两层一组"></a>方法一： 双端队列，两层一组</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">deque</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push_back(root);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">            <span class="comment">// 打印奇数层</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = q.size(); i &gt; <span class="number">0</span>; --i)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* node = q.front();</span><br><span class="line">                q.pop_front();</span><br><span class="line">                temp.push_back(node-&gt;val);</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left) q.push_back(node-&gt;left);</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right) q.push_back(node-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            res.push_back(temp);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (q.empty()) <span class="keyword">break</span>; <span class="comment">// 若为空，则最后一层是奇数层，直接跳出</span></span><br><span class="line">            temp.clear();</span><br><span class="line">            <span class="comment">// 打印偶数层</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = q.size(); i &gt; <span class="number">0</span>; --i)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* node = q.back();</span><br><span class="line">                q.pop_back();</span><br><span class="line">                temp.push_back(node-&gt;val);</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;right) q.push_front(node-&gt;right);</span><br><span class="line">                <span class="keyword">if</span> (node-&gt;left) q.push_front(node-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">            res.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628213618908.png" alt="image-20210628213618908"></p>
+<h4 id="方法二：按奇偶行从-队后-or-队前插入-temp"><a href="#方法二：按奇偶行从-队后-or-队前插入-temp" class="headerlink" title="方法二：按奇偶行从 队后 or 队前插入 temp"></a>方法二：按奇偶行从 队后 or 队前插入 temp</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><span class="keyword">public</span>:    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;        <span class="keyword">if</span> (!root) <span class="keyword">return</span> &#123;&#125;;        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;        q.push(root);        <span class="keyword">while</span>(!q.empty())        &#123;            <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; temp;            <span class="comment">// 打印奇数层            for (int i = q.size(); i &gt; 0; --i)            &#123;                TreeNode* node = q.front();                q.pop();                if (res.size() % 2 == 0) temp.push_back(node-&gt;val);                else temp.push_front(node-&gt;val);                if (node-&gt;left) q.push(node-&gt;left);                if (node-&gt;right) q.push(node-&gt;right);            &#125;            res.push_back((vector&lt;int&gt;)&#123;temp.begin(),temp.end()&#125;);        &#125;        return res;    &#125;&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629091332699.png" alt="image-20210629091332699"></p>
+<h4 id="方法三：根据res的大小判断奇偶行，然后决定是否使用-reverse-函数"><a href="#方法三：根据res的大小判断奇偶行，然后决定是否使用-reverse-函数" class="headerlink" title="方法三：根据res的大小判断奇偶行，然后决定是否使用 reverse 函数"></a>方法三：根据res的大小判断奇偶行，然后决定是否使用 reverse 函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><span class="keyword">public</span>:    <span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; <span class="title">levelOrder</span><span class="params">(TreeNode* root)</span> </span>&#123;        <span class="keyword">if</span> (!root) <span class="keyword">return</span> &#123;&#125;;        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;        q.push(root);        <span class="keyword">while</span>(!q.empty())        &#123;            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;            <span class="keyword">for</span> (<span class="keyword">int</span> i = q.size(); i &gt; <span class="number">0</span>; --i)            &#123;                TreeNode* node = q.front();                q.pop();                temp.push_back(node-&gt;val);                <span class="keyword">if</span> (node-&gt;left) q.push(node-&gt;left);                <span class="keyword">if</span> (node-&gt;right) q.push(node-&gt;right);            &#125;            <span class="keyword">if</span> (res.size() % <span class="number">2</span> == <span class="number">1</span>)                reverse(temp.begin(),temp.end());            res.push_back(temp);        &#125;        <span class="keyword">return</span> res;    &#125;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210629091202472.png" alt="image-20210629091202472"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 31 栈的压入、弹出序列" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/29/SwordToOffer%20-%2031%20%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/"
+    >《剑指Offer》  31 - 栈的压入、弹出序列</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/29/SwordToOffer%20-%2031%20%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/" class="article-date">
+  <time datetime="2021-06-29T01:13:48.000Z" itemprop="datePublished">2021-06-29</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-31-栈的压入、弹出序列"><a href="#《剑指Offer》-31-栈的压入、弹出序列" class="headerlink" title="《剑指Offer》  31 - 栈的压入、弹出序列"></a>《剑指Offer》  31 - 栈的压入、弹出序列</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/" target="_blank" rel="noopener">剑指 Offer 31. 栈的压入、弹出序列</a></p>
+<p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：pushed &#x3D; [1,2,3,4,5], popped &#x3D; [4,5,3,2,1]</span><br><span class="line">输出：true</span><br><span class="line">解释：我们可以按以下顺序执行：</span><br><span class="line">push(1), push(2), push(3), push(4), pop() -&gt; 4,</span><br><span class="line">push(5), pop() -&gt; 5, pop() -&gt; 3, pop() -&gt; 2, pop() -&gt; 1</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：pushed &#x3D; [1,2,3,4,5], popped &#x3D; [4,3,5,1,2]</span><br><span class="line">输出：false</span><br><span class="line">解释：1 不能在 2 之前弹出。</span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">0 &lt;&#x3D; pushed.length &#x3D;&#x3D; popped.length &lt;&#x3D; 1000</span><br><span class="line">0 &lt;&#x3D; pushed[i], popped[i] &lt; 1000</span><br><span class="line">pushed 是 popped 的排列。</span><br></pre></td></tr></table></figure>
+
+<p><strong>本题与LeetCode946相同：</strong><a href="https://leetcode-cn.com/problems/validate-stack-sequences/" target="_blank" rel="noopener">946. 验证栈序列</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><ul>
+<li>建立一个辅助栈，把输入的第一个序列中的数字依次压入辅助栈，并按第二个序列的顺序依次从该栈弹出，如果最后栈为空，则序列一致。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validateStackSequences</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; pushed, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; popped)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : pushed)</span><br><span class="line">        &#123;</span><br><span class="line">            s.push(num);</span><br><span class="line">            <span class="keyword">while</span> (!s.empty() &amp;&amp; s.top() == popped[i])</span><br><span class="line">            &#123;</span><br><span class="line">                s.pop();</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628170348181.png" alt="image-20210628170348181"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 30 包含min函数的栈" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/28/SwordToOffer%20-%2030%20%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88/"
+    >《剑指Offer》  30 - 包含min函数的栈</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/28/SwordToOffer%20-%2030%20%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88/" class="article-date">
+  <time datetime="2021-06-28T08:25:38.000Z" itemprop="datePublished">2021-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-30-包含min函数的栈"><a href="#《剑指Offer》-30-包含min函数的栈" class="headerlink" title="《剑指Offer》  30 - 包含min函数的栈"></a>《剑指Offer》  30 - 包含min函数的栈</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/" target="_blank" rel="noopener">剑指 Offer 30. 包含min函数的栈</a></p>
+<p>定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line">MinStack minStack &#x3D; new MinStack();</span><br><span class="line">minStack.push(-2);</span><br><span class="line">minStack.push(0);</span><br><span class="line">minStack.push(-3);</span><br><span class="line">minStack.min();   --&gt; 返回 -3.</span><br><span class="line">minStack.pop();</span><br><span class="line">minStack.top();      --&gt; 返回 0.</span><br><span class="line">minStack.min();   --&gt; 返回 -2.</span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">各函数的调用总次数不超过 20000 次</span><br></pre></td></tr></table></figure>
+
+<p><strong>本题与LeetCode155相同：</strong><a href="https://leetcode-cn.com/problems/min-stack/" target="_blank" rel="noopener">155. 最小栈</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一：异步-双栈"><a href="#方法一：异步-双栈" class="headerlink" title="方法一：异步 双栈"></a>方法一：异步 双栈</h4><ul>
+<li>注意<code>INT_MAX</code>的使用，表示整数最大值。</li>
+<li>注意<code>push</code>操作中的比较是 <code>&lt;=</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s1;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s2;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    MinStack() &#123;</span><br><span class="line">        <span class="keyword">while</span>(!s1.empty()) s1.pop();</span><br><span class="line">        <span class="keyword">while</span>(!s2.empty()) s2.pop();</span><br><span class="line">        s2.push(INT_MAX);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        s1.push(x);</span><br><span class="line">        <span class="keyword">if</span> (s2.empty() || x &lt;= s2.top())</span><br><span class="line">            s2.push(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s1.top() == s2.top())</span><br><span class="line">            s2.pop();</span><br><span class="line">        s1.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.top();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s2.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MinStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MinStack* obj = new MinStack();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;top();</span></span><br><span class="line"><span class="comment"> * int param_4 = obj-&gt;min();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628162136494.png" alt="image-20210628162136494"></p>
+<h4 id="方法二：同步-双栈"><a href="#方法二：同步-双栈" class="headerlink" title="方法二：同步 双栈"></a>方法二：同步 双栈</h4><ul>
+<li>两个栈的元素个数保持一致，所以<code>pop()</code>时可以同时<code>pop()</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s1;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s2;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    MinStack() &#123;</span><br><span class="line">        s2.push(INT_MAX);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        s1.push(x);</span><br><span class="line">        s2.push(<span class="built_in">std</span>::min(s2.top(), x));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        s1.pop();</span><br><span class="line">        s2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s1.top();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s2.top();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628161247579.png" alt="image-20210628161247579"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 29 顺时针打印矩阵" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/28/SwordToOffer%20-%2029%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/"
+    >《剑指Offer》  29 - 顺时针打印矩阵</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/28/SwordToOffer%20-%2029%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5/" class="article-date">
+  <time datetime="2021-06-28T08:25:03.000Z" itemprop="datePublished">2021-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-29-顺时针打印矩阵"><a href="#《剑指Offer》-29-顺时针打印矩阵" class="headerlink" title="《剑指Offer》  29 - 顺时针打印矩阵"></a>《剑指Offer》  29 - 顺时针打印矩阵</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/" target="_blank" rel="noopener">剑指 Offer 29. 顺时针打印矩阵</a></p>
+<p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：matrix &#x3D; [[1,2,3],[4,5,6],[7,8,9]]</span><br><span class="line">输出：[1,2,3,6,9,8,7,4,5]</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：matrix &#x3D; [[1,2,3,4],[5,6,7,8],[9,10,11,12]]</span><br><span class="line">输出：[1,2,3,4,8,12,11,10,9,5,6,7]</span><br><span class="line"></span><br><span class="line">限制：</span><br><span class="line">0 &lt;&#x3D; matrix.length &lt;&#x3D; 100</span><br><span class="line">0 &lt;&#x3D; matrix[i].length &lt;&#x3D; 100</span><br></pre></td></tr></table></figure>
+
+<p><strong>本题与LeetCode54相同：</strong><a href="https://leetcode-cn.com/problems/spiral-matrix/" target="_blank" rel="noopener">54. 螺旋矩阵</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p>在判空的时候，注意顺序，如果写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line"><span class="keyword">int</span> row = matrix.size() - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> col = matrix[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> (row &lt; <span class="number">0</span>) <span class="keyword">return</span> res;</span><br></pre></td></tr></table></figure>
+
+<p>会报指针错误，因为当res为空时，不存在<code>matrix[0].size()</code>，所以要这样写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line"><span class="keyword">int</span> row = matrix.size() - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> (row &lt; <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line"><span class="keyword">int</span> col = matrix[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或者写成</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (matrix.size() == <span class="number">0</span> || matrix[<span class="number">0</span>].size() == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">int</span> rows = matrix.size(), columns = matrix[<span class="number">0</span>].size();</span><br></pre></td></tr></table></figure>
+
+<p>设置四个边界，如图所示：</p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628153341074.png" alt="image-20210628153341074"></p>
+<h4 id="写法一："><a href="#写法一：" class="headerlink" title="写法一："></a>写法一：</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">spiralOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (matrix.empty()) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right = matrix[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> top = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> bottom = matrix.size() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 左上 --&gt; 右上</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = left; i &lt;= right; ++i) res.push_back(matrix[top][i]);</span><br><span class="line">            <span class="keyword">if</span> (++top &gt; bottom) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 右上 --&gt; 右下</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = top; i &lt;= bottom; ++i) res.push_back(matrix[i][right]);</span><br><span class="line">            <span class="keyword">if</span> (--right &lt; left) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 右下 --&gt; 左下</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = right; i &gt;= left; --i) res.push_back(matrix[bottom][i]);</span><br><span class="line">            <span class="keyword">if</span> (--bottom &lt; top) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 左下 --&gt; 左上</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = bottom; i &gt;= top; --i) res.push_back(matrix[i][left]);</span><br><span class="line">            <span class="keyword">if</span> (++left &gt; right) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628153723096.png" alt="image-20210628153723096"></p>
+<h4 id="写法二："><a href="#写法二：" class="headerlink" title="写法二："></a>写法二：</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">spiralOrder</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (row &lt; <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">        <span class="keyword">int</span> col = matrix[<span class="number">0</span>].size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = col, top = <span class="number">0</span>, bottom = row;</span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right &amp;&amp; top &lt;= bottom)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = left; i &lt;= right; ++i)</span><br><span class="line">                res.push_back(matrix[top][i]);</span><br><span class="line">            top++;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = top; i &lt;= bottom; ++i)</span><br><span class="line">                res.push_back(matrix[i][right]);</span><br><span class="line">            right--;</span><br><span class="line">            </span><br><span class="line">			<span class="comment">// 判断是否重复打印，只有一行的时候，就不需要打印了，所以需要top&lt;=bottom</span></span><br><span class="line">            <span class="keyword">if</span> (top &lt;= bottom)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = right; i &gt;= left; --i)</span><br><span class="line">                    res.push_back(matrix[bottom][i]);</span><br><span class="line">                bottom--;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">			<span class="comment">// 判断是否重复打印，当只有一列的时候，就不需要打印了，所以需要left&lt;=right</span></span><br><span class="line">            <span class="keyword">if</span> (left &lt;= right)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = bottom; i &gt;= top; --i)</span><br><span class="line">                    res.push_back(matrix[i][left]);</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628142431419.png" alt="image-20210628142431419"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 28 对称的二叉树" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/28/SwordToOffer%20-%2028%20%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91/"
+    >《剑指Offer》 28 - 对称的二叉树</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/28/SwordToOffer%20-%2028%20%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2021-06-28T08:24:36.000Z" itemprop="datePublished">2021-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-28-对称的二叉树"><a href="#《剑指Offer》-28-对称的二叉树" class="headerlink" title="《剑指Offer》 28 - 对称的二叉树"></a>《剑指Offer》 28 - 对称的二叉树</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/" target="_blank" rel="noopener">剑指 Offer 28. 对称的二叉树</a></p>
+<p>请实现一个函数，用来判断一棵二叉树是不是对称的。如果一棵二叉树和它的镜像一样，那么它是对称的。</p>
+<pre><code>例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+示例 1：
+输入：root = [1,2,2,3,4,4,3]
+输出：true
+
+示例 2：
+输入：root = [1,2,2,null,3,null,3]
+输出：false
+
+限制：
+0 &lt;= 节点个数 &lt;= 1000</code></pre><p><strong>本题与LeetCode28相同：</strong><a href="https://leetcode-cn.com/problems/symmetric-tree/" target="_blank" rel="noopener">101. 对称二叉树</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一：递归遍历，比较前序遍历和对称前序遍历"><a href="#方法一：递归遍历，比较前序遍历和对称前序遍历" class="headerlink" title="方法一：递归遍历，比较前序遍历和对称前序遍历"></a>方法一：递归遍历，比较前序遍历和对称前序遍历</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> isSymmetric(root-&gt;left,root-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* L, TreeNode* R)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!L &amp;&amp; !R) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(!L || !R || L-&gt;val != R-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> isSymmetric(L-&gt;left, R-&gt;right) &amp;&amp; isSymmetric(L-&gt;right, R-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628105631979.png" alt="image-20210628105631979"></p>
+<h4 id="方法二：使用辅助栈-BFS"><a href="#方法二：使用辅助栈-BFS" class="headerlink" title="方法二：使用辅助栈 BFS"></a>方法二：使用辅助栈 BFS</h4><ul>
+<li>入栈两对（左子树的左孩子和右子树的右孩子是一对，左子树的右孩子和右子树的左孩子是一对），出栈的时候出栈一对，判别是否符合条件，全部遍历完，队列为空，则全部符合，返回<code>true</code>。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">        s.push(root-&gt;left);</span><br><span class="line">        s.push(root-&gt;right);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* curR = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            TreeNode* curL = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ((!curL &amp;&amp; curR) || curL &amp;&amp; !curR)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (curL &amp;&amp; curR)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(curL-&gt;val != curR-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="comment">// 左子树的左孩子，右子树的右孩子</span></span><br><span class="line">                s.push(curL-&gt;left);</span><br><span class="line">                s.push(curR-&gt;right);</span><br><span class="line">                <span class="comment">// 左子树的右孩子，右子树的左孩子</span></span><br><span class="line">                s.push(curL-&gt;right);</span><br><span class="line">                s.push(curR-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628132837470.png" alt="image-20210628132837470"></p>
+<h4 id="方法三-使用辅助队列-BFS"><a href="#方法三-使用辅助队列-BFS" class="headerlink" title="方法三 使用辅助队列 BFS"></a>方法三 使用辅助队列 BFS</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSymmetric</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root-&gt;left);</span><br><span class="line">        q.push(root-&gt;right);</span><br><span class="line">        <span class="keyword">while</span>(!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* curL = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            TreeNode* curR = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ((!curL &amp;&amp; curR) || (curL &amp;&amp; !curR)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (curL &amp;&amp; curR)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (curL-&gt;val != curR-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                q.push(curL-&gt;left);</span><br><span class="line">                q.push(curR-&gt;right);</span><br><span class="line"></span><br><span class="line">                q.push(curL-&gt;right);</span><br><span class="line">                q.push(curR-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628133703740.png" alt="image-20210628133703740"></p>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 27 树的镜像" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/28/SwordToOffer%20-%2027%20%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F/"
+    >《剑指Offer》  27 - 树的镜像</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/28/SwordToOffer%20-%2027%20%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F/" class="article-date">
+  <time datetime="2021-06-28T08:24:06.000Z" itemprop="datePublished">2021-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-27-树的镜像"><a href="#《剑指Offer》-27-树的镜像" class="headerlink" title="《剑指Offer》  27 - 树的镜像"></a>《剑指Offer》  27 - 树的镜像</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/" target="_blank" rel="noopener">剑指 Offer 27. 二叉树的镜像</a></p>
+<p>请完成一个函数，输入一个二叉树，该函数输出它的镜像。</p>
+<pre><code>例如输入：
+      4
+    /   \
+  2      7
+ / \    / \
+1   3  6   9
+
+镜像输出：
+      4
+    /   \
+  7      2
+ / \    / \
+9   6  3   1
+
+示例 1：
+输入：root = [4,2,7,1,3,6,9]
+输出：[4,7,2,9,6,3,1]
+
+限制：
+0 &lt;= 节点个数 &lt;= 1000</code></pre><p><strong>本题与LeetCode226相同：</strong><a href="https://leetcode-cn.com/problems/invert-binary-tree/" target="_blank" rel="noopener">226. 翻转二叉树</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><ul>
+<li>递归交换，有多种写法</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">mirrorTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        TreeNode* temp = root-&gt;left;</span><br><span class="line">        root-&gt;left = mirrorTree(root-&gt;right);</span><br><span class="line">        root-&gt;right = mirrorTree(temp);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628100929962.png" alt="image-20210628100929962"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">mirrorTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        TreeNode* left = mirrorTree(root-&gt;left);</span><br><span class="line">        TreeNode* right = mirrorTree(root-&gt;right);</span><br><span class="line">        root-&gt;left = right;</span><br><span class="line">        root-&gt;right = left;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628101342412.png" alt="image-20210628101342412"></p>
+<h4 id="方法二-：辅助栈"><a href="#方法二-：辅助栈" class="headerlink" title="方法二 ：辅助栈"></a>方法二 ：辅助栈</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">mirrorTree</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">        s.push(root);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode* cur = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;left) s.push(cur-&gt;left);</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;right) s.push(cur-&gt;right);</span><br><span class="line">            swap(cur-&gt;left, cur-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628103051940.png" alt="image-20210628103051940"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+    <article id="post-SwordToOffer - 26 树的子结构" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/28/SwordToOffer%20-%2026%20%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/"
+    >《剑指Offer》 26 - 树的子结构</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/28/SwordToOffer%20-%2026%20%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/" class="article-date">
+  <time datetime="2021-06-28T08:23:28.000Z" itemprop="datePublished">2021-06-28</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-26-树的子结构"><a href="#《剑指Offer》-26-树的子结构" class="headerlink" title="《剑指Offer》 26 - 树的子结构"></a>《剑指Offer》 26 - 树的子结构</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/" target="_blank" rel="noopener">剑指 Offer 26. 树的子结构</a></p>
+<p>输入两棵二叉树<code>A</code>和<code>B</code>，判断<code>B</code>是不是<code>A</code>的子结构。(约定空树不是任意一个树的子结构)。<code>B</code>是<code>A</code>的子结构， 即 <code>A</code>中有出现和<code>B</code>相同的结构和节点值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">例如:</span><br><span class="line">给定的树 A:</span><br><span class="line"></span><br><span class="line">     3</span><br><span class="line">    &#x2F; \</span><br><span class="line">   4   5</span><br><span class="line">  &#x2F; \</span><br><span class="line"> 1   2</span><br><span class="line"></span><br><span class="line">给定的树 B：</span><br><span class="line"></span><br><span class="line">   4 </span><br><span class="line">  &#x2F;</span><br><span class="line"> 1</span><br><span class="line">返回 true，因为 B 与 A 的一个子树拥有相同的结构和节点值。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：A &#x3D; [1,2,3], B &#x3D; [3,1]</span><br><span class="line">输出：false</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：A &#x3D; [3,4,5,1,2], B &#x3D; [4,1]</span><br><span class="line">输出：true</span><br><span class="line"></span><br><span class="line">限制：</span><br><span class="line">0 &lt;&#x3D; 节点个数 &lt;&#x3D; 10000</span><br></pre></td></tr></table></figure>
+
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><ul>
+<li>先在树A中找和树B的根节点值相同的节点，再判断树B是不是树A的子树</li>
+<li><code>dosAhasB</code> 函数中注意判断的顺序<ul>
+<li>当节点 <code>B</code> 为空：说明树 <code>B</code> 已匹配完成（越过叶子节点），因此返回 <code>true</code> ；</li>
+<li>当节点 <code>A</code> 为空：说明已经越过树 <code>A</code>叶子节点，即匹配失败，返回 <code>false</code> ；</li>
+<li>当节点 <code>A</code> 和 <code>B</code> 的值不同：说明匹配失败，返回<code>false</code> ；</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSubStructure</span><span class="params">(TreeNode* A, TreeNode* B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> res = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(A &amp;&amp; B)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(A-&gt;val == B-&gt;val)</span><br><span class="line">                res = doesAhasB(A, B);</span><br><span class="line">            <span class="keyword">if</span>(!res)</span><br><span class="line">                res = isSubStructure(A-&gt;left, B);</span><br><span class="line">            <span class="keyword">if</span>(!res)</span><br><span class="line">                res = isSubStructure(A-&gt;right,B);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">doesAhasB</span><span class="params">(TreeNode*A, TreeNode*B)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!B) <span class="keyword">return</span> <span class="literal">true</span>;   </span><br><span class="line">        <span class="keyword">if</span> (!A) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (A-&gt;val != B-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> doesAhasB(A-&gt;left, B-&gt;left) &amp;&amp; doesAhasB(A-&gt;right, B-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628091648312.png" alt="image-20210628091648312"></p>
+<h4 id="方法二-递归-迭代"><a href="#方法二-递归-迭代" class="headerlink" title="方法二 递归+迭代"></a>方法二 递归+迭代</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isSubStructure</span><span class="params">(TreeNode* A, TreeNode* B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!A || !B) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">        s.push(A);</span><br><span class="line">        <span class="keyword">while</span>(!s.empty()) &#123;</span><br><span class="line">            TreeNode* cur = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">if</span>(cur) &#123;</span><br><span class="line">                <span class="keyword">if</span>(cur-&gt;val == B-&gt;val &amp;&amp; dfs(cur,B)) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                s.push(cur-&gt;left);</span><br><span class="line">                s.push(cur-&gt;right);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(TreeNode* A, TreeNode* B)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!B) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(!A) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> A-&gt;val == B-&gt;val &amp;&amp; dfs(A-&gt;left,B-&gt;left) &amp;&amp; dfs(A-&gt;right,B-&gt;right);       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210628094109478.png" alt="image-20210628094109478"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/6/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

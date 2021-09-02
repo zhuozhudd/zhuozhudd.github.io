@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    C基础 - 概念、随机数、字符与编码、字符串、编码、结构体 等 |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-CNote1" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  C基础 - 概念、随机数、字符与编码、字符串、编码、结构体 等
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/22/CNote1/" class="article-date">
+  <time datetime="2021-05-22T09:29:15.000Z" itemprop="datePublished">2021-05-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/C%E8%AF%AD%E8%A8%80/">C语言</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">3.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">14 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="C基础-1"><a href="#C基础-1" class="headerlink" title="C基础 1"></a>C基础 1</h1><h2 id="1-函数"><a href="#1-函数" class="headerlink" title="1 - 函数"></a>1 - 函数</h2><ul>
+<li><ol>
+<li>在变量前加const约束，主要用于定义函数的参数，表示该参数在函数中是只读取，不允许改变，如果函数中试图改变它的值，编译的时候就会报错。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>局部变量和全局变量的名称可以相同，在某函数或语句块内部，如果局部变量名与全局变量名相同，就会屏蔽全局变量而使用局部变量</li>
+</ol>
+</li>
+</ul>
+<h2 id="2-指针"><a href="#2-指针" class="headerlink" title="2 - 指针"></a>2 - 指针</h2><ul>
+<li><ol>
+<li>在printf函数中，输出内存地址的格式控制符是%p，地址采用十六进制的数字显示。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>空指针就是说指针没有指向任何内存变量，指针的值是空，所以不能操作内存，否则可能会引起程序的崩溃。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>在C语言中，数组占用的内存空间是连续的，数组名是数组元素的首地址，也是数组的地址。数组名、对数组取地址和数组元素的首地址<code>(arr,&amp;arr,&amp;arr[0])</code>是同一回事。在应用开发中，程序员一般用数组名，书写最简单。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>指针也是一种内存变量，是内存变量就要占用内存空间，在C语言中，任何类型的指针占用8字节的内存（32位操作系统4字节）</li>
+</ol>
+</li>
+</ul>
+<h2 id="3-整数"><a href="#3-整数" class="headerlink" title="3 - 整数"></a>3 - 整数</h2><ul>
+<li>二进制0b(0B)开头,八进制0开头,十六进制0x(0X)开头</li>
+<li>%hd、%d、%ld 以十进制、有符号的形式输出short、int、long 类型的整数。</li>
+<li>%hu、%u、%lu 以十进制、无符号的形式输出short、int、long 类型的整数。</li>
+<li>库函数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">atoi</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;   <span class="comment">// 把字符串nptr转换为int整数</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">atol</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;     <span class="comment">// 把字符串nptr转换为long整数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">abs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> j)</span></span>;            <span class="comment">// 求int整数的绝对值</span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">labs</span><span class="params">(<span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">int</span> j)</span></span>;     <span class="comment">// 求long整数的绝对值</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-数据类型的别名"><a href="#4-数据类型的别名" class="headerlink" title="4 - 数据类型的别名"></a>4 - 数据类型的别名</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="keyword">size_t</span>;</span><br><span class="line"><span class="keyword">size_t</span> ii; <span class="comment">// 等同于 unsigned int ii;</span></span><br></pre></td></tr></table></figure></li>
+<li>strlen的返回值是size_t类型。</li>
+<li>man strlen 查看strlen的文档</li>
+</ul>
+<h2 id="5-随机数"><a href="#5-随机数" class="headerlink" title="5 - 随机数"></a>5 - 随机数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">srand</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> seed)</span></span>; <span class="comment">// 随机数生成器的初始化函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rand</span><span class="params">()</span></span>;  <span class="comment">// 获取一个随机数</span></span><br><span class="line"></span><br><span class="line">srand(time(<span class="number">0</span>));  <span class="comment">// 播下随机种子,每次运行都不同</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d "</span>,rand());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rand函数初始化随机数发生器（俗称种子），在实际开发中，可以用时间作为参数，只要每次播种的时间不同，那么生成的种子就不同，最终的随机数也就不同，通常我们采用<code>&lt;time.h&gt;</code> 头文件中的 time 函数即可得到一个精确到秒的时间作为种子。</li>
+<li>生成一定范围的随机数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = rand() % <span class="number">50</span>;   <span class="comment">// 产生0~49的随机数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = rand() % <span class="number">51</span> + <span class="number">100</span>;   <span class="comment">// 产生100~150的随机数</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="6-字符与ASCII码"><a href="#6-字符与ASCII码" class="headerlink" title="6 - 字符与ASCII码"></a>6 - 字符与ASCII码</h2><ul>
+<li>32是空格。</li>
+<li>48～57为0到9十个阿拉伯数字；</li>
+<li>65～90为26个大写英文字母；</li>
+<li>97～122号为26个小写英文字母；</li>
+<li><strong>在char的取值范围内（0-255），字符和整数没有本质区别</strong>,char 变量在内存中存储的是字符对应的 ASCII 码值。如果以 %c 输出，会根据 ASCII 码表转换成对应的字符，如果以 %d 输出，那么还是整数。int 变量在内存中存储的是整数本身，如果以 %c 输出时，也会根据 ASCII 码表转换成对应的字符<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalpha</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是字母（'A'-'Z','a'-'z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isalnum</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是字母（'A'-'Z','a'-'z'）或数字（'0'-'9'），返回非0值,否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isdigit</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是数字（'0'-'9'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">islower</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是小写字母（'a'-'z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isupper</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是大写字母（'A'-'Z'）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tolower</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是大写字母（'A'-'Z'）返回相应的小写字母（'a'-'z'）。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">toupper</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是小写字母（'a'-'z'）返回相应的大写字母（'A'-'Z'）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ispunct</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是标点字符（0x00-0x1F）返回非0值，否则返回0。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isspace</span><span class="params">(<span class="keyword">int</span> ch)</span></span>;  <span class="comment">// 若ch是空格（' '），水平制表符（'/t'）,回车符（'/r'），走纸换行（'/f'），垂直制表符（'/v'），换行符（'/n'），返回非0值，否则返回0。</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="7-浮点数"><a href="#7-浮点数" class="headerlink" title="7 - 浮点数"></a>7 - 浮点数</h2><ul>
+<li><p>浮点数的精度:</p>
+<ul>
+<li>float只能表达6-7位的有效数字，不能用“==”判断两个数字是否相等。</li>
+<li>double能表达15-16位有效的数字，可以用“==”判断两个数字是否相等。</li>
+<li>long double占用的内存是double的两倍，但表达数据的精度和double相同。</li>
+<li>实际开发中，建议弃用float，只采用double就可以</li>
+</ul>
+</li>
+<li><p>浮点数的输出:</p>
+<ul>
+<li>float采用%f占位符。</li>
+<li>double采用%lf占位符.</li>
+<li>long double采用%Lf占位符，注意，L是大写。</li>
+</ul>
+</li>
+<li><p>float只能表达6-7位的有效数字，不能用“==”判断两个数字是否相等。</p>
+</li>
+<li><p>double能表达15-16位有效的数字，可以用“==”判断两个数字是否相等。</p>
+</li>
+<li><p>long double占用的内存是double的两倍，但表达数据的精度和double相同。</p>
+<p><strong>在实际开发中，建议弃用float，只采用double就可以，long double暂时没有必要，但不知道以后的操作系统和编译器对long double是否有改进</strong></p>
+</li>
+<li><p>常用库函数:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">atof</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *nptr)</span></span>;       <span class="comment">// 把字符串nptr转换为double</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">fabs</span><span class="params">(<span class="keyword">double</span> x)</span></span>;                <span class="comment">// 求双精度实数x的绝对值</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">pow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>;      <span class="comment">// 求 x 的 y 次幂（次方）</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">round</span><span class="params">(<span class="keyword">double</span> x)</span></span>;               <span class="comment">// double四舍五入</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">ceil</span><span class="params">(<span class="keyword">double</span> x)</span></span>;                <span class="comment">// double向上取整数</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">floor</span><span class="params">(<span class="keyword">double</span> x)</span></span>;               <span class="comment">// double向下取整数</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">fmod</span><span class="params">(<span class="keyword">double</span> x,<span class="keyword">double</span> y)</span></span>;      <span class="comment">// 求x/y整除后的双精度余数</span></span><br><span class="line"><span class="comment">// 把双精度val分解成整数部分和小数部分，整数部分存放在ip所指的变量中，返回小数部分。</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">modf</span><span class="params">(<span class="keyword">double</span> val,<span class="keyword">double</span> *ip)</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>科学计数法</p>
+<ul>
+<li>科学计数法采用%e或%E输出，完整的输出格式是%m.ne或%m.nE，指定输出数据整数部分和小数部分共占m位，其中有n位是小数。如果数值长度小于m，则左端补空格，若数值长度大于m，则按实际位数输出</li>
+</ul>
+</li>
+<li><p>浮点数有一些坑，例如两个浮点数不相等和精度的问题，在实际开发中，我们经常用整数代替浮点数，因为整数是精确的，效率也更高。例如人的身高一米七五，以米为单位，用浮点数表示是1.75米，如果以厘米为单位，用整数表示是175。</p>
+</li>
+</ul>
+<h2 id="8-字符串"><a href="#8-字符串" class="headerlink" title="8 - 字符串"></a>8 - 字符串</h2><ul>
+<li><p>因为字符串需要用\0结尾，所以在定义字符串的时候，字符数组的长度要预留多一个字节用来存放\0, \0就是数字0。这是约定。</p>
+</li>
+<li><p>一个中文字符占两个字节（GBK编码）。char strname[21]用于存放中文的时候，只能存10个汉字。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>];  <span class="comment">// 定义一个最多存放20个英文字符或十个中文的字符串</span></span><br></pre></td></tr></table></figure></li>
+<li><p>字符串的初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>]; <span class="comment">// 一个字符占一个字节</span></span><br><span class="line"><span class="built_in">memset</span>(strname,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname));  <span class="comment">// 把全部的元素置为0</span></span><br></pre></td></tr></table></figure></li>
+<li><p>字符串越界问题 c80_str.c</p>
+</li>
+<li><p>字符串常用的库函数</p>
+</li>
+</ul>
+<ol>
+<li>strlen <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">size_t</span>  <span class="title">strlen</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span>*  str)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">返回值：返回字符串的字符数</span></span><br><span class="line"><span class="comment">strlen 函数计算的是字符串的实际长度，遇到第一个0结束。</span></span><br><span class="line"><span class="comment">函数返回值一定是size_t，是无符号的整数</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strcpy<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strcpy</span><span class="params">(<span class="keyword">char</span>* dest, <span class="keyword">const</span> <span class="keyword">char</span>* src)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功 能: 将参数src字符串拷贝至参数dest所指的地址。</span></span><br><span class="line"><span class="comment">返回值: 返回参数dest的字符串起始地址。</span></span><br><span class="line"><span class="comment">复制完字符串后，在dest后追加0。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strncpy<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">strncpy</span><span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src, <span class="keyword">const</span> <span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能：把src前n字符的内容复制到dest中</span></span><br><span class="line"><span class="comment">如果src的长度大于等于n，就截取src的前n个字符，不会在dest后追加0。*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strcat<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> * <span class="title">strcat</span><span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能：将src字符串拼接到dest所指的字符串尾部。</span></span><br><span class="line"><span class="comment">返回值：返回dest字符串起始地址。</span></span><br><span class="line"><span class="comment">dest最后原有的结尾字符0会被覆盖掉，并在连接后的字符串的尾部再增加一个0。</span></span><br><span class="line"><span class="comment">dest要有足够的空间来容纳要拼接的字符串，否则可能会造成缓冲溢出的错误情况。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+<li>strncat<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strncat</span> <span class="params">(<span class="keyword">char</span>* dest,<span class="keyword">const</span> <span class="keyword">char</span>* src, <span class="keyword">const</span> <span class="keyword">size_t</span> n)</span></span>;</span><br><span class="line"><span class="comment">// 功能：将src字符串的前n个字符拼接到dest所指的字符串尾部。</span></span><br></pre></td></tr></table></figure></li>
+<li>strchr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strchr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *s,<span class="keyword">const</span> <span class="keyword">int</span> c)</span></span>;</span><br><span class="line"><span class="comment">// 返回一个指向在字符串s中第一个出现c的位置，如果找不到，返回0。</span></span><br></pre></td></tr></table></figure></li>
+<li>strnchr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strrchr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *s,<span class="keyword">const</span> <span class="keyword">int</span> c)</span></span>;</span><br><span class="line"><span class="comment">// 返回一个指向在字符串s中最后一个出现c的位置，如果找不到，返回0.</span></span><br></pre></td></tr></table></figure></li>
+<li>strstr<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">strstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str,<span class="keyword">const</span> <span class="keyword">char</span>* substr)</span></span>;</span><br><span class="line"><span class="comment">// 返回值：返回字符串str中第一次出现子串substr的地址；如果没有检索到子串，则返回0。</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>位置（地址）偏移的用法<br>字符串的地址偏移其本质是指针的运算，常用于灵活的处理字符串。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> strname[<span class="number">21</span>];</span><br><span class="line"><span class="built_in">memset</span>(strname,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname));</span><br><span class="line"><span class="built_in">strcpy</span>(strname,<span class="string">"abcdefghijk"</span>);     <span class="comment">// 把abcdefghijk赋值给strname</span></span><br><span class="line"><span class="keyword">char</span> strname1[<span class="number">21</span>];</span><br><span class="line"><span class="built_in">memset</span>(strname1,<span class="number">0</span>,<span class="keyword">sizeof</span>(strname1));</span><br><span class="line"><span class="built_in">strcpy</span>(strname1,strname+<span class="number">1</span>);       <span class="comment">// 把bcdefghijk的值赋给strname1</span></span><br><span class="line"><span class="built_in">strncpy</span>(strname1,strname+<span class="number">2</span>,<span class="number">3</span>);    <span class="comment">// 把cde的值赋给strname1</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="9-数据类型转换"><a href="#9-数据类型转换" class="headerlink" title="9 - 数据类型转换"></a>9 - 数据类型转换</h2><ul>
+<li><p>计算机进行算术运算时，要求各操作数的类型具有相同的大小（存储位数）及存储方式，不能将 char 型（ 1 字节）数据与 int 型（ 2、4或8字节）数据直接参与运算；由于存储方式的不同，也不能将 int 型数据与 double 型数据直接参与运算。</p>
+</li>
+<li><p>一个表达式中出现不同类型间的混合运算，较低类型将自动向较高类型转换。一般情况下，数据的取值范围越大、精度越高，其类型也越“高级”。</p>
+</li>
+</ul>
+<h2 id="10-结构体"><a href="#10-结构体" class="headerlink" title="10 - 结构体"></a>10 - 结构体</h2><h3 id="10-1-占用内存的情况"><a href="#10-1-占用内存的情况" class="headerlink" title="10.1 占用内存的情况"></a>10.1 占用内存的情况</h3><ul>
+<li>理论上讲结构体的各个成员在内存中是连续存放的，和数组非常类似，但是，结构体的占用内存的总大小不一定等于全部成员变量占用内存大小之和。在编译器的具体实现中，为了提高内存寻址的效率，各个成员之间可能会存在缝隙。</li>
+<li>C语言提供了结构体成员内存对齐的方法，在定义结构体之前，增加以下代码可以使结构体成员变量之间的内存没有空隙。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-结构体的复制"><a href="#10-2-结构体的复制" class="headerlink" title="10.2 结构体的复制"></a>10.2 结构体的复制</h3><ul>
+<li>使用内存拷贝，C语言提供了memcpy（memory copy的简写）实现内存拷贝功能。<ul>
+<li><strong>src</strong> 源内存变量的起始地址。</li>
+<li><strong>dest</strong> 目的内存变量的起始地址。</li>
+<li><strong>n</strong> 需要复制内容的字节数。</li>
+<li>函数返回指向dest的地址，函数的返回值意义不大，程序员一般不关心这个返回值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memcpy</span><span class="params">(<span class="keyword">void</span> *dest, <span class="keyword">const</span> <span class="keyword">void</span> *src, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>strcpy 和 memcpy 比较：</p>
+<p>1）复制的内容不同，strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。</p>
+<p>2）用途不同，通常在复制字符串时用strcpy，而需要复制其他类型数据时则一般用memcpy。</p>
+<p>3）复制的方法不同，strcpy不需要指定长度，它遇到被复制字符的串结尾符0才结束，memcpy则是根据其第3个参数决定复制的长度。</p>
+</li>
+</ul>
+<h3 id="10-3-结构体作为函数的参数"><a href="#10-3-结构体作为函数的参数" class="headerlink" title="10.3 结构体作为函数的参数"></a>10.3 结构体作为函数的参数</h3><ul>
+<li>结构体是多个变量集合，作为函数参数时就可以传递整个集合，也就是所有成员。如果结构体成员较多，函数参数的初始化和赋值的内存开销会很大，影响程序的运行效率。所以最好的办法就是传递结构体变量的地址。</li>
+</ul>
+<h3 id="10-4-memset和bzero函数"><a href="#10-4-memset和bzero函数" class="headerlink" title="10.4 memset和bzero函数"></a>10.4 memset和bzero函数</h3><p><strong>memset函数：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">memset</span><span class="params">(<span class="keyword">void</span> *s, <span class="keyword">int</span> v, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>memset 函数是内存空间赋值函数，用来给某一块内存空间进行赋值的。包含在&lt;string.h&gt;头文件中。<ul>
+<li>s为内存空间的地址，一般是数组名或结构体的地址。</li>
+<li>v为要填充的值，填0就是初始化。</li>
+<li>n为要填充的字节数。</li>
+</ul>
+</li>
+</ul>
+<p><strong>bzero函数：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bzero</span><span class="params">(<span class="keyword">void</span> *s, <span class="keyword">size_t</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bzero函数是内存空间清零。包含在&lt;string.h&gt;头文件中。<ul>
+<li>s为内存空间的地址，一般是数组名或结构体的地址。</li>
+<li>n为要清零的字节数。</li>
+<li>如果要对数组或结构体清零，用memset和bzero都可以，没什么差别，看程序员的习惯。</li>
+</ul>
+</li>
+</ul>
+<h2 id="11-格式化输出"><a href="#11-格式化输出" class="headerlink" title="11 - 格式化输出"></a>11 - 格式化输出</h2><h3 id="11-1-格式说明符的形式如下（方括号-中的项为可选项）："><a href="#11-1-格式说明符的形式如下（方括号-中的项为可选项）：" class="headerlink" title="11.1 格式说明符的形式如下（方括号 [] 中的项为可选项）："></a>11.1 格式说明符的形式如下（方括号 [] 中的项为可选项）：</h3><p><strong><code>%[flags][width][.prec]type</code></strong></p>
+<h4 id="对齐标志-flags："><a href="#对齐标志-flags：" class="headerlink" title="对齐标志 flags："></a>对齐标志 flags：</h4><ul>
+<li>flag: 不填或+是右对齐,  - 是左对齐</li>
+</ul>
+<h4 id="宽度-width："><a href="#宽度-width：" class="headerlink" title="宽度 width："></a>宽度 width：</h4><ul>
+<li>如果本身输出的长度大于指定宽度，则宽度限制无效，输出本身</li>
+<li>数字会在前面补充0</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12s=\n"</span>,<span class="string">"abc"</span>);     <span class="comment">// 输出=         abc=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12d=\n"</span>,<span class="number">123</span>);       <span class="comment">// 输出=         123=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12lf=\n"</span>,<span class="number">123.5</span>);    <span class="comment">// 输出=  123.500000=</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="精度-prec"><a href="#精度-prec" class="headerlink" title="精度 .prec"></a>精度 .prec</h4><p>如果输出的内容是浮点数，用于控制输出内容的精度，也就是说小数点后面保留多少位，后面的数四舍五入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12.2lf=\n"</span>,<span class="number">123.5</span>);   <span class="comment">// 输出=      123.50=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%.2lf=\n"</span>,<span class="number">123.5</span>);     <span class="comment">// 输出=123.50=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%12.2e=\n"</span>,<span class="number">123500000000.0</span>);  <span class="comment">// 输出=    1.24e+11=</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"=%.2e=\n"</span>,<span class="number">123500000000.0</span>);    <span class="comment">// 输出=1.24e+11=</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类型符-type："><a href="#类型符-type：" class="headerlink" title="类型符 type："></a>类型符 type：</h4><ul>
+<li>%hd、%d、%ld 以十进制、有符号的形式输出 short、int、long 类型的整数。</li>
+<li>%hu、%u、%lu 以十进制、无符号的形式输出 short、int、long 类型的整数</li>
+<li>%c 输出字符。</li>
+<li>%lf 以普通方式输出double（float弃用，long doube无用）。</li>
+<li>%e 以科学计数法输出double。</li>
+<li>%s 输出字符串。</li>
+<li>%p 输出内存的地址</li>
+</ul>
+<h3 id="11-2-格式化输出到字符串"><a href="#11-2-格式化输出到字符串" class="headerlink" title="11.2 格式化输出到字符串"></a>11.2 格式化输出到字符串</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sprintf</span><span class="params">(<span class="keyword">char</span> *str, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">snprintf</span><span class="params">(<span class="keyword">char</span> *str, <span class="keyword">size_t</span> <span class="built_in">size</span>, <span class="keyword">const</span> <span class="keyword">char</span> *format, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>功能：printf是把结果输出到屏幕，sprintf把格式化输出的内容保存到字符串str中，snprintf的n类似于strncpy中的n，意思是只获取输出结果的前n-1个字符，不是n个字符。</strong></p>
+<p>sprintf 和 snprintf</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 格式化输出到str中</span></span><br><span class="line"><span class="built_in">sprintf</span>(str,<span class="string">"%d,%c,%f,%s"</span>,<span class="number">10</span>,<span class="string">'A'</span>,<span class="number">25.97</span>,<span class="string">"一共输入了三个数。"</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,str);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 格式化输出到str中，只截取前7个字符</span></span><br><span class="line"><span class="built_in">snprintf</span>(str,<span class="number">8</span>,<span class="string">"%d,%c,%f,%s"</span>,<span class="number">10</span>,<span class="string">'A'</span>,<span class="number">25.97</span>,<span class="string">"一共输入了三个数。"</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,str);</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果 n = 7，snprintf函数在unix和windows平台下的表现略有不同，在windows平台下，会输出7个字符。unix则输出6个字符</strong></p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/22/CNote1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C语言基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C语言学习笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/22/CNote2/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            C基础 - main函数参数、动态内存管理
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/11/09/Conda%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">Conda使用指南</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

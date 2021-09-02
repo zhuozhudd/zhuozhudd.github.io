@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    PyBullet Quickstart Guide 官方文档翻译 3 - Deformables and Cloth | 4 - Synthetic Camera Rendering | 5 - Collision Detection Queries | 6 - Inverse Dynamics, Kinematics |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-PyBullet2" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyBullet Quickstart Guide 官方文档翻译 3 - Deformables and Cloth | 4 - Synthetic Camera Rendering | 5 - Collision Detection Queries | 6 - Inverse Dynamics, Kinematics
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/31/PyBullet2/" class="article-date">
+  <time datetime="2021-05-31T07:35:54.000Z" itemprop="datePublished">2021-05-31</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/">机器人仿真</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">5.8k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">23 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="3-Deformables-and-Cloth-using-FEM-PBD"><a href="#3-Deformables-and-Cloth-using-FEM-PBD" class="headerlink" title="3. Deformables and Cloth (using FEM, PBD)"></a>3. Deformables and Cloth (using FEM, PBD)</h1><p>Finite Element Method (FEM) 有限元法<br><br>position based dynamics（PBD）基于位置的模拟<br><br>可以通过如下方式重置世界来启用基于有限元法(FEM)的模拟：<br><strong>deformable_torus.py</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pybullet.resetSimulation(p.RESET_USE_DEFORMABLE_WORLD)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>loadSoftBody/loadURDF<ul>
+<li>从VTK或OBJ文件加载一个可变形的对象。</li>
+</ul>
+</li>
+</ul>
+<h1 id="4-Synthetic-Camera-Rendering"><a href="#4-Synthetic-Camera-Rendering" class="headerlink" title="4. Synthetic Camera Rendering"></a>4. Synthetic Camera Rendering</h1><p>PyBullet有一个内置的OpenGL GPU可视化工具和一个基于TinyRenderer的内置CPU渲染器。这使得从任意相机位置渲染图像变得非常容易。在Linux上，你也可以在没有X11上下文的情况下启用硬件加速的OpenGL渲染。<br><br><strong>eglRenderTest.py</strong><br><br>合成相机由两个4 × 4矩阵指定:视图矩阵和投影矩阵。由于这些不是很直观，有一些辅助方法来计算视图和投影矩阵从可理解的参数。<br><a href="http://ksimek.github.io/2013/08/13/intrinsic/" target="_blank" rel="noopener">http://ksimek.github.io/2013/08/13/intrinsic/</a></p>
+<ul>
+<li>computeView/ProjectionMatrix</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Inupt parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>cameraEyePosition</td>
+<td>vec3f</td>
+<td>eye position在笛卡尔坐标系中</td>
+</tr>
+<tr>
+<td>R</td>
+<td>cameraTargetPosition</td>
+<td>vec3f</td>
+<td>目标(焦点)点的位置，以笛卡尔世界坐标表示</td>
+</tr>
+<tr>
+<td>R</td>
+<td>cameraUpVector</td>
+<td>vec3f</td>
+<td>在笛卡尔坐标系下，相机的up vector</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td>unused</td>
+</tr>
+</tbody></table>
+<p>输出是4x4视图矩阵，存储为包含16个浮点数的列表。<br></p>
+<ul>
+<li>computeViewMatrixFromYawPitchRoll</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>cameraTargetPosition</td>
+<td>list of 3 f</td>
+<td>目标焦点在笛卡尔世界坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>distance</td>
+<td>float</td>
+<td>从eye到焦点的距离</td>
+</tr>
+<tr>
+<td>R</td>
+<td>yaw</td>
+<td>float</td>
+<td>yaw angle in degrees left/right around up-axis.</td>
+</tr>
+<tr>
+<td>R</td>
+<td>pitch</td>
+<td>float</td>
+<td>pitch in degrees up/down.</td>
+</tr>
+<tr>
+<td>R</td>
+<td>roll</td>
+<td>float</td>
+<td>roll in degrees around forward vector</td>
+</tr>
+<tr>
+<td>R</td>
+<td>upAxisIndex</td>
+<td>int</td>
+<td>Y轴是1,Z轴是2。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td>unused</td>
+</tr>
+</tbody></table>
+<p>输出是4x4视图矩阵，存储为包含16个浮点数的列表。</p>
+<ul>
+<li>computeProjectionMatrix</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>left</td>
+<td>float</td>
+<td>左屏幕(画布)坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>right</td>
+<td>float</td>
+<td>右屏幕(画布)坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>bottom</td>
+<td>float</td>
+<td>下方屏幕(画布)坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>top</td>
+<td>float</td>
+<td>上方屏幕(画布)坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>near</td>
+<td>float</td>
+<td>近平面的距离</td>
+</tr>
+<tr>
+<td>R</td>
+<td>far</td>
+<td>float</td>
+<td>远平面的距离</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td>unused</td>
+</tr>
+</tbody></table>
+<p>输出是4x4投影矩阵，存储为一个包含16个浮点数的列表。</p>
+<ul>
+<li>computeProjectionMatrixFOV<ul>
+<li>这个命令还将使用不同的参数返回一个4x4投影矩阵。你可以查看OpenGL文档了解这些参数的含义</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>fov</td>
+<td>float</td>
+<td>视野</td>
+</tr>
+<tr>
+<td>R</td>
+<td>aspect</td>
+<td>float</td>
+<td>纵横比；屏幕高宽比</td>
+</tr>
+<tr>
+<td>R</td>
+<td>nearVal</td>
+<td>float</td>
+<td>近平面的距离</td>
+</tr>
+<tr>
+<td>R</td>
+<td>farVal</td>
+<td>flaot</td>
+<td>远平面的距离</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td>unused</td>
+</tr>
+</tbody></table>
+<ul>
+<li>getCameraImage<ul>
+<li>getCameraImage API将返回一个RGB图像，一个深度缓冲区和一个分割掩码缓冲区，其中包含每个像素的可见对象的body unique id。请注意，PyBullet可以使用numpy选项进行编译:使用numpy将提高从C到Python复制摄像机像素的性能。注意:旧的renderImage API已经过时了，被getCameraImage所取代。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>width</td>
+<td>int</td>
+<td>以像素为单位的水平图像分辨率</td>
+</tr>
+<tr>
+<td>R</td>
+<td>height</td>
+<td>int</td>
+<td>以像素为单位的垂直图像分辨率</td>
+</tr>
+<tr>
+<td>O</td>
+<td>viewMatrix</td>
+<td>16 floats</td>
+<td>4x4视图矩阵，参见computeViewMatrix*</td>
+</tr>
+<tr>
+<td>O</td>
+<td>projectionMatrix</td>
+<td>16 floats</td>
+<td>4x4投影矩阵，参见computeProjection*</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightDirection</td>
+<td>vec3f</td>
+<td>lightDirection指定光源的世界位置，方向是从光源位置到世界框架的原点。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightColor</td>
+<td>vec3f</td>
+<td>方向光颜色在[红，绿，蓝]范围0..1、仅适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightDistance</td>
+<td>float</td>
+<td>光沿归一化光方向的距离，仅适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>shadow</td>
+<td>int</td>
+<td>1表示阴影，0表示没有阴影，只适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightAmbientCoeff</td>
+<td>float</td>
+<td>光环境系数，仅适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightDiffuseCoeff</td>
+<td>float</td>
+<td>光漫反射系数，仅适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightSpecularCoeff</td>
+<td>float</td>
+<td>光反射系数，仅适用于ER_TINY_RENDERER</td>
+</tr>
+<tr>
+<td>O</td>
+<td>renderer</td>
+<td>int</td>
+<td>ER_BULLET_HARDWARE_OPENGL或ER_TINY_RENDERER。注意，直接模式没有OpenGL，所以它需要ER_TINY_RENDERER。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>flags</td>
+<td>int</td>
+<td>ER_SEGMENTATION_MASK_OBJECT_AND_LINKINDEX，参见下面的segmentationMaskBuffer的描述和示例代码。使用ER_NO_SEGMENTATION_MASK来避免计算分割掩码。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<table>
+<thead>
+<tr>
+<th>Retured parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>int</td>
+<td>宽度图像分辨率(以像素为单位)(水平)</td>
+</tr>
+<tr>
+<td>height</td>
+<td>int</td>
+<td>高度图像分辨率(以像素为单位)(垂直)</td>
+</tr>
+<tr>
+<td>rgbPixel</td>
+<td>list of [char RED,char GREEN,char BLUE, char ALPHA] [0..width*height]</td>
+<td>R,G,B格式的像素颜色列表，范围[0..]每一种颜色</td>
+</tr>
+<tr>
+<td>depthPixels</td>
+<td>list of float [0..width*height]</td>
+<td>depth buffer. Bullet uses OpenGL to render, and the convention is non-linear z-buffer.See <a href="https://stackoverflow.com/questions/6652253/getting-the-true-z-value-from-the-depth-buffer" target="_blank" rel="noopener">https://stackoverflow.com/questions/6652253/getting-the-true-z-value-from-the-depth-buffer</a> <br> far=1000. 取决于投影矩阵，这是默认的<br> near=0.01 取决于投影矩阵<br> depth = far<em>near/(far-(far-near)\</em>depthImg) depthImg是从getCameraImage函数得到的depth。demo见 <strong>pointCloudFromCameraImage.py</strong></td>
+</tr>
+<tr>
+<td>segmentationMaskBuffer</td>
+<td>list of int [0..width*height]</td>
+<td>对于每个像素，可见对象的唯一id如果使用ER_SEGMENTATION_MASK_OBJECT_AND_LINKINDEX, segmentationMaskBuffer将对象唯一id和链接索引结合如下:<br> value = objectUniqueId + (linkIndex+1)&lt;&lt;24 Demo见 <strong>segmask_linkindex.py</strong> <br>所以对于一个没有joints/links的自由浮动我要吐，分割掩码等于它本身的唯一id，因为它的link索引是-1。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>isNumpyEnabled</p>
+<ul>
+<li>对于大图像，将像素从C/C++复制到Python可能会非常慢，除非使用NumPy编译PyBullet。可以使用PyBullet.isNumpyEnabled()检查是否启用了NumPy。如果系统上可用，则pip install pybullet启用了NumPy。目前，只有getCameraImage使用numpy加速。</li>
+</ul>
+</li>
+<li><p>getVisualShapeData</p>
+<ul>
+<li>可以使用getVisualShapeData访问视觉形状信息。可以使用此方法将自己的呈现方法与PyBullet模拟连接起来，并在每个模拟步骤之后手动同步世界转换。也可以使用getMeshData来接收顶点位置的数据，特别是对于可变形的对象。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>objectUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>O</td>
+<td>flags</td>
+<td>int</td>
+<td>VISUAL_SHAPE_DATA_TEXTURE_UNIQUE_IDS也将提供textureUniqueId</td>
+</tr>
+<tr>
+<td>O</td>
+<td>pyhsicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Output parameters</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>objectUniqueId</td>
+<td>int</td>
+<td>Id,和输入参数相同</td>
+</tr>
+<tr>
+<td>linkIndex</td>
+<td>int</td>
+<td>link索引或-1(base)</td>
+</tr>
+<tr>
+<td>visualGeometryType</td>
+<td>int</td>
+<td>视觉几何类型(TBD)</td>
+</tr>
+<tr>
+<td>dimentsions</td>
+<td>vec3f</td>
+<td>几何的尺寸(大小，局部比例尺)</td>
+</tr>
+<tr>
+<td>meshAssetFileName</td>
+<td>string,list of chars</td>
+<td>triangle mesh的路径，如果有的话。通常是相对于URDF、SDF或MJCF文件位置，但也可以是绝对位置</td>
+</tr>
+<tr>
+<td>localVisualFrame position</td>
+<td>vec3f</td>
+<td>局部visual frame相对于link/joint的位置</td>
+</tr>
+<tr>
+<td>localVisualFrame orientation</td>
+<td>vec4f</td>
+<td>局部visual frame相对于link/joint的方向</td>
+</tr>
+<tr>
+<td>rgbaColor</td>
+<td>vec4f</td>
+<td>URDF颜色(如果有指定)为红色/绿色/蓝色/alpha</td>
+</tr>
+<tr>
+<td>textureUniqueId</td>
+<td>int</td>
+<td>(此字段仅在使用VISUAL_SHAPE_DATA_TEXTURE_UNIQUE_IDS标志时存在)纹理形状的唯一id，无时为-1</td>
+</tr>
+</tbody></table>
+<p>物理模拟使用质心作为笛卡尔世界变换的参考，在getBasePositionAndOrientation和getLinkState中。如果实现自己的渲染，需要将局部视觉转换转换到世界空间，利用质心世界变换和(反向)localInertialFrame。可以使用getLinkState API访问localInertialFrame。</p>
+<ul>
+<li>changeVisualShape, loadTexture<ul>
+<li>可以使用changeVisualShape来改变Shape的纹理、RGBA颜色和其他属性。</li>
+</ul>
+</li>
+</ul>
+<p>||Input Parameters|type|descriptions|<br>|R|objectUniqueId|int|Id|<br>|R|linkIndex|int|link索引|<br>|O|shapeIndex|int|对于内部使用的实验，建议忽略shapeIndex或将其保留为-1。其目的是让可以选择要修改的特定shape的索引，因为URDF（和SDF等）每个link可以有多个visual shape。此shapeIndex与getVisualShapeData返回的列表顺序匹配。|<br>|O|textureUniqueId|int|纹理的唯一id，由loadTexture方法返回|<br>|O|rgbaColor|vec4f|颜色组件为红色，绿色，蓝色和ALPHA，每个范围[0..1]。Alpha必须是0(不可见)或1(可见)。注意，TinyRenderer不支持透明，但是GUI/EGL OpenGL3渲染器支持。|<br>|O|specularColor|vec3|高光颜色成分，红、绿、蓝，可以从0到大的数(&gt;100)。|<br>|R|physicsClientId|int|物理客户端id由’connect’返回|</p>
+<ul>
+<li>loadTexture<ul>
+<li>从文件中加载一个纹理，如果加载成功，返回一个非负的纹理唯一id。这个唯一的id可以与changeVisualShape一起使用。</li>
+</ul>
+</li>
+</ul>
+<h1 id="5-Collision-Detection-Queries-碰撞检测查询"><a href="#5-Collision-Detection-Queries-碰撞检测查询" class="headerlink" title="5. Collision Detection Queries 碰撞检测查询"></a>5. Collision Detection Queries 碰撞检测查询</h1><p>可以查询上次“stepSimulation”过程中存在的接触点信息。要获得接触点，你可以使用’getContactPoints’ API。请注意，’getContactPoints’将不会重新计算任何接触点信息。</p>
+<ul>
+<li>getOverlappingObjects<ul>
+<li>此查询将返回与给定轴对齐边框重叠的轴对齐边框对象的所有唯一id。注意，该查询是保守的，可能返回没有实际AABB重叠的附加对象。这是因为加速结构有一些启发式，扩大了一点aabb(额外的边缘和挤压沿速度矢量)。</li>
+<li>getOverlappingObjects将返回对象惟一id的列表。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>aabbMin</td>
+<td>vec3f</td>
+<td>aabb最小坐标</td>
+</tr>
+<tr>
+<td>R</td>
+<td>aabbMax</td>
+<td>vec3f</td>
+<td>aabb最大坐标</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>getAABB<ul>
+<li>可以查询轴对齐的边界框(在世界空间中)，给定对象唯一id和link索引(可选)。(当不传递link索引，或使用-1，得到的是AABB的base)。</li>
+<li>返回的结构是世界空间坐标下的vec3、aabbMin (x,y,z)和aabbMax (x,y,z)的列表。</li>
+<li>AABB盒，一个3D的AABB就是一个简单的六面体，每一边都平行于一个坐标平面，矩形边界框不一定都是立方体，它的长、宽、高可以彼此不同。</li>
+<li>坐标轴平行（Axially-aligned）不仅指盒体与世界坐标轴平行，同时也指盒体的每个面都和一条坐标轴垂直，这样一个基本信息就能减少转换盒体时操作的次数。</li>
+<li><strong>getAABB.py</strong></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Paramets</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id as returened by creation methods</td>
+</tr>
+<tr>
+<td>O</td>
+<td>linkIndex</td>
+<td>int</td>
+<td>link索引，范围在[0…getNumJoints(..)]</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<br>
+
+<ul>
+<li>getContactPoints<ul>
+<li>getContactPoints API返回在最近的stepSimulation调用中计算的接触点。请注意，如果在stepSimulation之后更改模拟的状态，“getContactPoints”不会被更新，而且可能是无效的。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Paramets</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O</td>
+<td>bodyA</td>
+<td>int</td>
+<td>只报告涉及A体的接触点</td>
+</tr>
+<tr>
+<td>O</td>
+<td>bodyB</td>
+<td>int</td>
+<td>只报告涉及B体的接触点。重要:如果你提供B体，你需要有一个有效的a体。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>linkIndexA</td>
+<td>int</td>
+<td>只报告bodyA的linkIndexA接触点</td>
+</tr>
+<tr>
+<td>O</td>
+<td>linkIndexB</td>
+<td>int</td>
+<td>只报告涉及bodyB的linkIndexB的接触点</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br><br>getContactPoints将返回一个接触点列表。每个接触点有以下字段:<br><br><br></p>
+<table>
+<thead>
+<tr>
+<th>Returned Values</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>contactFlag</td>
+<td>int</td>
+<td>reserved</td>
+</tr>
+<tr>
+<td>bodyUniqueIdA</td>
+<td>int</td>
+<td>物体A的Id</td>
+</tr>
+<tr>
+<td>bodyUniqueIdB</td>
+<td>int</td>
+<td>物体B的Id</td>
+</tr>
+<tr>
+<td>linkIndexA</td>
+<td>int</td>
+<td>物体A的link索引，-1(base)</td>
+</tr>
+<tr>
+<td>linkIndexB</td>
+<td>int</td>
+<td>物体B的link索引，-1(base)</td>
+</tr>
+<tr>
+<td>positionOnA</td>
+<td>vec3f</td>
+<td>在笛卡尔世界坐标下，A上的接触位置</td>
+</tr>
+<tr>
+<td>positionOnB</td>
+<td>vec3f</td>
+<td>在笛卡尔世界坐标下，B上的接触位置</td>
+</tr>
+<tr>
+<td>contactNormalOnB</td>
+<td>vec3f</td>
+<td>B上的接触法线，指向A</td>
+</tr>
+<tr>
+<td>contactDistance</td>
+<td>float</td>
+<td>接触距离，正的用于分离，负的用于渗透</td>
+</tr>
+<tr>
+<td>nornalForce</td>
+<td>float</td>
+<td>在最后的“stepSimulation”中施加的法向力</td>
+</tr>
+<tr>
+<td>lateralFriction1</td>
+<td>float</td>
+<td>lateralFrictionDir1方向上的横向摩擦力</td>
+</tr>
+<tr>
+<td>lateralFrictionDir1</td>
+<td>vec3f</td>
+<td>第一横向摩擦方向</td>
+</tr>
+<tr>
+<td>lateralFriction2</td>
+<td>float</td>
+<td>lateralFrictionDir2方向上的横向摩擦力</td>
+</tr>
+</tbody></table>
+<p>|<br>|lateralFrictionDir2|float|lateralFrictionDir2方向上的横向摩擦力|<br><br><br></p>
+<ul>
+<li>getClosestPoints<ul>
+<li>它也可以计算最近的点，独立于stepSimulation。这也可以让你用任意的分离距离计算物体的最近点。在这个查询中将没有正常的力报告。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyA</td>
+<td>int</td>
+<td>第一个物体A的Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>bodyB</td>
+<td>int</td>
+<td>第二个物体B的Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>distance</td>
+<td>float</td>
+<td>如果物体之间的距离超过这个最大距离，则不能返回任何点。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>linkIndexA</td>
+<td>int</td>
+<td>物体A的link索引, -1(base)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>linkIndexB</td>
+<td>int</td>
+<td>物体B的link索引, -1(base)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>getClosePoints以与getContactPoints相同的格式返回最近点的列表(但normalForce在这种情况下总是为零)</p>
+<ul>
+<li>rayTest<ul>
+<li>可以执行一个光线投射来找到第一个被击中的物体的交叉信息。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>rayFromPosition</td>
+<td>vec3f</td>
+<td>从世界坐标的光线开始</td>
+</tr>
+<tr>
+<td>R</td>
+<td>rayToPosition</td>
+<td>vec3f</td>
+<td>射线在世界坐标的末端</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<table>
+<thead>
+<tr>
+<th>Retured Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>linkIndex</td>
+<td>int</td>
+<td>命中对象的link索引，if none/parent，则为-1</td>
+</tr>
+<tr>
+<td>hit fraction</td>
+<td>float</td>
+<td>沿射线范围[0,1]内沿射线的hit fraction。</td>
+</tr>
+<tr>
+<td>hit position</td>
+<td>vec3f</td>
+<td>笛卡尔世界坐标系下的hit position</td>
+</tr>
+<tr>
+<td>hit normal</td>
+<td>vec3f</td>
+<td>笛卡尔世界坐标系下的hit position</td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>rayTestBatch<ul>
+<li>这与rayTest类似，但允许提供一个射线数组，以更快地执行。rayFromPositions的大小需要等于rayToPositions的大小。可以每条射线都有一个射线结果，即使没有交集:你需要使用objectUniqueId字段来检查射线是否击中了任何东西:如果objectUniqueId是-1，就没有击中。在这种情况下，“hit fraction”是1。每批射线的最大数量是pybullet.MAX_RAY_INTERSECTION_BATCH_SIZE。</li>
+<li>输出是每条输入射线的一条射线相交结果，信息与上面的rayTest查询相同。见 <strong>batchRayTest.py</strong> Demo<br>
+
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>rayFromPositions</td>
+<td>list of vec3,list of list of 3f</td>
+<td>每个射线的起始点的列表，在世界坐标中</td>
+</tr>
+<tr>
+<td>R</td>
+<td>rayToPositions</td>
+<td>list of vec3,list of list of 3f</td>
+<td>每个射线的终点的列表，在世界坐标中</td>
+</tr>
+<tr>
+<td>O</td>
+<td>parentObjectUniquedId</td>
+<td>int</td>
+<td>ray from/to is in local space of a parent object</td>
+</tr>
+<tr>
+<td>O</td>
+<td>parentLinkIndex</td>
+<td>int</td>
+<td>ray from/to is in local space of a parent object</td>
+</tr>
+<tr>
+<td>O</td>
+<td>numThreads</td>
+<td>int</td>
+<td>使用多个线程来计算射线测试(0 =使用所有可用的线程，正数=正好这个线程数，默认=-1 =单线程)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>reportHitNumber</td>
+<td>int</td>
+<td>可以报告第n次hit，而不是第一次hit</td>
+</tr>
+<tr>
+<td>O</td>
+<td>collisionFilterMask</td>
+<td>int</td>
+<td>只有当collisionFilterMask和body collision filter组的按位和之间的值是非零时，才测试命中。请参阅setCollisionFilterGroupMask来了解如何修改主体过滤器的掩码/组。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>fractionEpsilon</td>
+<td>float</td>
+<td>仅在使用reportHitNumber时有用:如果分数与这个fractionEpsilon中的现有命中率相似，则忽略重复命中率。例如，一束射线可能击中一个物体的许多共面三角形，你可能只对其中一个感兴趣。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>getCollisionShapeData<ul>
+<li>可以使用此查询查询现有body base和links的碰撞几何类型和其他碰撞形状信息。它的工作原理与getVisualShapeData非常相似。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>objectUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndex</td>
+<td>int</td>
+<td>link索引,-1(base)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<table>
+<thead>
+<tr>
+<th>Retured Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>object unique id</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>linkIndex</td>
+<td>int</td>
+<td>link索引,-1(base)</td>
+</tr>
+<tr>
+<td>geometry type</td>
+<td>int</td>
+<td>geometry type: GEOM_BOX, GEOM_SPHERE, GEOM_CAPSULE, GEOM_MESH, GEOM_PLANE</td>
+</tr>
+<tr>
+<td>dimensions</td>
+<td>vec3</td>
+<td>取决于几何类型: <br>for GEOM_BOX: extents,<br> for GEOM_SPHERE dimensions[0] = radius,<br> for GEOM_CAPSULE and GEOM_CYLINDER, dimensions[0] = height (length), dimensions[1] = radius. <br>For GEOM_MESH, dimensions is the scaling factor.</td>
+</tr>
+<tr>
+<td>filename</td>
+<td>string</td>
+<td>仅用于GEOM_MESH:collision mesh asset的文件名(和路径)</td>
+</tr>
+<tr>
+<td>local frame pos</td>
+<td>vec3</td>
+<td>碰撞坐标系相对于质心/惯性坐标系的局部位置。</td>
+</tr>
+<tr>
+<td>local frame orn</td>
+<td>vec4</td>
+<td>碰撞坐标系相对于惯性坐标系的局部方向。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>Enable/Disable Collisions</p>
+<ul>
+<li>默认情况下，在不同动态移动的物体之间启用碰撞检测。同一body和links之间的自碰撞可以使用loadURDF中的  <strong>URDF_USE_SELF_COLLISION</strong>标志来启用(参见loadURDF命令获取更多信息)。</li>
+<li>可以使用setCollisionFilterGroupMask API来启用和禁用对象组之间的碰撞检测。</li>
+</ul>
+</li>
+<li><p>V-HACD</p>
+<ul>
+<li>PyBullet包含了一个由Khaled Mamou实现的体积分层近似分解(Volumetric Hierarchical Approximate Decomposition, vhacd)。这可以导入一个concave Wavefront .obj文件，并导出一个新的包含凸分解部分的Wavefront obj文件。这可以在PyBullet中使用，以有效地处理凹面移动几何图形</li>
+<li>concave 凹的，凹面的</li>
+<li>wavefront  波前；波阵面</li>
+<li>对于静态的(非移动的)凹三角形网格环境，你可以在URDF文件中使用标签(<link concave ="yes" name="baseLink">)或使用带有标记的createCollisionShape,标记为p.GEOM_FORCE_CONCAVE_TRIMESH。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>fileNameIn</td>
+<td>string</td>
+<td>source (concave) Wavefront obj文件名</td>
+</tr>
+<tr>
+<td>R</td>
+<td>fileNameOut</td>
+<td>string</td>
+<td>目标(凸分解)Wavefront obj文件名</td>
+</tr>
+<tr>
+<td>R</td>
+<td>fileNameLog</td>
+<td>string</td>
+<td>日志文件名</td>
+</tr>
+<tr>
+<td>O</td>
+<td>concavity</td>
+<td>double</td>
+<td>最大允许凹度(default=0.0025, range=0.0-1.0)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>alpha</td>
+<td>double</td>
+<td>控制沿对称平面剪切的偏向(默认值=0.05，范围=0.0-1.0)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>beta</td>
+<td>double</td>
+<td>控制沿旋转轴剪切的偏向(默认值=0.05，范围=0.0-1.0)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>gamma</td>
+<td>double</td>
+<td>控制合并阶段允许的最大凹面(默认值=0.00125，范围=0.0-1.0)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>minVolumePerCH</td>
+<td>double</td>
+<td>控制对生成的convex-hulls的自适应采样(默认值=0.0001，范围=0.0-0.01)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>resolution</td>
+<td>int</td>
+<td>在体素化阶段生成的最大体素值(默认值=100,000，范围=10,000-16,000,000)</td>
+</tr>
+</tbody></table>
+<p>|O|maxNumVerticesPerCH|int|控制每个convex-hull的最大三角形数(默认为64，范围为4-1024)<br>|O|depth|int|最大剪切段数。在每个分割阶段，凹度高于用户定义阈值的部分将根据最佳裁剪平面进行裁剪(默认为20，范围为1-32)|<br>|O|planeDownsampling|int|控制搜索\“最佳\”剪切平面的间隔尺寸(默认为4，范围为1-16)|<br>|O|convechullDownsamping|int|在剪切平面选择阶段控制convex-hull生成过程的精度(默认值=4，范围=1-16)|<br>|O|pca|int|在应用凸分解之前启用/禁用网格的规格化(默认值=0，范围={0,1})|<br>|O|mode|int|0:基于体素的近似凸分解，1:基于四面体的近似凸分解(默认为0,range={0,1})|<br>|O|convexhullApproximation|int|在计算凸壳时启用/禁用近似(默认值=1，范围={0,1})|<br>|O|physicsClientId|int||<br><br><br></p>
+<ul>
+<li>setCollisionFilterGroupMask<ul>
+<li>每个body都是一个group的一部分。如果其他的body与mask匹配，它就会与之碰撞，反之亦然。下面的检查是使用两个body的group和mask进行的。这取决于碰撞过滤器模式</li>
+<li>可以对特定link对之间的碰撞检测进行更细粒度的控制。这里使用setCollisionFilterPair API:可以启用或禁用碰撞检测。setCollisionFilterPair将覆盖过滤组/掩码和其他逻辑。<br>
+
+</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>配置的Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndexA</td>
+<td>int</td>
+<td>需要配置的body的linl索引</td>
+</tr>
+<tr>
+<td>R</td>
+<td>collisionFilterGroup</td>
+<td>int</td>
+<td>过滤器的bitwise group，参见下面的解释</td>
+</tr>
+<tr>
+<td>R</td>
+<td>collisionFilterMask</td>
+<td>int</td>
+<td>过滤器的bitwise mask，参见下面的解释</td>
+</tr>
+<tr>
+<td>O</td>
+<td>pyhsicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>setCollisionFilterPair</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>int</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueIdA</td>
+<td>int</td>
+<td>A的Id，被过滤后的</td>
+</tr>
+<tr>
+<td>R</td>
+<td>bodyUniqueIdB</td>
+<td>int</td>
+<td>B的Id，被过滤后的，A==B 意味着自碰撞</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndexA</td>
+<td>int</td>
+<td>linkIndex of body A</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndexB</td>
+<td>int</td>
+<td>linkIndex of body B</td>
+</tr>
+<tr>
+<td>R</td>
+<td>enableCollision</td>
+<td>int</td>
+<td>1表示启用碰撞，0表示禁用碰撞</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<h1 id="6-Inverse-Dynamics-Kinematics"><a href="#6-Inverse-Dynamics-Kinematics" class="headerlink" title="6. Inverse Dynamics, Kinematics"></a>6. Inverse Dynamics, Kinematics</h1><h2 id="6-1-calculateInverseDynamics-2"><a href="#6-1-calculateInverseDynamics-2" class="headerlink" title="6.1 calculateInverseDynamics(2)"></a>6.1 calculateInverseDynamics(2)</h2><p>  calculateInverseDynamics将计算达到给定关节加速度所需的力，从指定的关节位置和速度开始。逆动力学计算使用递推牛顿欧拉算法(RNEA)。<br><br><br><br>  calculateInverseDynamics返回每个自由度的联合力列表。<br>注意，当涉及到多自由度(球形)关节时，calculateInverseDynamics使用不同的代码路径，会稍微慢一些。还要注意的是，calculateInverseDynamics忽略了joint/link阻尼，而正向动力学(在stepSimulation中)包含了这些阻尼项。所以如果想比较逆动力学和正动力学，确保将这些阻尼项设为零，使用带有关节阻尼和线性阻尼和角阻尼的连杆阻尼的变化动力学。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>int</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objPositions</td>
+<td>list of float</td>
+<td>每个自由度(DoF)的关节位置(角)。注意，固定关节的自由度为0。base在所有情况下(浮动基座和固定基座)都会被跳过/忽略</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objVelocities</td>
+<td>list of float</td>
+<td>每个自由度的关节速度</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objAccelerations</td>
+<td>list of float</td>
+<td>每个自由度的期望关节加速度</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="6-2-calculateJacobian-MassMatrix"><a href="#6-2-calculateJacobian-MassMatrix" class="headerlink" title="6.2 calculateJacobian, MassMatrix"></a>6.2 calculateJacobian, MassMatrix</h2><ul>
+<li>calculateJacobian<ul>
+<li>calculateJacobian将计算link上一个点的平移和旋转雅可比矩阵，例如x_dot = J * q_dot。根据root link是固定的还是浮动的，返回的雅可比矩阵略有不同。如果是浮动的，雅可比矩阵将包括对应root link自由度的列;如果固定，雅可比矩阵就只有和joint相关的列。这个函数调用获得了运动学状态的完整描述，这是因为calculateInverseDynamics实际上是首先被调用的，并从中提取出所需的雅可比矩阵;因此，如果需要，通过关节速度和加速度的零向量是合理的</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>int</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndex</td>
+<td>int</td>
+<td>雅可比矩阵的link索引</td>
+</tr>
+<tr>
+<td>R</td>
+<td>localPosition</td>
+<td>list of float</td>
+<td>给定link上的点，在其质心周围的link局部坐标中计算雅可比矩阵。</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objPositions</td>
+<td>list of float</td>
+<td>joint positions(angles)</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objVelocities</td>
+<td>list of float</td>
+<td>joint velocities</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objAccelerations</td>
+<td>list of float</td>
+<td>期望的joint加速度</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CalculateJacobian Returns</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>linear Jacobian</td>
+<td>mat3x((dof),(dof),dof))</td>
+<td>the translational jacobian, x_dot = J_t * q_dot.</td>
+</tr>
+<tr>
+<td>R</td>
+<td>angular Jacobian</td>
+<td>mat3x((dof),(dof),dof))</td>
+<td>the rotational jacobian, r_dot = J_r * q_dot.</td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>calculateMassMatrix<ul>
+<li>calculateMassMatrix将计算一个articulated body给定其joint位置的系统惯性。采用复合刚体算法(CBRA)计算质量矩阵。</li>
+<li>Composite Rigid Body Algorithm, CBRA</li>
+<li>结果是尺寸为dofCount * dofCount的质量方阵，存储为dofCount行列表，每一行是dofCount质量矩阵元素列表。</li>
+<li>注意，当涉及到多自由度(球形)关节时，calculateMassMatrix将使用不同的代码路径，这有点慢。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>objPositions</td>
+<td>array of float</td>
+<td>jointPositions for each link</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="6-3-calculateInverseKinematics-2"><a href="#6-3-calculateInverseKinematics-2" class="headerlink" title="6.3 calculateInverseKinematics(2)"></a>6.3 calculateInverseKinematics(2)</h2><ul>
+<li><p>Inverse Kinematics</p>
+<ul>
+<li>你可以计算使末端执行器达到笛卡尔世界空间中给定目标位置的joint angles。在内部，Bullet使用了Samuel Buss逆运动学库的改进版本。针对单末端执行器目标，目前只公开了带或不带零空间控制的阻尼最小二乘方法。</li>
+<li>还可以指定末端执行器的目标方向。此外，还可以使用null-space来指定joint limits和rest poses。这个可选的null-space支持需要所有4个列(lowerLimits, upperLimits, jointRanges, restPoses),否则将使用常规的IK。</li>
+<li><strong>inverse_kinematics.py</strong></li>
+</ul>
+</li>
+<li><p>calculateInverseKinematics</p>
+<ul>
+<li>返回每个自由度的关节位置列表，因此这个列表的长度就是关节的自由度(跳过基本关节和固定关节)。</li>
+<li>默认情况下，IK将refine解决方案，直到目标执行器与实际执行器之间的距离低于residual阈值(1e-4)或达到最大迭代次数。</li>
+<li><strong>inverse_kinematics.py</strong></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>endEffectorLinkIndex</td>
+<td>int</td>
+<td>末端执行器的link index</td>
+</tr>
+<tr>
+<td>R</td>
+<td>targetPosition</td>
+<td>vec3f</td>
+<td>末端执行器的目标位置(它的是link坐标,不是质心坐标!)默认情况下，这是在笛卡尔世界空间中，除非你提供了currentPosition joint angles)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>targetOrientation</td>
+<td>vec3,list of 4 floats</td>
+<td>笛卡尔世界空间中的目标方向，四元数[x,y,w,z]。如果未指定，将使用纯位置IK。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lowerLimits</td>
+<td>list of floats [0..nDof]</td>
+<td>可选的null-space IK需要所有4个列表(lowerLimits,upperLimits,jointRanges,restPoses).否则将使用常规IK.只提供有它们的关节的限制(跳过固定关节)，所以长度是自由度的数目.注意，lowerLimits, upperLimits, jointRanges很容易在IK解决方案中引起冲突和不稳定。首先，尝试使用一个广泛的范围和限制，with just the rest pose.</td>
+</tr>
+<tr>
+<td>O</td>
+<td>upperLimits</td>
+<td>list of floats [0..nDof]</td>
+<td>可选的null-space IK需要所有4个列表(lowerLimits,upperLimits,jointRanges,restPoses).否则将使用常规IK.lowerLimit and upperLimit 指定 joint limits</td>
+</tr>
+<tr>
+<td>O</td>
+<td>jointRanges</td>
+<td>list of floats [0..nDof]</td>
+<td>可选的null-space IK需要所有4个列表(lowerLimits,upperLimits,jointRanges,restPoses).否则将使用常规IK.</td>
+</tr>
+<tr>
+<td>O</td>
+<td>restPoses</td>
+<td>list of floats [0..nDof]</td>
+<td>可选的null-space IK需要所有4个列表(lowerLimits,upperLimits,jointRanges,restPoses).否则将使用常规IK.Favor an IK solution closer to a given rest pose</td>
+</tr>
+<tr>
+<td>O</td>
+<td>jointDamping</td>
+<td>list of floats [0..nDof]</td>
+<td>jointDamping允许使用joint阻尼因子来调整IK解决方案</td>
+</tr>
+<tr>
+<td>O</td>
+<td>solver</td>
+<td>int</td>
+<td>p.IK_DLS或p.IK_SDLS，阻尼最小二乘或选择性阻尼最小二乘，如Samuel Buss的论文“逆运动学的选择性阻尼最小二乘”所述。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>currentPosition</td>
+<td>list of floats [0..nDof]</td>
+<td>list of joint  positions.默认情况下，PyBullet使用body的joint位置。如果提供了，the targetPosition and targetOrientation is in local space!</td>
+</tr>
+<tr>
+<td>O</td>
+<td>maxNumIterations</td>
+<td>int</td>
+<td>Refine the IK solution(细化IK解)，直到目标与实际末端执行器位置之间的距离低于这个阈值，或者达到最大迭代次数。默认为20次迭代</td>
+</tr>
+<tr>
+<td>O</td>
+<td>residualThreshold</td>
+<td>double</td>
+<td>Refine the IK solution(细化IK解)，直到目标与实际末端执行器位置之间的距离低于这个阈值，或者达到最大迭代次数。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>calculateInverseKinematics2<ul>
+<li>类似于calculateInverseKinematics，但它接受一组末端执行器索引及其目标位置(此刻没有方向)。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>bodyUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>endEffectorLinkIndics</td>
+<td>list of int</td>
+<td>end effector link index</td>
+</tr>
+<tr>
+<td>R</td>
+<td>targetPositions</td>
+<td>list of vec3</td>
+<td>末端执行器的目标位置(它的link坐标，而不是质心坐标!)默认情况下，这是在笛卡尔世界空间中，除非你提供了currentPosition joint angles。</td>
+</tr>
+<tr>
+<td>…</td>
+<td>For other arguments,see calculateInverseSknematics</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/31/PyBullet2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyBullet/" rel="tag">PyBullet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/" rel="tag">机器人仿真</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/05/31/PyBullet3/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            PyBullet Quickstart Guide 官方文档翻译 7 - Reinforcement Learning Gym Envs | 8 - Virtual Reality | 9 - Debug GUI, Lines, Text, Parameters
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/31/PyBullet1/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyBullet Quickstart Guide 官方文档翻译 1 - Introduction | 2 - Controlling a Robot |</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>

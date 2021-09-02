@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-Configuration" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="baidu-site-verification" content="code-HzuN3OUvvm" />
+    
+  <meta name="description" content="努力，奋斗！" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    PyBullet Quickstart Guide 官方文档翻译 7 - Reinforcement Learning Gym Envs | 8 - Virtual Reality | 9 - Debug GUI, Lines, Text, Parameters |  Shine on You Crazy Diamond
+  </title>
+  <meta name="generator" content="hexo-theme-yilia-plus">
+  
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-PyBullet3" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  PyBullet Quickstart Guide 官方文档翻译 7 - Reinforcement Learning Gym Envs | 8 - Virtual Reality | 9 - Debug GUI, Lines, Text, Parameters
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/31/PyBullet3/" class="article-date">
+  <time datetime="2021-05-31T07:35:59.000Z" itemprop="datePublished">2021-05-31</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/">机器人仿真</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">9 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="7-Reinforcement-Learning-Gym-Envs"><a href="#7-Reinforcement-Learning-Gym-Envs" class="headerlink" title="7. Reinforcement Learning Gym Envs"></a>7. Reinforcement Learning Gym Envs</h1><p>在“pip install pybullet”期间安装了一套RL Gym环境。这包括PyBullet版本的OpenAI Gym Env，如ant, hopper, humanoid和walker。还有一些环境适用于模拟和真实的机器人，如Ghost<br>Robotics Minitaur quadruped，麻省理工赛车和库卡机器人手臂抓取环境。<br><br><br>pybullet, pybullet_envs, pybullet_data的源代码和示例: <a href="https://github.com/bulletphysics/bullet3/tree/master/examples/pybullet/gym" target="_blank" rel="noopener">https://github.com/bulletphysics/bullet3/tree/master/examples/pybullet/gym</a>.<br><br><br><br>可以使用RL训练算法来训练环境，例如DQN、PPO、TRPO和<br>DDPG。以下是一些经过训练的例子:<br><strong>python -m pybullet_envs.examples.enjoy_TF_HumanoidBulletEnv_v0_2017may</strong><br><strong>python -m pybullet_envs.examples.kukaGymEnvTest</strong></p>
+<h2 id="7-1-Environments-and-Data"><a href="#7-1-Environments-and-Data" class="headerlink" title="7.1 Environments and Data"></a>7.1 Environments and Data</h2><h2 id="7-2-Stable-Baselines-amp-ARS-Es-…"><a href="#7-2-Stable-Baselines-amp-ARS-Es-…" class="headerlink" title="7.2 Stable Baselines &amp; ARS,Es,…"></a>7.2 Stable Baselines &amp; ARS,Es,…</h2><h1 id="8-Virtual-Reality"><a href="#8-Virtual-Reality" class="headerlink" title="8. Virtual Reality"></a>8. Virtual Reality</h1><h1 id="9-Debug-GUI-Lines-Text-Parameters"><a href="#9-Debug-GUI-Lines-Text-Parameters" class="headerlink" title="9. Debug GUI, Lines, Text, Parameters"></a>9. Debug GUI, Lines, Text, Parameters</h1><p>PyBullet有一些功能，可以更容易地调试、可视化和调优模拟。<br>这个功能只有在有一些3D可视化窗口时才有用，例如GUI模式或连接到单独的物理服务器(例如“物理服务器”模式的浏览器或独立的OpenGL GUI物理服务器)。</p>
+<h2 id="9-1-addUserDebugLine-Text-Parameter"><a href="#9-1-addUserDebugLine-Text-Parameter" class="headerlink" title="9.1 addUserDebugLine, Text, Parameter"></a>9.1 addUserDebugLine, Text, Parameter</h2><ul>
+<li>addUserDebugline  <ul>
+<li>可以添加由3d起始点(从)和结束点(到)指定的3d线条，以及颜色<br>(红、绿、蓝)，线宽和持续时间(以秒为单位)。</li>
+<li>addUserDebugLine将返回一个非负的唯一id，它允许使用removeUserDebugItem删除这个line。(当使用’replaceItemUniqueId’参数时，它将返回replaceItemUniqueId)。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>lineFromXYZ</td>
+<td>vec3f</td>
+<td>直线在笛卡尔世界坐标中的起始点</td>
+</tr>
+<tr>
+<td>R</td>
+<td>lineToXYZ</td>
+<td>vec3f</td>
+<td>直线在笛卡尔世界坐标中的终点</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lineColorRGB</td>
+<td>vec3f</td>
+<td>RGB颜色[红、绿、蓝]范围内各分量</td>
+</tr>
+<tr>
+<td>(0…1)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>O</td>
+<td>lineWidth</td>
+<td>float</td>
+<td>线宽(受OpenGL实现限制)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lifeTime</td>
+<td>float</td>
+<td>使用0为永久线路，或正时间秒</td>
+</tr>
+<tr>
+<td>(之后会自动删除一行)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>O</td>
+<td>parentObjectUniqueId</td>
+<td>int</td>
+<td>即将到来的PyBullet 1.0.8新增功能:在parent object/link局部坐标中绘制直线。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>replaceItemUniqueId</td>
+<td>int</td>
+<td>替换现有的line(以提高性能和避免移除/添加的闪烁)参见<strong>f10_racecar.py</strong>示例。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>addUserDebugText<ul>
+<li>可以使用颜色和大小在特定位置添加一些3d文本</li>
+<li>addUserDebugText将返回一个非负的唯一id，它允许你使用removeUserDebugItem删除行</li>
+<li>See also <strong>pybullet/examples/debugDrawItems.py</strong></li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>text</td>
+<td>text</td>
+<td>表示为字符串(字符数组)的文本</td>
+</tr>
+<tr>
+<td>R</td>
+<td>textPosition</td>
+<td>vec3f</td>
+<td>文本在笛卡尔世界坐标中的三维位置[x, y, z]</td>
+</tr>
+<tr>
+<td>O</td>
+<td>textColorRGB</td>
+<td>vec3f</td>
+<td>RGB颜色[红、绿、蓝]范围内各分量(0 . . 1)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>textSize</td>
+<td>float</td>
+<td>Text大小</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lifeTime</td>
+<td>float</td>
+<td>为永久文本使用0，或以秒为单位的正时间(之后文本将自动删除)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>textOrientation</td>
+<td>vec4f</td>
+<td>默认情况下，调试文本将始终面向摄像头，自动旋转。通过指定文本方向(四元数)，定向将固定在世界空间或局部空间(当parent指定时)。注意，不同的实现/着色器用于面向摄像机的文本，具有不同的外观:面向摄像机的文本使用位图字体，指定方向的文本使用TrueType字体。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>parentObjectUniquedId</td>
+<td>int</td>
+<td>即将到来的PyBullet 1.0.8新增功能:在parent object/link的局部坐标中绘制直线。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>parentLinkIndex</td>
+<td>int</td>
+<td>即将到来的PyBullet 1.0.8新增功能:在parent object/link的局部坐标中绘制直线。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>replaceItemUniqueId</td>
+<td>int</td>
+<td>替换现有的文本项(以避免移除/添加的闪烁)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>addUserDebugParameter<ul>
+<li>：addUserDebugParameter允许你添加自定义滑块和按钮来调整参数。它将返回一个唯一的id。这使用readUserDebugParameter读取参数的值。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>paramName</td>
+<td>string</td>
+<td>参数名</td>
+</tr>
+<tr>
+<td>R</td>
+<td>rangeMin</td>
+<td>float</td>
+<td>最小值。如果最小值&gt;最大值将出现一个按钮而不是滑块</td>
+</tr>
+<tr>
+<td>R</td>
+<td>rangeMax</td>
+<td>float</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>R</td>
+<td>startValue</td>
+<td>float</td>
+<td>开始值</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>readUserDebugParameter<ul>
+<li>对于滑块，返回值是该参数的最新读取值。对于按钮，每按一次按钮，按钮的getUserDebugParameter的值增加1。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>itemUniqueId</td>
+<td>int</td>
+<td>由’addUserDebugParameter’返回的唯一id</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<br>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p.addUserDebugParameter(<span class="string">"button"</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">p.addUserDebugParameter(<span class="string">"my_slider"</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ul>
+<li><p>removeAllUserParameters</p>
+<ul>
+<li>这将删除所有滑块和按钮</li>
+<li>| O | physicsClient | int | … |</li>
+</ul>
+</li>
+<li><p>removeUserDebugItem/All</p>
+<ul>
+<li>函数添加user debug lines ，如果成功，文本将返回一个非负的唯一id。可以使用removeUserDebugItem这个惟一id删除调试项</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>itemUniquedId</td>
+<td>int</td>
+<td>要删除的调试项的唯一id(line, text etc)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>removeAllUserDebugItems</p>
+<ul>
+<li>删除所有debug items (text, lines etc)</li>
+</ul>
+</li>
+<li><p>setDebugObjectColor</p>
+<ul>
+<li>内置的OpenGL可视化工具有一个线框调试渲染特性:按“w”键切换。<br>线框有一些默认颜色。可以使用setDebugObjectColor覆盖特定对象的颜色和link</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>objectUniqueId</td>
+<td>int</td>
+<td>Id</td>
+</tr>
+<tr>
+<td>R</td>
+<td>linkIndex</td>
+<td>int</td>
+<td>link 索引</td>
+</tr>
+<tr>
+<td>O</td>
+<td>objectDebugColorRGB</td>
+<td>vec3f</td>
+<td>调试颜色为[红，绿，蓝]。如果不提供，自定义颜色将被删除。</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClient</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<br>
+
+<h2 id="9-2-addUserData"><a href="#9-2-addUserData" class="headerlink" title="9.2 addUserData"></a>9.2 addUserData</h2><ul>
+<li><p>addUserData</p>
+<ul>
+<li>简而言之，添加、删除和查询用户数据，此时文本字符串，附加到主体的任何链接上。请参阅userData.py示例了解如何使用它。它将返回一个userDataId。注意，您还可以在urdf文件中添加用户数据。</li>
+</ul>
+</li>
+<li><p>getUserData</p>
+<ul>
+<li>getUserData将根据addUserData返回的userDataId接收用户数据。</li>
+<li><strong>userData.py</strong></li>
+</ul>
+</li>
+<li><p>syncUserData</p>
+<ul>
+<li>syncUserData将在多个客户端更改用户数据(addUserData等)的情况下同步用户数据(getUserData)。</li>
+</ul>
+</li>
+<li><p>removeUserData</p>
+<ul>
+<li>给定userDataId, removeUserData将删除先前添加的用户数据。</li>
+</ul>
+</li>
+<li><p>getUserDataId and getNumUserData</p>
+<ul>
+<li>getNumUserData将根据bodyUniqueId返回用户数据条目的数量。</li>
+</ul>
+</li>
+<li><p>getUserDataInfo</p>
+<ul>
+<li>getUserDataInfo检索用户数据的键和标识符为(userDataId, key, bodyUniqueId, linkIndex, visualShapeIndex)</li>
+</ul>
+</li>
+</ul>
+<h2 id="9-3-configureDebugVisualizer"><a href="#9-3-configureDebugVisualizer" class="headerlink" title="9.3 configureDebugVisualizer"></a>9.3 configureDebugVisualizer</h2><ul>
+<li>configureDebugVisualizer<ul>
+<li>可以配置一些内置OpenGL可视化工具的设置，例如启用或禁用线框图、阴影和GUI渲染。这是非常有用的，因为一些笔记本电脑或桌面gui与我们的OpenGL 3可视化工具有性能问题</li>
+<li>pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_WIREFRAME,1)</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>flag</td>
+<td>int</td>
+<td>要启用或禁用的功能:such as <br>COV_ENABLE_WIREFRAME,<br>COV_ENABLE_SHADOWS,<br>COV_ENABLE_GUI,COV_ENABLE_VR_PICKING,<br> COV_ENABLE_VR_TELEPORTING,<br>COV_ENABLE_RENDERING,<br> COV_ENABLE_TINY_RENDERER,<br>COV_ENABLE_VR_RENDER_CONTROLLERS,<br>COV_ENABLE_KEYBOARD_SHORTCUTS,<br>COV_ENABLE_MOUSE_PICKING,<br>COV_ENABLE_Y_AXIS_UP (Z is default world up axis),<br>COV_ENABLE_RGB_BUFFER_PREVIEW,<br>COV_ENABLE_DEPTH_BUFFER_PREVIEW,<br>COV_ENABLE_SEGMENTATION_MARK_PREVIEW</td>
+</tr>
+<tr>
+<td>R</td>
+<td>enable</td>
+<td>int</td>
+<td>0 or 1</td>
+</tr>
+<tr>
+<td>O</td>
+<td>lightPosition</td>
+<td>vec3</td>
+<td>visualizer的灯光位置</td>
+</tr>
+<tr>
+<td>O</td>
+<td>shadowMapResolution</td>
+<td>int</td>
+<td>阴影贴图纹理的大小，对于许多gpu来说通常是power of 2。默认是4096。现代gpu可以处理16384或32768或更高</td>
+</tr>
+<tr>
+<td>O</td>
+<td>shadowMapWorldSize</td>
+<td>int</td>
+<td>阴影地图在世界空间的大小(单位为米，默认为10)</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="9-4-get-resetDebugVisualizerCamera"><a href="#9-4-get-resetDebugVisualizerCamera" class="headerlink" title="9.4 get/resetDebugVisualizerCamera"></a>9.4 get/resetDebugVisualizerCamera</h2><ul>
+<li><p>get/resetDebugVisualizerCamera</p>
+<ul>
+<li>Warning:getDebugVisualizerCamera的返回参数与resetDebugVisualizerCamera的返回参数顺序不同。将在未来的API修订版(主要的新版本)中修复</li>
+</ul>
+</li>
+<li><p>resetDebugVisualizerCamera</p>
+<ul>
+<li>可以重置3D OpenGL调试visualizer摄像机距离(眼睛和摄像机目标位置之间)，摄像机偏航和俯仰和摄像机目标位置。</li>
+<li>pybullet.resetDebugVisualizerCamera( cameraDistance=3, cameraYaw=30,<br>cameraPitch=52, cameraTargetPosition=[0,0,0])</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R</td>
+<td>cameraDistance</td>
+<td>float</td>
+<td>从eye到camera目标位置的距离</td>
+</tr>
+<tr>
+<td>R</td>
+<td>cameraYaw</td>
+<td>float</td>
+<td>相机yaw(偏移)角度(以角度表示)左右</td>
+</tr>
+<tr>
+<td>R</td>
+<td>cameraPitch</td>
+<td>float</td>
+<td>摄像机Pitch(俯仰)角度(以度表示)向上/向下</td>
+</tr>
+<tr>
+<td>R</td>
+<td>cameraTargetPosition</td>
+<td>vec3f</td>
+<td>cameraTargetPosition是相机的焦点</td>
+</tr>
+<tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<ul>
+<li>getDebugVisualizerCamera<ul>
+<li>可以得到相机的宽度和高度(以像素为单位)，它的视图和投影矩阵使用这个命令。输入参数是可选的physicsClientId,输出信息见下表</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Output Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>int</td>
+<td>相机图像的像素宽度</td>
+</tr>
+<tr>
+<td>height</td>
+<td>int</td>
+<td>相机图像的像素高度</td>
+</tr>
+<tr>
+<td>viewMatrix</td>
+<td>float16,list of 16 floats</td>
+<td>相机的view matrix</td>
+</tr>
+<tr>
+<td>projectionMatrix</td>
+<td>float16,list of 16 floats</td>
+<td>相机投影矩阵</td>
+</tr>
+<tr>
+<td>cameraUp</td>
+<td>float3,list of 3 floats</td>
+<td>相机的上轴，在笛卡尔世界空间坐标中</td>
+</tr>
+<tr>
+<td>cameraForward</td>
+<td>float3,list of 3 floats</td>
+<td>相机的前轴，在笛卡尔世界空间坐标</td>
+</tr>
+<tr>
+<td>horizontal</td>
+<td>float3,list of 3 floats</td>
+<td>TBD。这是一个水平矢量，可以用来生成射线(例如，用于鼠标选择或创建一个简单的射线跟踪器)</td>
+</tr>
+<tr>
+<td>vertical</td>
+<td>float3,list of 3 floats</td>
+<td>：TBD。这是一个垂直矢量，可以用来生成射线(例如，鼠标选择或创建一个简单的射线追踪器)。</td>
+</tr>
+<tr>
+<td>yaw</td>
+<td>float</td>
+<td>相机的偏移角，在笛卡尔局部空间坐标中</td>
+</tr>
+<tr>
+<td>pitch</td>
+<td>float</td>
+<td>相机俯仰角，在笛卡尔局部空间坐标中</td>
+</tr>
+<tr>
+<td>dist</td>
+<td>float</td>
+<td>相机与相机目标之间的距离</td>
+</tr>
+<tr>
+<td>target</td>
+<td>float3,list of 3 floats</td>
+<td>相机的目标，在笛卡尔世界空间坐标</td>
+</tr>
+</tbody></table>
+<p><br><br></p>
+<h2 id="9-5-getKeyboardEvents-getMouseEvents"><a href="#9-5-getKeyboardEvents-getMouseEvents" class="headerlink" title="9.5 getKeyboardEvents, getMouseEvents"></a>9.5 getKeyboardEvents, getMouseEvents</h2><ul>
+<li>getKeyboardEvents<ul>
+<li>调用getKeyboardEvents可以接收自上次调用以来发生的所有键盘事件,每个事件有一个键码和状态，状态是位标志KEY_IS_DOWN, KEY_WAS_TRIGGERED 和 KEY_WAS_RELEASED的组合，如果键盘是from up to down状态，会接收到KEY_IS_DOWN和KEY_WAS_TRIGGERED状态，如果键盘已经被按下，然后松开，会接收到KEY_IS_DOWN和KEY_WAS_RELEASED状态</li>
+<li>定义了一些特殊的键：B3G_F1 … B3G_F12, B3G_LEFT_ARROW,B3G_RIGHT_ARROW, B3G_UP_ARROW, B3G_DOWN_ARROW, B3G_PAGE_UP,B3G_PAGE_DOWN, B3G_PAGE_END, B3G_HOME, B3G_DELETE, B3G_INSERT,B3G_ALT, B3G_SHIFT, B3G_CONTROL, B3G_RETURN.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Input Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>O</td>
+<td>physicsClientId</td>
+<td>int</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p><br><br><br><strong>输出是一个keycode ‘key’和键盘状态’value’的字典。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">qKey = ord(<span class="string">'q'</span>)</span><br><span class="line">keys = p.getKeyboardEvents()</span><br><span class="line"><span class="keyword">if</span> qKey <span class="keyword">in</span> keys <span class="keyword">and</span> keys[qKey]&amp;p.KEY_WAS_TRIGGERED:</span><br><span class="line">  <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>getMouseEvents<ul>
+<li>与getKeyboardEvents类似，可以获得自上次调用getMouseEvents以来发生的鼠标事件。所有鼠标移动事件合并到一个最新位置的单个鼠标移动事件中。此外，给定按钮的所有鼠标按钮事件将被合并。如果一个按钮向下和向上，状态将是’KEY_WAS_TRIGGERED ‘。对于鼠标按钮状态，我们重用KEY_WAS_TRIGGERED /KEY_IS_DOWN /KEY_WAS_RELEASED。</li>
+<li>输入参数只有 | O | physicsClient | int | … |</li>
+<li>See <strong>createVisualShape.py</strong> for an example of mouse events, to select/color objects.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Output Parameters</th>
+<th>type</th>
+<th>descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>eventType</td>
+<td>int</td>
+<td>MOUSE_MOVE_EVENT=1, MOUSE_BUTTON_EVENT=2</td>
+</tr>
+<tr>
+<td>mousePosX</td>
+<td>float</td>
+<td>鼠标指针的x坐标</td>
+</tr>
+<tr>
+<td>mousePosY</td>
+<td>float</td>
+<td>鼠标指针的y坐标</td>
+</tr>
+<tr>
+<td>buttonIndex</td>
+<td>int</td>
+<td>鼠标左键/中键/右键索引</td>
+</tr>
+<tr>
+<td>buttonState</td>
+<td>int</td>
+<td>：flag KEY_WAS_TRIGGERED / KEY_IS_DOWN / KEY_WAS_RELEASED</td>
+</tr>
+</tbody></table>
+
+      
+      <!-- reward -->
+      
+      <div id="reward-btn">
+        Reward
+      </div>
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+        <div class="declare">
+          <ul class="post-copyright">
+            <li>
+              <i class="ri-copyright-line"></i>
+              <strong>Copyright： </strong>
+              Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+            </li>
+          </ul>
+        </div>
+        
+    <footer class="article-footer">
+      
+          
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://yoursite.com/2021/05/31/PyBullet3/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyBullet/" rel="tag">PyBullet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/" rel="tag">机器人仿真</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2021/06/01/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%2001%20-%20%E5%BC%95%E8%A8%80/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            算法导论 01 - 引言
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/05/31/PyBullet2/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">PyBullet Quickstart Guide 官方文档翻译 3 - Deformables and Cloth | 4 - Synthetic Camera Rendering | 5 - Collision Detection Queries | 6 - Inverse Dynamics, Kinematics</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+  
+<!-- valine评论 -->
+<div id="vcomments-box">
+    <div id="vcomments">
+    </div>
+</div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        app_id: 'O5TErJuMgCMkSwAEA2KeOXTs-gzGzoHsz',
+        app_key: 'g1f07LPM3NsKWVGIa0haIagP',
+        path: window.location.pathname,
+        notify: 'false',
+        verify: 'false',
+        avatar: 'mp',
+        placeholder: '给我的文章加点评论吧~',
+        recordIP: true
+    });
+    const infoEle = document.querySelector('#vcomments .info');
+    if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+        infoEle.childNodes.forEach(function (item) {
+            item.parentNode.removeChild(item);
+        });
+    }
+</script>
+<style>
+    #vcomments-box {
+        padding: 5px 30px;
+    }
+
+    @media screen and (max-width: 800px) {
+        #vcomments-box {
+            padding: 5px 0px;
+        }
+    }
+
+    #vcomments-box #vcomments {
+        background-color: #fff;
+    }
+
+    .v .vlist .vcard .vh {
+        padding-right: 20px;
+    }
+
+    .v .vlist .vcard {
+        padding-left: 10px;
+    }
+</style>
+
+  
+
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>
+        &copy;
+        2015-2021
+        zhuozhu
+      </li>
+      <li>
+        
+        Powered by
+        
+        
+        <a href="https://hexo.io" target="_blank">Hexo</a> Theme <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul class="list-inline">
+      <li>
+        
+        
+        <span>
+  <i>PV:<span id="busuanzi_value_page_pv"></span></i>
+  <i>UV:<span id="busuanzi_value_site_uv"></span></i>
+</span>
+        
+      </li>
+      
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="Shine on You Crazy Diamond"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/2019/02/25/About_me">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Suche">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script>
+  try {
+    var typed = new Typed("#subtitle", {
+      strings: ['Remember when you were young, you shine like the sun.  -', 'Shine on you crazy diamond.', ''],
+      startDelay: 0,
+      typeSpeed: 80,
+      loop: true,
+      backSpeed: 40,
+      showCursor: true
+    });
+  } catch (err) {
+  }
+
+</script>
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
+
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://js.users.51.la/20544303.js"></script>
+
+  
+<script src="/js/clickLove.js"></script>
+
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":200,"height":450},"mobile":{"show":true},"rect":{"opacity":0.7},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
