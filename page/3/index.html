@@ -78,6 +78,113 @@
     
     
     
+    <article id="post-SwordToOffer - 56 数组中数字出现的次数" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/11/SwordToOffer%20-%2056%20%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/"
+    >《剑指Offer》  56 - 数组中数字出现的次数</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/07/11/SwordToOffer%20-%2056%20%E6%95%B0%E7%BB%84%E4%B8%AD%E6%95%B0%E5%AD%97%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0/" class="article-date">
+  <time datetime="2021-07-11T09:00:03.000Z" itemprop="datePublished">2021-07-11</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-56-数组中数字出现的次数"><a href="#《剑指Offer》-56-数组中数字出现的次数" class="headerlink" title="《剑指Offer》  56 - 数组中数字出现的次数"></a>《剑指Offer》  56 - 数组中数字出现的次数</h1><p><strong>题目1：</strong><a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/" target="_blank" rel="noopener">剑指 Offer 56 - I. 数组中数字出现的次数</a></p>
+<p>一个整型数组 <code>nums</code> 里除两个数字之外，其他数字都出现了两次。请写程序找出这两个只出现一次的数字。要求时间复杂度是$O(n)$，空间复杂度是$O(1)$。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：nums &#x3D; [4,1,4,6]</span><br><span class="line">输出：[1,6] 或 [6,1]</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：nums &#x3D; [1,2,10,4,1,4,3,3]</span><br><span class="line">输出：[2,10] 或 [10,2]</span><br><span class="line"> </span><br><span class="line">限制：</span><br><span class="line">2 &lt;&#x3D; nums.length &lt;&#x3D; 10000</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="题解1："><a href="#题解1：" class="headerlink" title="题解1："></a>题解1：</h2><p><strong>知识点：</strong></p>
+<ul>
+<li><strong>异或运算：</strong>两个相同数字异或为<code>0</code>，且<strong>满足交换律</strong>，即将下方数列执行异或运算，留下的结果则为出现一次的数字<code>x</code><ul>
+<li><code>a ^ b ^ b ^ c ^ x ^ a ^ c = a ^ a ^ b ^ b ^ c ^ c ^ x = x</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>解题思路：</strong></p>
+<ul>
+<li>由异或运算的性质可知，对<code>nums</code>中所有数字执行异或运算，得到的结果是两个只存在一次的数字<code>x1</code>和<code>x2</code>的异或结果，即<code>x1 ^ x2</code>，令<code>n = x1 ^ x2</code>，若<code>n</code>的某二进制位是<code>1</code>，则<code>x1和x2</code>在此二进制位一定不同，基于此位将<code>nums</code>数组分成两部分，<code>x1</code>和<code>x2</code>分别在这两个子数组是唯一的，分别进行异或运算，即可将<code>x1</code>和<code>x2</code>分离。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">singleNumbers</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x1 = <span class="number">0</span>, x2 = <span class="number">0</span>, n = <span class="number">0</span>, m = <span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums)</span><br><span class="line">            n ^= num;   <span class="comment">// n = x1 ^ x2</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> ((n &amp; m) == <span class="number">0</span>)</span><br><span class="line">            m &lt;&lt;= <span class="number">1</span>;    <span class="comment">// 找到n的二进制中从右往左数第一个为1的二进制位</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (num &amp; m) x1 ^= num;</span><br><span class="line">            <span class="keyword">else</span> x2 ^= num;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;x1, x2&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210711102639223.png" alt="image-20210711102639223"></p>
+<p><strong>题目2：</strong><a href="https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/" target="_blank" rel="noopener">剑指 Offer 56 - II. 数组中数字出现的次数 II</a></p>
+<p>在一个数组 <code>nums</code> 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">例 1：</span><br><span class="line">输入：nums &#x3D; [3,4,3,3]</span><br><span class="line">输出：4</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：nums &#x3D; [9,1,7,9,7,9,7]</span><br><span class="line">输出：1</span><br><span class="line"></span><br><span class="line">限制：</span><br><span class="line">1 &lt;&#x3D; nums.length &lt;&#x3D; 10000</span><br><span class="line">1 &lt;&#x3D; nums[i] &lt; 2^31</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="题解2："><a href="#题解2：" class="headerlink" title="题解2："></a>题解2：</h2><ul>
+<li>建立一个长度为<code>32</code>的数组<code>counts</code>，遍历<code>nums</code>，将<code>nums</code>中各个数字的各个二进制位相加并统计在<code>counts</code>数组中，然后对<code>counts</code>数组中的各元素对 <code>3</code>取余，结果即为只出现一次的数字的二进制形式，将其恢复到数字<code>res</code>中即可。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">counts</span><span class="params">(<span class="number">32</span>)</span></span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> num : nums)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">31</span>; j != <span class="number">0</span>; --j)</span><br><span class="line">            &#123;</span><br><span class="line">                counts[j] += num &amp; <span class="number">1</span>;</span><br><span class="line">                num &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, m = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">32</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            res = res &lt;&lt; <span class="number">1</span>; <span class="comment">// 左移 1 位</span></span><br><span class="line">            res = res | counts[i] % m; <span class="comment">// 恢复第 i 位的值到 res，对应的每个二进制位做或运算，只有双方都为0时才为0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果后左移，最后一轮的 最后一个操作变成了左移，那么最右一位 永远是 0</span></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210711113806665.png" alt="image-20210711113806665"></p>
+<ul>
+<li>两个循环合在一起</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, sub = <span class="number">0</span>; i &lt; <span class="number">32</span>; ++i, sub = <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> &amp;n : nums) sub += ((n &gt;&gt; i) &amp; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (sub % <span class="number">3</span>) res |= (<span class="number">1</span> &lt;&lt; i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210711114024389.png" alt="image-20210711114024389"></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-SwordToOffer - 55 二叉树的深度 &amp; 平衡二叉树" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -963,96 +1070,6 @@
 
 </article>
     
-    <article id="post-SwordToOffer - 46 把数字翻译成字符串" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/07/04/SwordToOffer%20-%2046%20%E6%8A%8A%E6%95%B0%E5%AD%97%E7%BF%BB%E8%AF%91%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/"
-    >《剑指Offer》  46 - 把数字翻译成字符串</a> 
-</h2>
- 
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/07/04/SwordToOffer%20-%2046%20%E6%8A%8A%E6%95%B0%E5%AD%97%E7%BF%BB%E8%AF%91%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="article-date">
-  <time datetime="2021-07-04T13:22:32.000Z" itemprop="datePublished">2021-07-04</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-
-      
-      <h1 id="《剑指Offer》-46-把数字翻译成字符串"><a href="#《剑指Offer》-46-把数字翻译成字符串" class="headerlink" title="《剑指Offer》  46 - 把数字翻译成字符串"></a>《剑指Offer》  46 - 把数字翻译成字符串</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/" target="_blank" rel="noopener">剑指 Offer 46. 把数字翻译成字符串</a></p>
-<p>给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例 1:</span><br><span class="line">输入: 12258</span><br><span class="line">输出: 5</span><br><span class="line">解释: 12258有5种不同的翻译，分别是&quot;bccfi&quot;, &quot;bwfi&quot;, &quot;bczi&quot;, &quot;mcfi&quot;和&quot;mzi&quot;</span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line">0 &lt;&#x3D; num &lt; 231</span><br></pre></td></tr></table></figure>
-
-<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><p><strong>动态规划问题</strong>：</p>
-<p>记数字 $num$ 第 $i$ 位数字为 $x_i$ ，$num$  共有 $n$  位，$num = 12256 ，n = 5，x_1 = 1$</p>
-<p><strong>状态定义：</strong>  $dp[i]$ 代表 以 $x_i$ 为结尾的数字的翻译方式数</p>
-<p><strong>状态转移方程：</strong>若 $x_i$ 和 $x_{i-1}$ 组成的数在 $10 ~ 25$ 之间，则 $dp[i] = dp[i-1] + dp[i-2]$；否则$dp[i] = dp[i-1]$</p>
-<p><strong>初始状态：</strong> $dp[0] = dp[1] = 1$，即无数字和第一位数字的翻译数量均为<code>1</code>，当 $num$ 第 <code>1</code>, <code>2</code> 位的组成的数字 $\in [10,25]$ 时，显然应有 <code>2</code> 种翻译方法，即 $dp[2] = dp[1] + dp[0] = 2$ ，而 $dp[1] = 1$ ，因此推出 $dp[0] = 1$。</p>
-<p><strong>返回值：</strong> $dp[n]$</p>
-<h4 id="方法一：转换为字符串做动态规划-O-n-O-n"><a href="#方法一：转换为字符串做动态规划-O-n-O-n" class="headerlink" title="方法一：转换为字符串做动态规划 $O(n) - O(n)$"></a>方法一：转换为字符串做动态规划 $O(n) - O(n)$</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">translateNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">string</span> str = to_string(num);</span><br><span class="line">        <span class="keyword">int</span> len = str.size();</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(len + <span class="number">1</span>)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; len + <span class="number">1</span>; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[i<span class="number">-2</span>] == <span class="string">'1'</span> || (str[i<span class="number">-2</span>] == <span class="string">'2'</span> &amp;&amp; str[i<span class="number">-1</span>] &lt;= <span class="string">'5'</span>))</span><br><span class="line">                dp[i] = dp[i<span class="number">-2</span>] + dp[i<span class="number">-1</span>];</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                dp[i] = dp[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210704205110401.png" alt="image-20210704205110401"></p>
-<h4 id="方法二：数字取余，滚动数组-O-n-O-1"><a href="#方法二：数字取余，滚动数组-O-n-O-1" class="headerlink" title="方法二：数字取余，滚动数组 $O(n) - O(1)$"></a>方法二：数字取余，滚动数组 $O(n) - O(1)$</h4><ul>
-<li>类似于求斐波那契数列问题和爬楼梯问题，只需要三个变量即可完成动态规划</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">translateNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> x, y = num % <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">while</span> (num)</span><br><span class="line">        &#123;</span><br><span class="line">            num /= <span class="number">10</span>;</span><br><span class="line">            x = num % <span class="number">10</span>;</span><br><span class="line">            <span class="keyword">int</span> xy = <span class="number">10</span> * x + y;</span><br><span class="line">            <span class="keyword">int</span> c = (xy &gt;= <span class="number">10</span> &amp;&amp; xy &lt;= <span class="number">25</span>) ? a + b : b; <span class="comment">// a b c</span></span><br><span class="line">            a = b;</span><br><span class="line">            b = c;</span><br><span class="line">            y = x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210704211508840.png" alt="image-20210704211508840"></p>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
   </article>
   
 
@@ -1149,7 +1166,7 @@
   <ul class="nav">
     <li class="nav-item">
       
-      <a class="nav-item-link nav-item-search"  title="Suche">
+      <a class="nav-item-link nav-item-search"  title="Rechercher">
         <i class="ri-search-line"></i>
       </a>
       

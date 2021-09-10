@@ -78,6 +78,126 @@
     
     
     
+    <article id="post-SwordToOffer - 16 数值的整数次方" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/23/SwordToOffer%20-%2016%20%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/"
+    >《剑指Offer》 16 - 数值的整数次方</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/23/SwordToOffer%20-%2016%20%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9/" class="article-date">
+  <time datetime="2021-06-23T07:32:34.000Z" itemprop="datePublished">2021-06-23</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/">《剑指Offer》</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="《剑指Offer》-16-数值的整数次方"><a href="#《剑指Offer》-16-数值的整数次方" class="headerlink" title="《剑指Offer》 16 - 数值的整数次方"></a>《剑指Offer》 16 - 数值的整数次方</h1><p><strong>题目：</strong><a href="https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/" target="_blank" rel="noopener">剑指 Offer 16. 数值的整数次方</a></p>
+<p>实现 <code>pow(x, n)</code>，即计算 <code>x</code>的 <code>n</code> 次幂函数，即 $x^n$。不得使用库函数，同时不需要考虑大数问题。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line">输入：x &#x3D; 2.00000, n &#x3D; 10</span><br><span class="line">输出：1024.00000</span><br><span class="line"></span><br><span class="line">示例 2：</span><br><span class="line">输入：x &#x3D; 2.10000, n &#x3D; 3</span><br><span class="line">输出：9.26100</span><br><span class="line"></span><br><span class="line">示例 3：</span><br><span class="line">输入：x &#x3D; 2.00000, n &#x3D; -2</span><br><span class="line">输出：0.25000</span><br><span class="line">解释：2-2 &#x3D; 1&#x2F;22 &#x3D; 1&#x2F;4 &#x3D; 0.25</span><br></pre></td></tr></table></figure>
+
+<p>取值范围：$-100 &lt; x &lt; 100.0$、 $ -2^{31} &lt;= n &lt;=2^{31}=1$、 $-10^4&lt;= x^n&lt;=10^4$</p>
+<p><strong>本题与LeetCode50相同：</strong><a href="https://leetcode-cn.com/problems/powx-n/" target="_blank" rel="noopener">50. Pow(x, n)</a></p>
+<h2 id="题解："><a href="#题解：" class="headerlink" title="题解："></a>题解：</h2><ul>
+<li>C++中 <code>int</code>类型的取值范围是 <code>-2147483648 ~ 2147483647</code>，所以当<code>n = -2147483648 时</code>，<code>n = -n</code>会发生越界错误。</li>
+<li>如果依次求解$x^1,x^2,…,x^{n-1},x^n$，则时间复杂度为$O(n)$。<strong>快速幂</strong>可以将时间复杂度降低至$O(\log_2{n})$，快速幂可以从<strong>二分法</strong>和<strong>二进制</strong>两个角度实现。</li>
+</ul>
+<h4 id="方法一：快速幂（二进制角度）"><a href="#方法一：快速幂（二进制角度）" class="headerlink" title="方法一：快速幂（二进制角度）"></a>方法一：快速幂（二进制角度）</h4><ul>
+<li>举例说明，计算$x^{10}$，$10$转换为二进制$1010$, $1010$转十进制的计算过程为 $2^3+2^0+2^1+2^0=10$，则$x^{10} = x^{2^3+0+2^1+0}=x^8*x^2=10$，只计算了$3$次乘法，时间复杂度为 $O(\log{n})$ 。</li>
+<li>通过<code>while</code>循环中计算$x^1, x^2, x^3,…$ ，通过 <code>if ((ln &amp; 1) == 1)</code> 从$x^1, x^2, x^3,…$ 中选出二进制对应为1的项相乘。</li>
+<li>时间复杂度：$O(\log{n})$</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">long</span> ln = n;</span><br><span class="line">        <span class="keyword">double</span> res = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">if</span> (ln &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            x = <span class="number">1</span> / x;</span><br><span class="line">            ln = -ln;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (ln &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> ((ln &amp; <span class="number">1</span>) == <span class="number">1</span>)</span><br><span class="line">                res *= x;  <span class="comment">// 从 x^1, x^2, x^3,... 中选出二进制对应为1的项相乘</span></span><br><span class="line">            x *= x;        <span class="comment">// 计算 x^1, x^2, x^3,...</span></span><br><span class="line">            ln &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210623143840471.png" alt="image-20210623143840471"></p>
+<h4 id="方法二：快速幂（二分法角度-递归）"><a href="#方法二：快速幂（二分法角度-递归）" class="headerlink" title="方法二：快速幂（二分法角度 递归）"></a>方法二：快速幂（二分法角度 递归）</h4><ul>
+<li><p>当 <code>n</code>为偶数时：$x^n = (x^2)^{\frac{n}{2}}$</p>
+</li>
+<li><p>当 `n 为奇数时：$x^n=x(x^2)^{\frac{n-1}{2}}$</p>
+</li>
+<li><p>转换为位运算：</p>
+<ul>
+<li>向下整除<code>n//2</code><strong>等价于</strong> 右移一位 <code>n &gt;&gt; 1</code> ；</li>
+<li>取余数<code>n % 2</code> <strong>等价于</strong> 判断二进制最右一位值 <code>n &amp; 1</code> ；</li>
+</ul>
+</li>
+<li><p>时间复杂度：$O(\log{n})$</p>
+</li>
+<li><p>空间复杂度：$O(\log{n})$</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">long</span> ln = n;</span><br><span class="line">        <span class="keyword">if</span> (ln &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            x = <span class="number">1</span> / x;</span><br><span class="line">            ln = -ln;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ln &amp; <span class="number">1</span> ? x * myPow(x * x, ln &gt;&gt; <span class="number">1</span>) : myPow(x * x, ln &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/image-20210623151344884.png" alt="image-20210623151344884"></p>
+<h4 id="方法三：循环累乘，效率低下（超时），但是注意到了-2147483648-取绝对值越界问题"><a href="#方法三：循环累乘，效率低下（超时），但是注意到了-2147483648-取绝对值越界问题" class="headerlink" title="方法三：循环累乘，效率低下（超时），但是注意到了 -2147483648 取绝对值越界问题"></a>方法三：循环累乘，效率低下（超时），但是注意到了 -2147483648 取绝对值越界问题</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">fabs</span>(x<span class="number">-0.0</span>)&lt;=<span class="number">1e-6</span> &amp;&amp; n &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">uint32_t</span> abs_n = (<span class="keyword">uint32_t</span>)n;</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">0</span>) abs_n = -(<span class="keyword">uint32_t</span>)n;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> result = _myPow(x,abs_n);</span><br><span class="line">        <span class="keyword">if</span> (n &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1.0</span> / result;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> _myPow(<span class="keyword">double</span> x, <span class="keyword">uint32_t</span> <span class="built_in">exp</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">double</span> result = <span class="number">1.0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="built_in">exp</span>; ++i)</span><br><span class="line">            result *= x;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>此题是《剑指Offer》第三章 高质量的代码 第一题。介绍了三种处理错误的方法：</p>
+<ul>
+<li>1 - 函数用返回值来告知调用者是否出错</li>
+<li>2 - 当错误发生时设置一个全局变量</li>
+<li>3 - 异常，函数运行出错时，抛出一个异常</li>
+</ul>
+<p>虽然下面的解法效率较低，但代码的规法性是值得学习的</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> g_InvalidInput = <span class="literal">false</span>; <span class="comment">// 采用全局变量来标识是否出错</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">equal</span><span class="params">(<span class="keyword">double</span> num1, <span class="keyword">double</span> num2)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">PowerWithUnsignedExponent</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">unsigned</span> <span class="keyword">int</span> exponent)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    g_InvalidInput = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (equal(base, <span class="number">0.0</span>) &amp;&amp; exponent &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        g_InvalidInput = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> absExponent = (<span class="keyword">unsigned</span> <span class="keyword">int</span>) (exponent);</span><br><span class="line">    <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>)</span><br><span class="line">        absExponent = (<span class="keyword">unsigned</span> <span class="keyword">int</span>) (-exponent);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> result = PowerWithUnsignedExponent(base, absExponent);</span><br><span class="line">    <span class="keyword">if</span> (exponent &lt; <span class="number">0</span>)</span><br><span class="line">        result = <span class="number">1.0</span> / result;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">PowerWithUnsignedExponent</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">unsigned</span> <span class="keyword">int</span> exponent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (exponent == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (exponent == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> base;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">double</span> result = PowerWithUnsignedExponent(base, exponent &gt;&gt; <span class="number">1</span>);</span><br><span class="line">    result *= result;</span><br><span class="line">    <span class="keyword">if</span> ((exponent &amp; <span class="number">0x1</span>) == <span class="number">1</span>)</span><br><span class="line">        result *= base;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">equal</span><span class="params">(<span class="keyword">double</span> num1, <span class="keyword">double</span> num2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((num1 - num2 &gt; <span class="number">-0.0000001</span>) &amp;&amp; (num1 - num2 &lt; <span class="number">0.0000001</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/" rel="tag">《剑指Offer》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-SwordToOffer - 15  二进制中 1 的个数" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -956,80 +1076,6 @@
 
 </article>
     
-    <article id="post-算法导论 78 重编号排头算法 - 基于高度函数的精巧求解（算法导论第26章）" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/06/19/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%2078%20%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95%20-%20%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89/"
-    >算法导论 78 重编号排头算法 - 基于高度函数的精巧求解（算法导论第26章）</a> 
-</h2>
- 
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/06/19/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%2078%20%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95%20-%20%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89/" class="article-date">
-  <time datetime="2021-06-19T06:34:42.000Z" itemprop="datePublished">2021-06-19</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E3%80%8A%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E3%80%8B/">《算法导论》</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-
-      
-      <h1 id="算法导论-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）"><a href="#算法导论-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）" class="headerlink" title="算法导论 78 重编号排头算法 - 基于高度函数的精巧求解（算法导论第26章）"></a>算法导论 78 重编号排头算法 - 基于高度函数的精巧求解（算法导论第26章）</h1><p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/Algorithm-78-%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89_%E9%A1%B5%E9%9D%A2_1.jpg" alt="Algorithm-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）_页面_1"></p>
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/Algorithm-78-%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89_%E9%A1%B5%E9%9D%A2_2.jpg" alt="Algorithm-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）_页面_2"></p>
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/Algorithm-78-%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89_%E9%A1%B5%E9%9D%A2_3.jpg" alt="Algorithm-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）_页面_3"></p>
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/Algorithm-78-%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89_%E9%A1%B5%E9%9D%A2_4.jpg" alt="Algorithm-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）_页面_4"></p>
-<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/Algorithm-78-%E9%87%8D%E7%BC%96%E5%8F%B7%E6%8E%92%E5%A4%B4%E7%AE%97%E6%B3%95-%E5%9F%BA%E4%BA%8E%E9%AB%98%E5%BA%A6%E5%87%BD%E6%95%B0%E7%9A%84%E7%B2%BE%E5%B7%A7%E6%B1%82%E8%A7%A3%EF%BC%88%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E7%AC%AC26%E7%AB%A0%EF%BC%89_%E9%A1%B5%E9%9D%A2_5.jpg" alt="Algorithm-78-重编号排头算法-基于高度函数的精巧求解（算法导论第26章）_页面_5"></p>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8A%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA%E3%80%8B/" rel="tag">《算法导论》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
   </article>
   
 
@@ -1126,7 +1172,7 @@
   <ul class="nav">
     <li class="nav-item">
       
-      <a class="nav-item-link nav-item-search"  title="Suche">
+      <a class="nav-item-link nav-item-search"  title="Rechercher">
         <i class="ri-search-line"></i>
       </a>
       

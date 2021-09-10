@@ -78,6 +78,211 @@
     
     
     
+    <article id="post-ROS MoviIt!教程 - 5.Moveit!编程" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%205.Moveit!%E7%BC%96%E7%A8%8B/"
+    >ROS MoviIt!学习 - 5.MoveIt! 编程</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/05/27/ROS%20MoviIt!%E6%95%99%E7%A8%8B%20-%205.Moveit!%E7%BC%96%E7%A8%8B/" class="article-date">
+  <time datetime="2021-05-27T09:29:20.000Z" itemprop="datePublished">2021-05-27</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ROS/">ROS</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="五、MoveIt-编程"><a href="#五、MoveIt-编程" class="headerlink" title="五、MoveIt! 编程"></a>五、MoveIt! 编程</h1><h2 id="5-1-MoveIt-的编程接口"><a href="#5-1-MoveIt-的编程接口" class="headerlink" title="5.1 MoveIt! 的编程接口"></a>5.1 MoveIt! 的编程接口</h2><p><strong>“move_group” Python Interface：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># "move_group" Python Interface</span></span><br><span class="line">group = moveit_commander.MoveGroupCommander(<span class="string">"left_arm"</span>)</span><br><span class="line"></span><br><span class="line">pose_target = geometry_msgs.msg.Pose()</span><br><span class="line">pose_target.orientation.w = <span class="number">1.0</span></span><br><span class="line">pose_target.position.x =  <span class="number">0.7</span></span><br><span class="line">pose_target.position.y = <span class="number">-0.05</span></span><br><span class="line">pose_target.position.z = <span class="number">1.1</span></span><br><span class="line">group.set_pose_target(pose_target)</span><br><span class="line"></span><br><span class="line">plan1 = group.plan()</span><br></pre></td></tr></table></figure>
+
+<p><strong>“move_group” C++ Interface:</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">moveit::<span class="function">planning_interface::MoveGroup <span class="title">group</span><span class="params">(<span class="string">"right_arm"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">geometry_msgs::Pose target_pose;</span><br><span class="line">target_pose.orientation.w = <span class="number">1.0</span>;</span><br><span class="line">target_pose.<span class="built_in">position</span>.x = <span class="number">0.28</span>;</span><br><span class="line">target_pose.<span class="built_in">position</span>.y = <span class="number">-0.7</span>;</span><br><span class="line">target_pose.<span class="built_in">position</span>.z = <span class="number">1.0</span>;</span><br><span class="line">group.setPoseTarget(target_pose);</span><br><span class="line"></span><br><span class="line">moveit::planning_interface::MoveGroup::Plan my_plan;</span><br><span class="line"><span class="keyword">bool</span> success = group.plan(my_plan);</span><br></pre></td></tr></table></figure>
+
+<h3 id="ROS编程流程"><a href="#ROS编程流程" class="headerlink" title="ROS编程流程"></a>ROS编程流程</h3><ul>
+<li><p>（1）连接控制需要的规划组</p>
+<ul>
+<li>要控制谁？</li>
+</ul>
+</li>
+<li><p>（2）设置目标位姿（关节空间或笛卡尔空间）</p>
+<ul>
+<li>要到达什么位置？终点的位姿？</li>
+</ul>
+</li>
+<li><p>（3）设置运动约束（可选）</p>
+<ul>
+<li>针对场景做运动约束</li>
+</ul>
+</li>
+<li><p>（4）使用MoveIt！规划一条到达目标的轨迹</p>
+<ul>
+<li>怎么走？</li>
+</ul>
+</li>
+<li><p>（5）修改轨迹（如速度等参数）（可选）</p>
+</li>
+<li><p>（6）执行规划出的轨迹</p>
+<ul>
+<li>Execute</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-2-关节空间运动"><a href="#5-2-关节空间运动" class="headerlink" title="5.2 关节空间运动"></a>5.2 关节空间运动</h2><p><strong>点到点运动：不需要在笛卡尔空间规划末端运动轨迹，机器人各个关节运动不需要联动。</strong></p>
+<h3 id="正向运动学规划例程："><a href="#正向运动学规划例程：" class="headerlink" title="正向运动学规划例程："></a>正向运动学规划例程：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_anno_moveit_config demo.launch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun probot_demo moveit_fk_demo.py</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># moveit_fk_demo.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy, sys</span><br><span class="line"><span class="keyword">import</span> moveit_commander</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoveItFkDemo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 0.初始化move_group API和ROS节点</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 初始化move_group的API</span></span><br><span class="line">        moveit_commander.roscpp_initialize(sys.argv)</span><br><span class="line">        <span class="comment"># 初始化ROS节点</span></span><br><span class="line">        rospy.init_node(<span class="string">'moveit_fk_demo'</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line"> </span><br><span class="line">		<span class="comment"># 1. 连接控制需要的规划组，设置参数约束</span></span><br><span class="line">        <span class="comment"># 初始化需要使用move group控制的机械臂中的arm group</span></span><br><span class="line">        arm = moveit_commander.MoveGroupCommander(<span class="string">'manipulator'</span>)        </span><br><span class="line">        <span class="comment"># 设置机械臂运动的允许误差值，单位是弧度</span></span><br><span class="line">        arm.set_goal_joint_tolerance(<span class="number">0.001</span>)</span><br><span class="line">        <span class="comment"># 设置允许的最大速度和加速度，0.5是一个比例，乘以允许的最大速度和加速度</span></span><br><span class="line">        arm.set_max_acceleration_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line">        arm.set_max_velocity_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 2. 设置初始位姿和目标位姿</span></span><br><span class="line">        <span class="comment"># 控制机械臂先回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go() <span class="comment"># plan + execute</span></span><br><span class="line">        rospy.sleep(<span class="number">1</span>) <span class="comment"># 休眠一秒        </span></span><br><span class="line">        <span class="comment"># 设置机械臂的目标位置，使用六轴的位置数据进行描述（单位：弧度）</span></span><br><span class="line">        joint_positions = [<span class="number">0.391410</span>, <span class="number">-0.676384</span>, <span class="number">-0.376217</span>, <span class="number">0.0</span>, <span class="number">1.052834</span>, <span class="number">0.454125</span>]</span><br><span class="line">        arm.set_joint_value_target(joint_positions)     </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 3. 执行规划出的轨迹，并回到原处</span></span><br><span class="line">        <span class="comment"># 控制机械臂完成运动</span></span><br><span class="line">        arm.go()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># 控制机械臂先回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 关闭并退出moveit</span></span><br><span class="line">        moveit_commander.roscpp_shutdown()</span><br><span class="line">        moveit_commander.os._exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        MoveItFkDemo()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关键API的实现步骤</strong></p>
+<ul>
+<li>创建规划组的控制对象；</li>
+<li>设置关节空间运动的目标位姿；</li>
+<li>完成规划并控制机械臂完成运动</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">arm = moveit_commander.MoveGroupCommander(<span class="string">'manipulator'</span>)</span><br><span class="line"></span><br><span class="line">joint_positions = [<span class="number">0.391410</span>, <span class="number">-0.676384</span>, <span class="number">-0.376217</span>, <span class="number">0.0</span>, <span class="number">1.052834</span>, <span class="number">0.454125</span>]</span><br><span class="line">arm.set_joint_value_target(joint_positions)</span><br><span class="line"></span><br><span class="line">arm.go()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="逆向运动学规划例程："><a href="#逆向运动学规划例程：" class="headerlink" title="逆向运动学规划例程："></a>逆向运动学规划例程：</h3><p>很多情况下很难确定机器人目标位置的六个关节值，更常用的是通过工作空间下的 x y z 和姿态来确定目标位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_anno_moveit_config demo.launch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun probot_demo moveit_ik_demo.py</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># moveit_ik_demo.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> rospy, sys</span><br><span class="line"><span class="keyword">import</span> moveit_commander</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> PoseStamped, Pose</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoveItIkDemo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 0. 初始化</span></span><br><span class="line">        <span class="comment"># 初始化move_group的API</span></span><br><span class="line">        moveit_commander.roscpp_initialize(sys.argv) </span><br><span class="line">        <span class="comment"># 初始化ROS节点</span></span><br><span class="line">        rospy.init_node(<span class="string">'moveit_ik_demo'</span>)             </span><br><span class="line">        <span class="comment"># 初始化需要使用move group控制的机械臂中的arm group</span></span><br><span class="line">        arm = moveit_commander.MoveGroupCommander(<span class="string">'manipulator'</span>)      </span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 1. 设置参考坐标系和约束参数</span></span><br><span class="line">        <span class="comment"># 获取终端link的名称</span></span><br><span class="line">        end_effector_link = arm.get_end_effector_link()                    </span><br><span class="line">        <span class="comment"># 设置目标位置所使用的参考坐标系</span></span><br><span class="line">        reference_frame = <span class="string">'base_link'</span></span><br><span class="line">        arm.set_pose_reference_frame(reference_frame)</span><br><span class="line">             </span><br><span class="line">        <span class="comment"># 当运动规划失败后，允许重新规划</span></span><br><span class="line">        arm.allow_replanning(<span class="literal">True</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置位置(单位：米)和姿态（单位：弧度）的允许误差</span></span><br><span class="line">        arm.set_goal_position_tolerance(<span class="number">0.001</span>)</span><br><span class="line">        arm.set_goal_orientation_tolerance(<span class="number">0.01</span>)</span><br><span class="line">       </span><br><span class="line">        <span class="comment"># 设置允许的最大速度和加速度</span></span><br><span class="line">        arm.set_max_acceleration_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line">        arm.set_max_velocity_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 控制机械臂先回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">               </span><br><span class="line">        <span class="comment"># 设置机械臂工作空间中的目标位姿，位置使用x、y、z坐标描述，</span></span><br><span class="line">        <span class="comment"># 姿态使用四元数描述，基于base_link坐标系</span></span><br><span class="line">        target_pose = PoseStamped()</span><br><span class="line">        target_pose.header.frame_id = reference_frame</span><br><span class="line">        target_pose.header.stamp = rospy.Time.now()     </span><br><span class="line">        target_pose.pose.position.x = <span class="number">0.2593</span></span><br><span class="line">        target_pose.pose.position.y = <span class="number">0.0636</span></span><br><span class="line">        target_pose.pose.position.z = <span class="number">0.1787</span></span><br><span class="line">        target_pose.pose.orientation.x = <span class="number">0.70692</span></span><br><span class="line">        target_pose.pose.orientation.y = <span class="number">0.0</span></span><br><span class="line">        target_pose.pose.orientation.z = <span class="number">0.0</span></span><br><span class="line">        target_pose.pose.orientation.w = <span class="number">0.70729</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置机器臂当前的状态作为运动初始状态</span></span><br><span class="line">        arm.set_start_state_to_current_state()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置机械臂终端运动的目标位姿</span></span><br><span class="line">        arm.set_pose_target(target_pose, end_effector_link)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 规划运动路径，即rviz中的机械臂虚影轨迹</span></span><br><span class="line">        traj = arm.plan()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 按照规划的运动路径控制机械臂运动</span></span><br><span class="line">        arm.execute(traj)</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 控制机械臂回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 关闭并退出moveit</span></span><br><span class="line">        moveit_commander.roscpp_shutdown()</span><br><span class="line">        moveit_commander.os._exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    MoveItIkDemo()</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键API的实现步骤：</strong></p>
+<ul>
+<li>创建规划组的控制对象；</li>
+<li>获取机器人的终端link名称；</li>
+<li>设置目标位姿对应的参考坐标系的起始、终止位姿；</li>
+<li>完成规划并控制机械臂完成运动。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">arm = moveit_commander.MoveGroupCommander(<span class="string">'manipulator'</span>)</span><br><span class="line">end_effortor_link = arm.get_end_effector_link()</span><br><span class="line"></span><br><span class="line">reference_frame = <span class="string">'base_link'</span></span><br><span class="line">arm.set_pose_reference_frame(reference_frame)</span><br><span class="line"></span><br><span class="line">arm.set_pose_target(target_pose, end_effector_link)</span><br><span class="line"></span><br><span class="line">traj = arm.plan()</span><br><span class="line">arm.execute(traj)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-3-笛卡尔空间运动"><a href="#5-3-笛卡尔空间运动" class="headerlink" title="5.3 笛卡尔空间运动"></a>5.3 笛卡尔空间运动</h2><p><strong>笛卡尔路径约束，路径点之间的路径形状是一条直线</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> roslaunch probot_anno_moveit_config demo.launch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun probot_demo moveit_cartesian_demo.py _cartesian:=True (走直线)</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun probot_demo moveit_cartesian_demo.py _cartesian:=False (自由曲线)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>显示终端轨迹：</strong></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130095029.png" alt="image-20201130095029187" style="zoom:67%;" />
+
+
+
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130095002.png" alt="image-20201130095002467" style="zoom:67%;" />
+
+
+
+<p><strong>走直线：</strong></p>
+<p>两点可以确定一条直线，所以在代码中用 列表 <code>waypoints[]</code> 来储存路点列表</p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130095310.png" alt="image-20201130095310643" style="zoom: 67%;" />
+
+<p><strong>自由曲线：</strong></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130095832.png" alt="image-20201130095832715" style="zoom: 80%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rospy, sys</span><br><span class="line"><span class="keyword">import</span> moveit_commander</span><br><span class="line"><span class="keyword">from</span> moveit_commander <span class="keyword">import</span> MoveGroupCommander</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> Pose</span><br><span class="line"><span class="keyword">from</span> copy <span class="keyword">import</span> deepcopy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoveItCartesianDemo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化move_group的API</span></span><br><span class="line">        moveit_commander.roscpp_initialize(sys.argv)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化ROS节点</span></span><br><span class="line">        rospy.init_node(<span class="string">'moveit_cartesian_demo'</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 是否需要使用笛卡尔空间的运动规划</span></span><br><span class="line">        cartesian = rospy.get_param(<span class="string">'~cartesian'</span>, <span class="literal">True</span>)</span><br><span class="line">                      </span><br><span class="line">        <span class="comment"># 初始化需要使用move group控制的机械臂中的arm group</span></span><br><span class="line">        arm = MoveGroupCommander(<span class="string">'manipulator'</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 当运动规划失败后，允许重新规划</span></span><br><span class="line">        arm.allow_replanning(<span class="literal">True</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置目标位置所使用的参考坐标系</span></span><br><span class="line">        arm.set_pose_reference_frame(<span class="string">'base_link'</span>)</span><br><span class="line">                </span><br><span class="line">        <span class="comment"># 设置位置(单位：米)和姿态（单位：弧度）的允许误差</span></span><br><span class="line">        arm.set_goal_position_tolerance(<span class="number">0.001</span>)</span><br><span class="line">        arm.set_goal_orientation_tolerance(<span class="number">0.001</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置允许的最大速度和加速度</span></span><br><span class="line">        arm.set_max_acceleration_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line">        arm.set_max_velocity_scaling_factor(<span class="number">0.5</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 获取终端link的名称</span></span><br><span class="line">        end_effector_link = arm.get_end_effector_link()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 控制机械臂先回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">                                               </span><br><span class="line">        <span class="comment"># 获取当前位姿数据最为机械臂运动的起始位姿</span></span><br><span class="line">        start_pose = arm.get_current_pose(end_effector_link).pose</span><br><span class="line">                </span><br><span class="line">        <span class="comment"># 初始化路点列表</span></span><br><span class="line">        waypoints = []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将初始位姿加入路点列表</span></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            waypoints.append(start_pose)</span><br><span class="line">            </span><br><span class="line">        <span class="comment"># 设置路点数据，并加入路点列表</span></span><br><span class="line">        wpose = deepcopy(start_pose)</span><br><span class="line">        wpose.position.z -= <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            waypoints.append(deepcopy(wpose))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            arm.set_pose_target(wpose)</span><br><span class="line">            arm.go()</span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        wpose.position.x += <span class="number">0.15</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            waypoints.append(deepcopy(wpose))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            arm.set_pose_target(wpose)</span><br><span class="line">            arm.go()</span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        wpose.position.y += <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            waypoints.append(deepcopy(wpose))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            arm.set_pose_target(wpose)</span><br><span class="line">            arm.go()</span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        wpose.position.x -= <span class="number">0.15</span></span><br><span class="line">        wpose.position.y -= <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            waypoints.append(deepcopy(wpose))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            arm.set_pose_target(wpose)</span><br><span class="line">            arm.go()</span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> cartesian:</span><br><span class="line">            fraction = <span class="number">0.0</span>   <span class="comment">#路径规划覆盖率</span></span><br><span class="line">            maxtries = <span class="number">100</span>   <span class="comment">#最大尝试规划次数</span></span><br><span class="line">            attempts = <span class="number">0</span>     <span class="comment">#已经尝试规划次数</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 设置机器臂当前的状态作为运动初始状态</span></span><br><span class="line">            arm.set_start_state_to_current_state()</span><br><span class="line">        </span><br><span class="line">            <span class="comment"># 尝试规划一条笛卡尔空间下的路径，依次通过所有路点</span></span><br><span class="line">            <span class="keyword">while</span> fraction &lt; <span class="number">1.0</span> <span class="keyword">and</span> attempts &lt; maxtries:</span><br><span class="line">                <span class="comment"># 返回的fraction是一个比例，成功规划的轨迹的百分比，所以fraction最好等于1，这里设置了求解100次</span></span><br><span class="line">                (plan, fraction) = arm.compute_cartesian_path (</span><br><span class="line">                                        waypoints,   <span class="comment"># waypoint poses，路点列表</span></span><br><span class="line">                                        <span class="number">0.01</span>,        <span class="comment"># eef_step，终端步进值, 每隔1厘米算一次运动学逆解，是否能到达这个点</span></span><br><span class="line">                                        <span class="number">0.0</span>,         <span class="comment"># jump_threshold，跳跃阈值，遇到逆解求不出的点，是否跳过，0.0是默认不跳过，如果是10，则允许跳过10厘米，10厘米内有点求不到都可以跳过</span></span><br><span class="line">                                        <span class="literal">True</span>)        <span class="comment"># avoid_collisions，避障规划</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 尝试次数累加</span></span><br><span class="line">                attempts += <span class="number">1</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment"># 打印运动规划进程</span></span><br><span class="line">                <span class="keyword">if</span> attempts % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">                    rospy.loginfo(<span class="string">"Still trying after "</span> + str(attempts) + <span class="string">" attempts..."</span>)</span><br><span class="line">                        </span><br><span class="line">            <span class="comment"># 如果路径规划成功（覆盖率100%）,则开始控制机械臂运动</span></span><br><span class="line">            <span class="keyword">if</span> fraction == <span class="number">1.0</span>:</span><br><span class="line">                rospy.loginfo(<span class="string">"Path computed successfully. Moving the arm."</span>)</span><br><span class="line">                arm.execute(plan)</span><br><span class="line">                rospy.loginfo(<span class="string">"Path execution complete."</span>)</span><br><span class="line">            <span class="comment"># 如果路径规划失败，则打印失败信息</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                rospy.loginfo(<span class="string">"Path planning failed with only "</span> + str(fraction) + <span class="string">" success after "</span> + str(maxtries) + <span class="string">" attempts."</span>)  </span><br><span class="line"></span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 控制机械臂先回到初始化位置</span></span><br><span class="line">            arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">            arm.go()</span><br><span class="line">            rospy.sleep(<span class="number">1</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 关闭并退出moveit</span></span><br><span class="line">            moveit_commander.roscpp_shutdown()</span><br><span class="line">            moveit_commander.os._exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        MoveItCartesianDemo()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关键 API 的实现步骤：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(plan, fraction) = arm.compute_cartesian_path(</span><br><span class="line">					waypoints, <span class="comment"># waypoint poses, 路点列表</span></span><br><span class="line">					<span class="number">0.01</span>,      <span class="comment"># eef_step, 终端步进值</span></span><br><span class="line">					<span class="number">0.0</span>,       <span class="comment"># jump_threshold，最小移动值</span></span><br><span class="line">					<span class="literal">True</span>)      <span class="comment"># avoid_collisions，避障规划</span></span><br></pre></td></tr></table></figure>
+
+<p>返回值：</p>
+<ul>
+<li>plan：规划出来的运动轨迹</li>
+<li>fraction：描述规划成功的轨迹在给定路点列表中的覆盖率 [0~1]。如果fraction小于1，说明给定的路点列表没办法完成规划。</li>
+</ul>
+<p><strong>ROS中没有直接走圆弧的API，如何在笛卡尔空间下走出圆弧轨迹？</strong></p>
+<h2 id="5-4-自主避障运动"><a href="#5-4-自主避障运动" class="headerlink" title="5.4 自主避障运动"></a>5.4 自主避障运动</h2><h3 id="5-4-1-规划场景监听器："><a href="#5-4-1-规划场景监听器：" class="headerlink" title="5.4.1 规划场景监听器："></a>5.4.1 规划场景监听器：</h3><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130102622.png" alt="image-20201130102622853" style="zoom:80%;" />
+
+<p><strong>监听信息：</strong></p>
+<ul>
+<li>状态信息（State Information）：<ul>
+<li>机器人的关节话题 joint_states;</li>
+</ul>
+</li>
+<li>传感器信息（Sensor Information）：<ul>
+<li>机器人的传感器数据；</li>
+</ul>
+</li>
+<li>外界环境信息（World geometry information）<ul>
+<li>周围环境信息。</li>
+</ul>
+</li>
+</ul>
+<p><strong>添加场景物体：</strong></p>
+<p><img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130104336.png" alt="image-20201130104336092"></p>
+<p>点击 <code>Scene Objects</code> -&gt; <code>Import File</code> ，可以选择/home/your_name/.gazebo/models中的模型，</p>
+<p>这里选择了 <code>bowl</code> -&gt;<code>meshes</code> -&gt;<code>bowl.dae</code> ，可以拖动Scale的拖动条调整模型的大小。设完成后点击 <code>Publish Scene</code>将模型发布出去，点击<code>Planning</code> 返回路径规划</p>
+<p><strong>碰撞：</strong></p>
+<ul>
+<li>拖动机械臂，当和盘子发生碰撞后会，碰撞部分会变成红色</li>
+</ul>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130104727.png" alt="image-20201130104727667" style="zoom: 80%;" />
+
+<p><strong>避障运动：</strong></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130105017.png" alt="image-20201130105017738" style="zoom:80%;" />
+
+<p><strong>当机器人末端抓取物体时，物体和机器人视为一体，也会考虑到物体的避障：</strong></p>
+<img src="https://gitee.com/song-zhuozhu/my_image/raw/master/img/20201130113953.png" alt="image-20201130113953680" style="zoom:80%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rospy, sys</span><br><span class="line"><span class="keyword">import</span> thread, copy</span><br><span class="line"><span class="keyword">import</span> moveit_commander</span><br><span class="line"><span class="keyword">from</span> moveit_commander <span class="keyword">import</span> RobotCommander, MoveGroupCommander, PlanningSceneInterface</span><br><span class="line"><span class="keyword">from</span> geometry_msgs.msg <span class="keyword">import</span> PoseStamped, Pose</span><br><span class="line"><span class="keyword">from</span> moveit_msgs.msg <span class="keyword">import</span> CollisionObject, AttachedCollisionObject, PlanningScene</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> radians</span><br><span class="line"><span class="keyword">from</span> copy <span class="keyword">import</span> deepcopy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MoveAttachedObjectDemo</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化move_group的API</span></span><br><span class="line">        moveit_commander.roscpp_initialize(sys.argv)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 初始化ROS节点</span></span><br><span class="line">        rospy.init_node(<span class="string">'moveit_attached_object_demo'</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 初始化场景对象,场景监听器！</span></span><br><span class="line">        scene = PlanningSceneInterface()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">                                </span><br><span class="line">        <span class="comment"># 初始化需要使用move group控制的机械臂中的arm group</span></span><br><span class="line">        arm = MoveGroupCommander(<span class="string">'manipulator'</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 获取终端link的名称</span></span><br><span class="line">        end_effector_link = arm.get_end_effector_link()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置位置(单位：米)和姿态（单位：弧度）的允许误差</span></span><br><span class="line">        arm.set_goal_position_tolerance(<span class="number">0.01</span>)</span><br><span class="line">        arm.set_goal_orientation_tolerance(<span class="number">0.05</span>)</span><br><span class="line">       </span><br><span class="line">        <span class="comment"># 当运动规划失败后，允许重新规划</span></span><br><span class="line">        arm.allow_replanning(<span class="literal">True</span>)</span><br><span class="line">        arm.set_planning_time(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 控制机械臂回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 移除场景中之前运行残留的物体</span></span><br><span class="line">        scene.remove_attached_object(end_effector_link, <span class="string">'tool'</span>)</span><br><span class="line">        scene.remove_world_object(<span class="string">'table'</span>) </span><br><span class="line">        scene.remove_world_object(<span class="string">'target'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置桌面的高度</span></span><br><span class="line">        table_ground = <span class="number">0.6</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置table和tool的三维尺寸，长宽高</span></span><br><span class="line">        table_size = [<span class="number">0.1</span>, <span class="number">0.7</span>, <span class="number">0.01</span>]</span><br><span class="line">        tool_size = [<span class="number">0.2</span>, <span class="number">0.02</span>, <span class="number">0.02</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 设置tool的位姿， 要和机器人的终端连接</span></span><br><span class="line">        p = PoseStamped()</span><br><span class="line">        p.header.frame_id = end_effector_link</span><br><span class="line">        </span><br><span class="line">        p.pose.position.x = tool_size[<span class="number">0</span>] / <span class="number">2.0</span> - <span class="number">0.025</span></span><br><span class="line">        p.pose.position.y = <span class="number">-0.015</span></span><br><span class="line">        p.pose.position.z = <span class="number">0.0</span></span><br><span class="line">        p.pose.orientation.x = <span class="number">0</span></span><br><span class="line">        p.pose.orientation.y = <span class="number">0</span></span><br><span class="line">        p.pose.orientation.z = <span class="number">0</span></span><br><span class="line">        p.pose.orientation.w = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 将tool附着到机器人的终端</span></span><br><span class="line">        scene.attach_box(end_effector_link, <span class="string">'tool'</span>, p, tool_size)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将table加入场景当中</span></span><br><span class="line">        table_pose = PoseStamped()</span><br><span class="line">        table_pose.header.frame_id = <span class="string">'base_link'</span></span><br><span class="line">        table_pose.pose.position.x = <span class="number">0.25</span></span><br><span class="line">        table_pose.pose.position.y = <span class="number">0.0</span></span><br><span class="line">        table_pose.pose.position.z = table_ground + table_size[<span class="number">2</span>] / <span class="number">2.0</span></span><br><span class="line">        table_pose.pose.orientation.w = <span class="number">1.0</span></span><br><span class="line">        scene.add_box(<span class="string">'table'</span>, table_pose, table_size)</span><br><span class="line">        </span><br><span class="line">        rospy.sleep(<span class="number">2</span>)  </span><br><span class="line"></span><br><span class="line">        <span class="comment"># 更新当前的位姿</span></span><br><span class="line">        arm.set_start_state_to_current_state()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置机械臂的目标位置，使用六轴的位置数据进行描述（单位：弧度）</span></span><br><span class="line">        joint_positions = [<span class="number">0.827228546495185</span>, <span class="number">0.29496592875743577</span>, <span class="number">1.1185644936946095</span>, <span class="number">-0.7987583317769674</span>, <span class="number">-0.18950024740190782</span>, <span class="number">0.11752152218233858</span>]</span><br><span class="line">        arm.set_joint_value_target(joint_positions)</span><br><span class="line">                 </span><br><span class="line">        <span class="comment"># 控制机械臂完成运动</span></span><br><span class="line">        arm.go()</span><br><span class="line">        rospy.sleep(<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 控制机械臂回到初始化位置</span></span><br><span class="line">        arm.set_named_target(<span class="string">'home'</span>)</span><br><span class="line">        arm.go()</span><br><span class="line"></span><br><span class="line">        moveit_commander.roscpp_shutdown()</span><br><span class="line">        moveit_commander.os._exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    MoveAttachedObjectDemo()</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键API:</strong></p>
+<ul>
+<li>add_box</li>
+<li>attach_box</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MoveIt/" rel="tag">MoveIt!</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ROS/" rel="tag">ROS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-ROS MoviIt!教程 - 4.MoveIt!仿真" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -1498,310 +1703,6 @@
 
 </article>
     
-    <article id="post-Cpp-Primer-5th-Notes-Ch3 字符串、向量和数组" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2021/05/22/Cpp-Primer-5th-Notes-Ch3%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%90%91%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84/"
-    >《Cpp-Primer-5th》Notes-Ch3 字符串、向量和数组</a> 
-</h2>
- 
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2021/05/22/Cpp-Primer-5th-Notes-Ch3%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%81%E5%90%91%E9%87%8F%E5%92%8C%E6%95%B0%E7%BB%84/" class="article-date">
-  <time datetime="2021-05-22T09:29:19.000Z" itemprop="datePublished">2021-05-22</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/C/">C++</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-
-      
-      <h1 id="第三章-字符串、向量和数组"><a href="#第三章-字符串、向量和数组" class="headerlink" title="第三章 字符串、向量和数组"></a>第三章 字符串、向量和数组</h1><h2 id="3-1-命名空间的-using-声明"><a href="#3-1-命名空间的-using-声明" class="headerlink" title="3.1 命名空间的 using 声明"></a>3.1 命名空间的 using 声明</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用cin cout endl，用using声明</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>头文件不应该包含using声明</li>
-</ul>
-<h2 id="3-2-标准库类型string"><a href="#3-2-标准库类型string" class="headerlink" title="3.2 标准库类型string"></a>3.2 标准库类型string</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-1-定义和初始化-string-对象"><a href="#3-2-1-定义和初始化-string-对象" class="headerlink" title="3.2.1 定义和初始化 string 对象"></a>3.2.1 定义和初始化 string 对象</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化string对象的方式</span></span><br><span class="line"><span class="built_in">string</span> s1;          <span class="comment">// 默认初始化，s1是一个空串</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;      <span class="comment">// s2是s1的副本</span></span><br><span class="line"><span class="built_in">string</span> s2 = s1;     <span class="comment">// 和上面等价</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"value"</span>)</span></span>; <span class="comment">// s3是字面值“value”的副本，除了字面值最好的那个空字符</span></span><br><span class="line"><span class="built_in">string</span> s3 = <span class="string">"value"</span>;<span class="comment">// 和上面等价</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(n, <span class="string">'c'</span>)</span></span>;  <span class="comment">// 把s4初始化为由n个字符c组成的串</span></span><br></pre></td></tr></table></figure>
-<p><strong>直接初始化和拷贝初始化</strong></p>
-<ul>
-<li>如果使用等号(=)初始化一个变量，实际上执行的是拷贝初始化。</li>
-<li>不使用等号，即为直接初始化<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般要初始化多个值时用直接初始化，单个两者都可</span></span><br><span class="line"><span class="built_in">string</span> s5 = <span class="string">"hiya"</span> <span class="comment">// 拷贝～</span></span><br><span class="line"><span class="built_in">string</span> s6(<span class="string">"hiya"</span>)  <span class="comment">// 直接～</span></span><br><span class="line"><span class="built_in">string</span> s7(<span class="number">10</span>,<span class="string">'c'</span>)  <span class="comment">// 直接～</span></span><br><span class="line"><span class="built_in">string</span> s8 = <span class="built_in">string</span>(<span class="number">10</span>, <span class="string">'c'</span>)</span><br><span class="line"><span class="comment">// 多个值初始化强行用拷贝～，需要显式地创建一个（临时）对象用于拷贝。</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="3-2-2-string对象上的操作"><a href="#3-2-2-string对象上的操作" class="headerlink" title="3.2.2 string对象上的操作"></a>3.2.2 string对象上的操作</h3><ul>
-<li><strong>os&lt;&lt;s</strong> 将s写到输出流os当中，返回os</li>
-<li><strong>is&gt;&gt;s</strong> 从is中读取字符串赋给s，字符串以空白分隔，返回is</li>
-<li><strong>getline(is, s)</strong> 从is中读取一行赋给s，返回is</li>
-</ul>
-<p><strong>读写string对象</strong></p>
-<ul>
-<li>string对象会自动忽略开头的空白（即空格符、换行符、制表符等）并从第一个真正的字符读起，直到遇见下一个空白为止。</li>
-</ul>
-<p><strong>使用getline读取一整行</strong></p>
-<ul>
-<li>getline函数的参数是一个输入流和一个string对象，函数从给定的输入流中读取内容，直到遇到换行符为止（注意换行符也被读进来了），然后把所读的内容存入到那个string对象中去（注意不存换行符）</li>
-<li>同输入运算符一样，getline也会返回它的流参数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> <span class="built_in">line</span>; <span class="comment">//每次读入一整行，直到文件末尾</span></span><br><span class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">line</span>&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>string::size_type 类型</strong></p>
-<ul>
-<li>size函数返回string对象的长度</li>
-<li>size函数返回的是一个string::size_type 类型的值</li>
-<li>string::size_type是一个无符号类型的值，而且能足够存放下任何string对象的大小。</li>
-<li>可以利用C++11新标准，用auto或者decltype来推断变量的类型</li>
-<li>假设n是一个具有负值的int，则表达式<strong>s.size()&lt;n</strong> 的结果一定是true，因为负值n会自动地转换成一个比较大的无符号值。所以如果一条表达式中已有了size函数就不要再使用int了，这样可以避免混用int和unsigned可能带来的问题。</li>
-</ul>
-<p><strong>字面值和string对象相加</strong></p>
-<ul>
-<li>当把string对象和字符字面值及字符串字面值混在一条语句中使用时，必须确保每个加法运算符+的两侧的运算对象至少一个是string<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> s4 = s1 + <span class="string">", "</span>; <span class="comment">// 正确</span></span><br><span class="line"><span class="built_in">string</span> s5 = <span class="string">"hello"</span> + <span class="string">", "</span>; <span class="comment">// 错误</span></span><br></pre></td></tr></table></figure></li>
-<li>由于历史原因，也为了与C兼容，所以C++语言中的字符串字面值并不是标准库类型string的对象。切记，字符串字面值与string是不同的类型。</li>
-</ul>
-<h3 id="3-2-3-处理string对象中的字符"><a href="#3-2-3-处理string对象中的字符" class="headerlink" title="3.2.3 处理string对象中的字符"></a>3.2.3 处理string对象中的字符</h3><p><strong>cctype头文件中的函数</strong></p>
-<ul>
-<li>isalnum(c) 是数字或数字？</li>
-<li>isalpha(c) 是字母？</li>
-<li>isdigit(c) 是数字？</li>
-<li>islower(c) 是小写字母？</li>
-<li>isupper(c) 是大写字母？</li>
-<li>isspace(c) 是空白？</li>
-<li>ispunct(c) 是标点？</li>
-<li>isxdigit(c)是十六进制数？</li>
-<li>tolower(c) 是大写字母则转为小写，不是则原样输出c</li>
-<li>toupper(c) 和上同理</li>
-</ul>
-<p><strong>使用范围for语句处理每个字符</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//统计标点符号个数</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hello world!!!"</span>)</span></span>;</span><br><span class="line">    <span class="keyword">decltype</span>(s.<span class="built_in">size</span>()) punct_cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> c:s)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">ispunct</span>(c))</span><br><span class="line">            ++punct_cnt;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; punct_cnt</span><br><span class="line">         &lt;&lt; <span class="string">" punctuation characters in"</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 改变字符串中的字符</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"Hello World!"</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;c:s)</span><br><span class="line">        c = <span class="built_in">toupper</span>(c);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-
-<p><strong>处理一部分字符</strong></p>
-<ul>
-<li>访问string对象中的单个字符有两种方式：<ul>
-<li>使用下标</li>
-<li>使用迭代器</li>
-</ul>
-</li>
-<li><strong>下标运算符( [ ] )</strong> 接收的输入参数是string::size_type类型的值，这个参数表示要访问的字符的为止，返回值是该位置上的字符的引用。</li>
-<li>下标的值称作“下标”或“索引”，任何表达式只要它的值是一个整型值就能作为索引。不过，如果某个索引是带符号类型的值将自动转换成由string::size_type表达的无符号类型。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用下标执行迭代</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">decltype</span>(s.<span class="built_in">size</span>()) index = <span class="number">0</span>;</span><br><span class="line">    index != s.<span class="built_in">size</span>() &amp;&amp; !<span class="built_in">isspace</span>(s[index]);</span><br><span class="line">    ++index)</span><br><span class="line">    s[index] = <span class="built_in">toupper</span>(s[index]);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="3-3-标准库类型-vector（容器）"><a href="#3-3-标准库类型-vector（容器）" class="headerlink" title="3.3 标准库类型 vector（容器）"></a>3.3 标准库类型 vector（容器）</h2><ul>
-<li>C++语言既有类模板(class template)，也有函数模板，其中vector是一个类模板</li>
-<li>编译器根据模板创建类或函数的过程称为<strong>实例化</strong></li>
-</ul>
-<h3 id="3-3-1-定义和初始化vector对象"><a href="#3-3-1-定义和初始化vector对象" class="headerlink" title="3.3.1 定义和初始化vector对象"></a>3.3.1 定义和初始化vector对象</h3><ul>
-<li>vector<T> v1 v1是空vector，执行默认初始化</li>
-<li>vector<T> v2(v1) v2中包含有v2中所有元素的副本</li>
-<li>vector<T> v2 = v1 同上等价</li>
-<li>vector<T> v3(n, val) v3中包含了n个重复的元素val</li>
-<li>vector<T> v4(n) v4包含n个元素，默认初始化</li>
-<li>vector<T> v5{a,b,c…}</li>
-<li>vector<T> v5 = {a,b,c..} 同上等价</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//C++11新标准 列表初始化vector对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; articles = &#123;<span class="string">"a"</span>,<span class="string">"an"</span>,<span class="string">"the"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建指定数量的元素</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>,<span class="number">-1</span>)</span></span>; <span class="comment">//10个-1</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">svec</span><span class="params">(<span class="number">10</span>,<span class="string">"hi"</span>)</span></span>; <span class="comment">//10个string类型的元素，每个都被初始化为"hi"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//值初始化</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>)</span></span>;  <span class="comment">//10个元素，每个都被初始化为0</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">svec</span><span class="params">(<span class="number">10</span>)</span></span>;<span class="comment">//10个元素，每个都是空是string对象</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3-2-向vector对象中添加元素"><a href="#3-3-2-向vector对象中添加元素" class="headerlink" title="3.3.2 向vector对象中添加元素"></a>3.3.2 向vector对象中添加元素</h3><ul>
-<li>push_back</li>
-<li>pop_back</li>
-</ul>
-<p><strong>向vector对象添加元素蕴含的编程假定</strong><br>如果循环体内包含有向vector对象添加元素的语句，则不能使用范围for循环。范围for语句体内不应改变其遍历序列的大小。</p>
-<h2 id="3-4-迭代器"><a href="#3-4-迭代器" class="headerlink" title="3.4 迭代器"></a>3.4 迭代器</h2><ul>
-<li>所有标准库容器都可以使用迭代器，但是其中只有少数几种才同时支持下标运算符。</li>
-</ul>
-<h3 id="3-4-1-使用迭代器"><a href="#3-4-1-使用迭代器" class="headerlink" title="3.4.1 使用迭代器"></a>3.4.1 使用迭代器</h3><ul>
-<li>有迭代器的类型同时拥有返回迭代器的成员，这些类型都有名为 begin 和 end 的成员。<ul>
-<li><strong>begin</strong>，返回指向第一个元素的迭代器</li>
-<li><strong>end</strong>，返回指向容器尾元素的下一个位置的迭代器。称为尾后迭代器(off-the-end iterator)</li>
-<li>如果容器为空，则begin和end返回的是同一个迭代器。都是尾后迭代器。</li>
-</ul>
-</li>
-</ul>
-<p><strong>泛型编程</strong></p>
-<ul>
-<li>C++程序员习惯地使用!=，其原因和他们更愿意使用迭代器而非下标的原因一样：因为这种编程风格在标准库提供的所有容器上都有效。</li>
-</ul>
-<p><strong>迭代器类型</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it; <span class="comment">// it能读写vector&lt;int&gt;的元素</span></span><br><span class="line"><span class="built_in">string</span>::iterator it2;  <span class="comment">// it2能读写string 对象中的字符</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator it3; <span class="comment">// it3只能读元素，不能写元素</span></span><br><span class="line"><span class="built_in">string</span>::const_iterator it4; <span class="comment">// it4只能读字符，不能写字符</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>const_iterator和常量指针差不多，能读取但不能修改它所指的元素值。</p>
-<ul>
-<li>如果vector对象或string对象是一个常量，只能用const_iterator</li>
-<li>如果vector对象或string对象不是常量，即可用iterator也能使用const_iterator</li>
-</ul>
-</li>
-<li><p>begin和end运算符</p>
-<ul>
-<li>begin和end返回的具体类型由对象是否是常量决定。是iterator还是const_iterator</li>
-<li><strong>C++11新标准</strong>，为了便于专门得到const_iterator类型的返回值，引入两个新函数<ul>
-<li>cbegin()</li>
-<li>cend()</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>结合解引用和成员访问操作</strong></p>
-<ul>
-<li>it-&gt;men 和 (*it).men 等价</li>
-<li>箭头运算符把解引用和成员访问两个操作结合在了一起</li>
-</ul>
-<p><strong>某些对vector对象的操作会使迭代器失效</strong></p>
-<ul>
-<li>不能在范围for循环中向vector对象添加元素</li>
-<li>任何一种可能改变vector对象容量的操作，比如push_back，都会使该vector对象的迭代器失效。</li>
-<li>谨记，凡是使用了迭代器的循环体，都不要向迭代器所属的容器添加元素</li>
-</ul>
-<h3 id="3-4-2-迭代器运算"><a href="#3-4-2-迭代器运算" class="headerlink" title="3.4.2 迭代器运算"></a>3.4.2 迭代器运算</h3><ul>
-<li>只要两迭代器指向的是同一个容器中的元素或者尾元素的下一个位置，就能将其相减，结果是两个迭代器的举例。类型是名为 <strong>difference_type</strong> 的带符号整数类型，因为这个距离可正可负。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 二分搜索，text有序，beg和end是搜索范围</span></span><br><span class="line"><span class="keyword">auto</span> beg = <span class="built_in">text</span>.<span class="built_in">begin</span>(), <span class="built_in">end</span> = <span class="built_in">text</span>.<span class="built_in">end</span>();</span><br><span class="line"><span class="keyword">auto</span> <span class="built_in">min</span> = <span class="built_in">text</span>.<span class="built_in">begin</span>() + (<span class="built_in">end</span> - beg)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">while</span>(mid != <span class="built_in">end</span> &amp;&amp; *mid != sought)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (sought &lt; *mid)</span><br><span class="line">        <span class="built_in">end</span> = mid;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        beg = mid + <span class="number">1</span>;</span><br><span class="line">    mid = beg + (<span class="built_in">end</span> - beg)/<span class="number">2</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-5-数组"><a href="#3-5-数组" class="headerlink" title="3.5 数组"></a>3.5 数组</h2><ul>
-<li>数组是一种复合类型，声明 a[n], n是数组维度。维度必须是一个常量表达式<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> cnt = <span class="number">42</span>;   <span class="comment">//不是常量表达式</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">unsigned</span> sz = <span class="number">42</span>; <span class="comment">//常量表达式</span></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">10</span>];  <span class="comment">//含有10个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> *parr[sz]; <span class="comment">//含有42个整型指针的数组</span></span><br><span class="line"><span class="built_in">string</span> bad[cnt];  <span class="comment">//错误：cnt不是常量表达式</span></span><br><span class="line">stromg strs[get_size()]; <span class="comment">// 只有get_size是constexpr时正确</span></span><br></pre></td></tr></table></figure></li>
-<li>和内置类型的变量一样，如果在函数内部定义了某种类型的数组，那么默认初始化会令数组含有为定义的值。</li>
-</ul>
-<p><strong>字符数组的特殊性</strong></p>
-<ul>
-<li>字符数组有一种额外的初始化形式，可以用字符串字面值对此类数组初始化。当使用这种方式时，一定要注意字符串字面值的结尾处还有一个空字符，这个空字符也会像字符串的其他字符一样被拷贝到字符数组中去。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> a1[] = &#123;<span class="string">'C'</span>,<span class="string">'+'</span>,<span class="string">'+'</span>&#125;; <span class="comment">//列表初始化，没有空字符，维度3</span></span><br><span class="line"><span class="keyword">char</span> a2[] = &#123;<span class="string">'C'</span>,<span class="string">'+'</span>,<span class="string">'+'</span>,<span class="string">'\0'</span>&#125;; <span class="comment">//列表初始化，含有显式的空字符，维度4</span></span><br><span class="line"><span class="keyword">char</span> a3[] = <span class="string">"C++"</span>; <span class="comment">//自动添加表示字符串结束的空字符，维度4</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> a4[<span class="number">6</span>] = <span class="string">"Daniel"</span>; <span class="comment">// 错误：没有空间放空字符！</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>不允许拷贝和赋值</strong></p>
-<ul>
-<li>不能将数组的内容拷贝给其他数组作为其初始值，也不能用数组为其他数组赋值。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;; <span class="comment">//含有三个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> a2[] = a; <span class="comment">//错误：不允许使用一个数组初始化另一个数组</span></span><br><span class="line">a2 = a;       <span class="comment">//错误：不能把一个数组直接赋值给另一个数组</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>理解复杂的数组声明</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从数组的名字开始按照由内向外的顺序阅读</span></span><br><span class="line"><span class="keyword">int</span> *ptrs[<span class="number">10</span>];   <span class="comment">//ptrs是含有10个整型指针的数组。</span></span><br><span class="line"><span class="keyword">int</span> &amp;refs[<span class="number">10</span>] = <span class="comment">/* ? */</span> <span class="comment">//错误：不存在引用的数组</span></span><br><span class="line"><span class="keyword">int</span> (*Parray)[<span class="number">10</span>] = &amp;arr; <span class="comment">//Parray指向一个含有10个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> (&amp;Parray)[<span class="number">10</span>] = arr; <span class="comment">//arrRef引用一个含有10个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> *(&amp;arry)[<span class="number">10</span>] = ptrs; <span class="comment">//arry是数组的引用，该数组含有10个指针</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="3-5-2-访问数组元素"><a href="#3-5-2-访问数组元素" class="headerlink" title="3.5.2 访问数组元素"></a>3.5.2 访问数组元素</h3><ul>
-<li>在使用数组下标的时候，通常定义为<strong>size_t</strong>类型。这是一种机器相关的无符号类型，它被设计得足够大以便能表示内存中任意对象的大小。在<strong>cstddef头文件</strong>中定义了<strong>size_t</strong>类型。</li>
-</ul>
-<h3 id="3-5-3-指针和数组"><a href="#3-5-3-指针和数组" class="headerlink" title="3.5.3 指针和数组"></a>3.5.3 指针和数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> nums[] = &#123;<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>&#125;;</span><br><span class="line"><span class="built_in">string</span> *p = &amp;nums[<span class="number">0</span>]; <span class="comment">// p指向nums的第一个元素</span></span><br><span class="line"><span class="built_in">string</span> *p2 = nums; <span class="comment">// 与 p2 = &amp;nums[0]等价</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>数组有一个特性：在很多用到数组名字的地方，编译器都会自动地将其替换为一个指向数组首元素的指针<ul>
-<li>根据这个特性，当使用数组作为一个auto变量的初始值时，推断得到的类型是指针而非数组</li>
-<li>当使用decltype关键字时上述类型转换不会发生，decltype(ia)返回的类型是由5个整数构成的数组<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">auto</span> <span class="title">ia2</span><span class="params">(ia)</span></span>;  <span class="comment">// ia2是一个整型指针，指向ia的第一个元素</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">decltype</span>(ia) ia3 = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">ia3 = p;    <span class="comment">// 错误：不能用整型指针给数组赋值</span></span><br><span class="line">ia3[<span class="number">4</span>] = i; <span class="comment">// 正确：把i的值赋给ia3的一个元素</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>指针也是迭代器</strong></p>
-<ul>
-<li>通过数组名字或者数组中首元素的地址都能得到还想首元素的指针</li>
-<li>获取尾后指针，可以设法获取数组尾元素之后的那个并不存在的元素的地址<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *e = &amp;arr[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> *b = arr; b != e; ++b)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; *b &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>标准库函数 begin 和 end</strong></p>
-<ul>
-<li><strong>C++11新标准</strong>引入了begin和end，这两个函数与容器中的两个同名成员功能类似，不过数组毕竟不是类类型，因此这两个函数不是成员函数。正确的使用形式是将数组作为他们的参数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> *beg = <span class="built_in">begin</span>(ia); <span class="comment">// 指向ia的首元素的指针</span></span><br><span class="line"><span class="keyword">int</span> *<span class="built_in">end</span> = <span class="built_in">end</span>(ia);   <span class="comment">// 指向arr尾元素的下一个位置的指针</span></span><br></pre></td></tr></table></figure></li>
-<li>尾后指针不能执行解引用和递增操作</li>
-</ul>
-<p><strong>指针运算</strong></p>
-<ul>
-<li>两个指针相减的类型是 <strong>ptrdiff_t</strong> 的标准库类型，和size_t一样，也是一种定义在cstddef头文件中的机器相关的类型。因为差值可能是负的，所以是一种带符号类型。</li>
-</ul>
-<p><strong>下标和指针</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[] = &#123;<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> *p = &amp;ia[<span class="number">2</span>]; <span class="comment">// p指向索引为2的元素</span></span><br><span class="line"><span class="keyword">int</span> j = p[<span class="number">1</span>];    <span class="comment">// p[1]等价于*(p+1),即ia[3]</span></span><br><span class="line"><span class="keyword">int</span> k = p[<span class="number">-2</span>];   <span class="comment">// p[-2]是ia[0]</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>虽然标准库类型string和vector也能执行下标运算，但是标准库类型限定使用的下标必须是无符号类型，而内置的下标运算无此要求，上例即说明了这点。内置的下标运算符可以处理负值，结果地址必须指向原来的指针所指同一数组中的元素</li>
-</ul>
-<h3 id="3-5-4-C风格字符串"><a href="#3-5-4-C风格字符串" class="headerlink" title="3.5.4 C风格字符串"></a>3.5.4 C风格字符串</h3><p><strong>C标准String函数</strong></p>
-<ul>
-<li>strlen(p)</li>
-<li>strcmp(p1,p2)</li>
-<li>strcat(p1,p2) 将p2附加到p1后，返回p1</li>
-<li>strcpy(p1,p2) 将p2拷贝给p1，返回p1</li>
-</ul>
-<p><strong>目标字符串的大小由调用者指定</strong></p>
-<ul>
-<li>连接或拷贝C风格字符串于标准库string对象的同类操作差别很大，比如两个字符串相加<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 标准库string</span></span><br><span class="line"><span class="built_in">string</span> largeStr = s1 + <span class="string">" "</span> + s2;</span><br><span class="line"></span><br><span class="line"><span class="comment">// C风格，使用strcat和strcpy必须提供一个用于存放结果字符串的数组，该数组必须足够大以便容纳结果字符串及末尾的空字符。</span></span><br><span class="line"><span class="built_in">strcpy</span>(largeStr, ca1);</span><br><span class="line"><span class="built_in">strcat</span>(largeStr, <span class="string">" "</span>);</span><br><span class="line"><span class="built_in">strcpy</span>(largeStr, ca2);</span><br><span class="line"><span class="comment">// 如果计算错了largeStr的大小将引发严重错误</span></span><br></pre></td></tr></table></figure></li>
-<li>使用标准库string要比C风格字符串更安全，更高效</li>
-</ul>
-<h3 id="3-5-5-与旧代码的接口"><a href="#3-5-5-与旧代码的接口" class="headerlink" title="3.5.5 与旧代码的接口"></a>3.5.5 与旧代码的接口</h3><p><strong>混用string对象和C风格字符串</strong></p>
-<ul>
-<li>任何出现字符串字面值的地方都可以用以空字符结束的字符数组来替代：<ul>
-<li>允许使用以空字符结束的字符数组来初始化tring对象或为string对象赋值</li>
-<li>在string对象的加法运算中使用以空字符结束的字符数组作为其中一个运算对象（不能两个都是）：在string对象的复合赋值运算中允许使用以空字符结束的字符数组作为右侧的运算对象</li>
-</ul>
-</li>
-<li>string专门提供来一个名为c_str的成员函数<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line"><span class="keyword">char</span> *str = s;  <span class="comment">//错误：不能用string对象初始化char</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *str = s.c_str(); <span class="comment">//正确</span></span><br></pre></td></tr></table></figure></li>
-<li>c_str函数的返回值是一个C风格的字符串。即以一个指针，该指针指向一个以空字符结束的字符数组。</li>
-</ul>
-<p><strong>使用数组初始化vector对象</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> int_arr[] = &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="built_in">begin</span>(int_arr),<span class="built_in">end</span>(int_arr))</span></span>;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>现代的C++程序应当尽量使用vector和迭代器，避免使用内置数组和指针</li>
-<li>应尽量使用string，避免使用C风格的基于数组的字符串</li>
-</ul>
-<h2 id="3-6-多维数组"><a href="#3-6-多维数组" class="headerlink" title="3.6 多维数组"></a>3.6 多维数组</h2><ul>
-<li>类似于一维数组，在初始化多维数组时也并非所有的元素的值都必须包含在初始化列表中<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[<span class="number">3</span>][<span class="number">4</span>] = &#123; &#123;<span class="number">0</span>&#125;, &#123;<span class="number">4</span>&#125; ,&#123;<span class="number">8</span>&#125; &#125;;</span><br><span class="line"><span class="comment">//只初始化每行的首元素，其他未列出的元素执行默认值初始化</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><strong>多维数组的下标引用</strong></p>
-<ul>
-<li>经常用两层嵌套for循环来处理多维数组的元素<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="keyword">size_t</span> rowCnt = <span class="number">3</span>, colCnt = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">int</span> ia[rowCnt][colCnt];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">size_t</span> i = <span class="number">0</span>; i != rowCnt; ++i)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">size_t</span> j = <span class="number">0</span>; j != colCnt; ++j)</span><br><span class="line">        ia[i][j] = i * colCnt + j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><strong>使用范围for语句处理多维数组</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;row : ia)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;col : row)</span><br><span class="line">    &#123;</span><br><span class="line">        col = cnt;</span><br><span class="line">        ++cnt;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>为什么要用引用？<strong>为了避免数组被自动转成指针</strong><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;row : ia)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> col : row)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;col&lt;&lt;<span class="built_in">endl</span>; </span><br><span class="line"><span class="comment">// 上面编译通过，下面报错</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> row : ia)</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> col : row)</span><br></pre></td></tr></table></figure></li>
-<li>由于row不是引用类型，所以编译器初始化row时会自动将这些数组形式的元素转换成指向该数组内首元素的指针。这样得到的row的类型就是 int* ，显然内层的循环就不合法了。</li>
-<li>使用范围for语句处理多维数组，除了最内层的循环外，其他所有循环的控制变量都应该是引用类型。</li>
-</ul>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag">C++基础知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">C++学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E3%80%8AC-Primer-Plus%E3%80%8B/" rel="tag">《C++ Primer Plus》</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag">读书笔记</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-  
-  
-
-  
-
-</article>
-    
   </article>
   
 
@@ -1898,7 +1799,7 @@
   <ul class="nav">
     <li class="nav-item">
       
-      <a class="nav-item-link nav-item-search"  title="Suche">
+      <a class="nav-item-link nav-item-search"  title="Rechercher">
         <i class="ri-search-line"></i>
       </a>
       
